@@ -1,7 +1,7 @@
 baseURL = 'https://uzrwth.github.io/'
 languageCode = 'en-us'
 title = 'uz'
-theme = "ananke"
+theme = "hugo-toigian"
 
 [caches]
   [caches.images]
