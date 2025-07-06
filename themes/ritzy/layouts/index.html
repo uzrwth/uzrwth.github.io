@@ -40,7 +40,6 @@
     </div>    
     
     <div class="section">
-      <div class="works-title">Writing</div>
 
       {{ range sort (where .Site.RegularPages "Section" "posts") "Date" "desc" }}
       <div class="work-item">
@@ -53,11 +52,6 @@
       {{ end }}
     </div>
 
-    <div class="contact">
-        {{ with .Site.GetPage "_contact" }}
-          {{ .Content }}
-        {{ end }} 
-    </div>
   </div>
 </div>
 {{ end }}
