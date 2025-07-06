@@ -9,18 +9,18 @@
     <lastBuildDate>Sun, 06 Jul 2025 20:00:19 +0200</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>My Second Post</title>
-      <link>http://localhost:1313/posts/my-second-post/</link>
+      <title>Directional Derivatives</title>
+      <link>http://localhost:1313/posts/directional-derivatives/</link>
       <pubDate>Sun, 06 Jul 2025 20:00:19 +0200</pubDate>
-      <guid>http://localhost:1313/posts/my-second-post/</guid>
-      <description></description>
+      <guid>http://localhost:1313/posts/directional-derivatives/</guid>
+      <description>&lt;p&gt;Travel east from: 从&amp;hellip;向东走&lt;/p&gt;&#xA;&lt;p&gt;Directional derivative enables us to find the rate of change of a function of two or more variables in any direction.&lt;/p&gt;</description>
     </item>
     <item>
-      <title>My First Post</title>
-      <link>http://localhost:1313/posts/my-first-post/</link>
+      <title>second-order linear differential equations</title>
+      <link>http://localhost:1313/posts/second_order_differential_equations/</link>
       <pubDate>Sun, 06 Jul 2025 19:52:04 +0200</pubDate>
-      <guid>http://localhost:1313/posts/my-first-post/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;introduction&lt;/h2&gt;&#xA;&lt;p&gt;This is uz&amp;rsquo;s new post.&lt;/p&gt;</description>
+      <guid>http://localhost:1313/posts/second_order_differential_equations/</guid>
+      <description>&lt;p&gt;solve problems concerning the vibrations of springs and the analysis of electric circuits.&lt;/p&gt;&#xA;&lt;p&gt;How infinite series can be used to solve differential equations.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
