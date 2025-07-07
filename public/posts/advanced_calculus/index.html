@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts | uz</title>
+    <title>Advanced Calculus | uz</title>
     <meta name="description" content="" />
 
     
@@ -217,76 +217,79 @@
     <div class="container">
       
 <style>
-  .posts-container {
-    max-width: 750px;
+  .post-container {
+    max-width: 580px;  
     margin: 0 auto;
     padding: 0 20px;
   }
   
-  .posts-header {
+  .post-header {
     margin-bottom: 40px;
   }
   
-  .posts-title {
+  .post-title {
     font-family: 'Source Serif Pro', serif;
     font-size: 28px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #4a4b4f;
   }
   
-  .posts-description {
-    color: #666;
-    margin-bottom: 30px;
-  }
-  
-  .post-list {
-    margin-bottom: 40px;
-  }
-  
-  .post-item {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .post-item:last-child {
-    border-bottom: none;
-  }
-  
-  .post-link {
-    display: block;
-    text-decoration: none;
-    color: #4a4b4f;
-  }
-  
-  .post-link:hover .post-item-title {
-    color: #8f6a60;
-  }
-  
-  .post-item-title {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    transition: color 0.2s;
-  }
-  
-  .post-item-date {
+  .post-date {
     color: #9d9d9d;
     font-style: italic;
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 20px;
   }
   
-  .post-item-description {
+  .post-description {
+    font-style: italic;
     color: #666;
-    line-height: 1.5;
+    margin-bottom: 30px;
+    font-size: 17px;
+  }
+  
+  .post-content {
+    line-height: 1.8;
+  }
+  
+  .post-content h2 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 30px 0 20px 0;
+    color: #4a4b4f;
+  }
+  
+  .post-content p {
+    margin-bottom: 20px;
+  }
+  
+  .post-content img {
+    display: block;
+    width: 80%;
+    max-width: 80%;
+    height: auto;
+    margin: 2rem auto;
+    border-radius: 4px;
+  }
+  
+   
+  .post-content img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .post-content em {
+    color: #666;
   }
   
   .back-link {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 30px;
     color: #8f6a60;
     text-decoration: underline;
@@ -299,94 +302,40 @@
   }
 </style>
 
-<div class="posts-container">
-  <div class="posts-header">
-    <h1 class="posts-title">Posts</h1>
-    
+<div class="post-container">
+  <div class="post-header">
+    <h1 class="post-title">Advanced Calculus</h1>
+    <div class="post-date">July 7, 2025</div>
   </div>
   
-  <div class="post-list">
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/calculus/" class="post-link">
-        <h2 class="post-item-title">Calculus</h2>
-        <div class="post-item-date">July 7, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/advanced_calculus/" class="post-link">
-        <h2 class="post-item-title">Advanced Calculus</h2>
-        <div class="post-item-date">July 7, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/german-life/" class="post-link">
-        <h2 class="post-item-title">德国生活</h2>
-        <div class="post-item-date">July 7, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/optimization-and-analysis-of-smooth-functions/" class="post-link">
-        <h2 class="post-item-title">Optimization and Analysis of Smooth Functions</h2>
-        <div class="post-item-date">July 7, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/calculus-preview/" class="post-link">
-        <h2 class="post-item-title">Calculus Preview</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/some-thoughts/" class="post-link">
-        <h2 class="post-item-title">Some Thoughts</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/first-order-taylor-approximation/" class="post-link">
-        <h2 class="post-item-title">First Order Taylor Approximation</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/lipschitz-continuous/" class="post-link">
-        <h2 class="post-item-title">Lipschitz Continuous</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/directional-derivatives/" class="post-link">
-        <h2 class="post-item-title">Directional Derivatives</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/second_order_differential_equations/" class="post-link">
-        <h2 class="post-item-title">second-order linear differential equations</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
+  <div class="post-content">
+    <ul>
+<li>Vector spaces</li>
+<li>Finite-Dimensional vector spaces</li>
+<li>The differential calculus</li>
+<li>Compactness and Completeness</li>
+<li>Scalar Product Spaces</li>
+<li>Differential Equations</li>
+<li>Multilinear Functionals</li>
+<li>Integrations</li>
+<li>Differentiable Manifolds</li>
+<li>The Integral Calculus on Manifolds</li>
+<li>Exterior Calculus</li>
+<li>Potential Theory in $E^n$</li>
+<li>Classical Mechanics</li>
+</ul>
+<p>The foundational material, presented in the unstarred sections of Chapters 1 through 11, was normally covered, but different applications of this basic material were stressed from year to year, and the book therefore contains more material than was covered in any one year.</p>
+<p>These prerequisites are a good grounding in the calculus of one variable from a mathematically rigorous point of view, together with some acquaintance with linear algebra.</p>
+<p>The reader should be familiar with limit and continuity type arguments and have a certain amount of mathematical sophistication.</p>
+<p>As possible introductory texts</p>
+<ul>
+<li>Differential and Integral Calculus by R.Courant</li>
+<li>Calculus by T. Apostol</li>
+<li>Calculus by M. Spivak</li>
+<li>Pure Mathematics by G. Hardy.</li>
+</ul>
+<p>The reader should also have some experience with partial derivatives.</p>
+
   </div>
   
   <a href="/" class="back-link">← Back to home</a>

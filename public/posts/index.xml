@@ -6,8 +6,22 @@
     <description>Recent content in Posts on uz</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 07 Jul 2025 20:37:37 +0200</lastBuildDate>
+    <lastBuildDate>Mon, 07 Jul 2025 23:44:59 +0200</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Calculus</title>
+      <link>http://localhost:1313/posts/calculus/</link>
+      <pubDate>Mon, 07 Jul 2025 23:44:59 +0200</pubDate>
+      <guid>http://localhost:1313/posts/calculus/</guid>
+      <description>&lt;p&gt;Linear algebra has been incorporated, the mean-value theorems and routine applications of calculus are introduced at an earlier stage.&lt;/p&gt;&#xA;&lt;p&gt;Several sections have been rewritten and reorganized to provide better motivation and to improve the flow of ideas.&lt;/p&gt;&#xA;&lt;p&gt;As in the first edition, a historical introduction precedes each important new concept, tracing its development from an early intuitive physical notion to its precise mathematical formulation. The student is told something of the struggles of the past and of the triumphs of the men who contributed most to the subject. Thus the student becomes an active participant in the evolution of ideas rather than a passive observer of results.&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>Advanced Calculus</title>
+      <link>http://localhost:1313/posts/advanced_calculus/</link>
+      <pubDate>Mon, 07 Jul 2025 23:34:15 +0200</pubDate>
+      <guid>http://localhost:1313/posts/advanced_calculus/</guid>
+      <description>&lt;ul&gt;&#xA;&lt;li&gt;Vector spaces&lt;/li&gt;&#xA;&lt;li&gt;Finite-Dimensional vector spaces&lt;/li&gt;&#xA;&lt;li&gt;The differential calculus&lt;/li&gt;&#xA;&lt;li&gt;Compactness and Completeness&lt;/li&gt;&#xA;&lt;li&gt;Scalar Product Spaces&lt;/li&gt;&#xA;&lt;li&gt;Differential Equations&lt;/li&gt;&#xA;&lt;li&gt;Multilinear Functionals&lt;/li&gt;&#xA;&lt;li&gt;Integrations&lt;/li&gt;&#xA;&lt;li&gt;Differentiable Manifolds&lt;/li&gt;&#xA;&lt;li&gt;The Integral Calculus on Manifolds&lt;/li&gt;&#xA;&lt;li&gt;Exterior Calculus&lt;/li&gt;&#xA;&lt;li&gt;Potential Theory in $E^n$&lt;/li&gt;&#xA;&lt;li&gt;Classical Mechanics&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;The foundational material, presented in the unstarred sections of Chapters 1 through 11, was normally covered, but different applications of this basic material were stressed from year to year, and the book therefore contains more material than was covered in any one year.&lt;/p&gt;</description>
+    </item>
     <item>
       <title>德国生活</title>
       <link>http://localhost:1313/posts/german-life/</link>
