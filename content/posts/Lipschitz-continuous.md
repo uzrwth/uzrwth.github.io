@@ -55,6 +55,11 @@ If the sequence is divergent, then the series is called divergent.
 > Thus the sum of a series is the limit of the sequence of partial sums.
 
 
+#### Geometric series
+
+Each term is obtained from the preceding one by multiplying it by the common ratio r.
+
+
 ### Power series
 
 a series of constants that we can test for convergence or divergence.
@@ -73,4 +78,4 @@ Notice that f resembles a polynomial. The only difference is that f has infinite
 How to represent certain types of functions as sums of power series by manipulating geometric series or by differentiating or integrating such a series.
 
 Why we would ever want to express a known function as a sum of infinitely many terms?
-This strategy is useful for integrating functions that don't have elementary antiderivatives, for solving differential equations, and for approximating functions by polynomials.
+This strategy is useful for integrating functions that don't have elementary antiderivatives, for solving differential equations, and for **approximating functions by polynomials**.

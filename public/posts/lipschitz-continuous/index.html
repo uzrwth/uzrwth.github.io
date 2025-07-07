@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Posts | uz</title>
+    <title>Lipschitz Continuous | uz</title>
     <meta name="description" content="" />
 
     
@@ -217,76 +217,79 @@
     <div class="container">
       
 <style>
-  .posts-container {
-    max-width: 750px;
+  .post-container {
+    max-width: 580px;  
     margin: 0 auto;
     padding: 0 20px;
   }
   
-  .posts-header {
+  .post-header {
     margin-bottom: 40px;
   }
   
-  .posts-title {
+  .post-title {
     font-family: 'Source Serif Pro', serif;
     font-size: 28px;
     font-weight: 600;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: #4a4b4f;
   }
   
-  .posts-description {
-    color: #666;
-    margin-bottom: 30px;
-  }
-  
-  .post-list {
-    margin-bottom: 40px;
-  }
-  
-  .post-item {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .post-item:last-child {
-    border-bottom: none;
-  }
-  
-  .post-link {
-    display: block;
-    text-decoration: none;
-    color: #4a4b4f;
-  }
-  
-  .post-link:hover .post-item-title {
-    color: #8f6a60;
-  }
-  
-  .post-item-title {
-    font-family: 'Source Serif Pro', serif;
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 8px;
-    transition: color 0.2s;
-  }
-  
-  .post-item-date {
+  .post-date {
     color: #9d9d9d;
     font-style: italic;
-    margin-bottom: 8px;
-    font-size: 14px;
+    margin-bottom: 20px;
   }
   
-  .post-item-description {
+  .post-description {
+    font-style: italic;
     color: #666;
-    line-height: 1.5;
+    margin-bottom: 30px;
+    font-size: 17px;
+  }
+  
+  .post-content {
+    line-height: 1.8;
+  }
+  
+  .post-content h2 {
+    font-family: 'Source Serif Pro', serif;
+    font-size: 24px;
+    font-weight: 600;
+    margin: 30px 0 20px 0;
+    color: #4a4b4f;
+  }
+  
+  .post-content p {
+    margin-bottom: 20px;
+  }
+  
+  .post-content img {
+    display: block;
+    width: 80%;
+    max-width: 80%;
+    height: auto;
+    margin: 2rem auto;
+    border-radius: 4px;
+  }
+  
+   
+  .post-content img + em {
+    display: block;
+    text-align: center;
+    font-size: 0.9em;
+    color: #777;
+    margin-top: -0.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .post-content em {
+    color: #666;
   }
   
   .back-link {
     display: inline-block;
-    margin-top: 20px;
+    margin-top: 50px;
     margin-bottom: 30px;
     color: #8f6a60;
     text-decoration: underline;
@@ -299,54 +302,53 @@
   }
 </style>
 
-<div class="posts-container">
-  <div class="posts-header">
-    <h1 class="posts-title">Posts</h1>
-    
+<div class="post-container">
+  <div class="post-header">
+    <h1 class="post-title">Lipschitz Continuous</h1>
+    <div class="post-date">July 6, 2025</div>
   </div>
   
-  <div class="post-list">
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/some-thoughts/" class="post-link">
-        <h2 class="post-item-title">Some Thoughts</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/first-taylor-approximation/" class="post-link">
-        <h2 class="post-item-title">First Taylor Approximation</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/lipschitz-continuous/" class="post-link">
-        <h2 class="post-item-title">Lipschitz Continuous</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/directional-derivatives/" class="post-link">
-        <h2 class="post-item-title">Directional Derivatives</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
-    <div class="post-item">
-      <a href="http://localhost:1313/posts/second_order_differential_equations/" class="post-link">
-        <h2 class="post-item-title">second-order linear differential equations</h2>
-        <div class="post-item-date">July 6, 2025</div>
-        <div class="post-item-description"></div>
-      </a>
-    </div>
-    
+  <div class="post-content">
+    <p>The terms &ldquo;Lipschitz constraint&rdquo; and &ldquo;Lipschitz continuous&rdquo; are closely related, and often used in the context of optimization, differential equations, and machine learning.</p>
+<p>Lipschitz continuous.
+A function is Lipschitz continuous if there exists a constant L&gt;0 such that
+This means the function does not change faster than linearly in its inputs.</p>
+<p>Lipschitz constraint.
+The Lipschitz constraint typically refers to imposing a Lipschitz condition, often in optimization or learning tasks.
+Enforcing that a function (or its gradient) is Lipschitz continuous with a known constant L.
+This is also called L-smoothness.</p>
+<p>Lipschitz continuity of the gradient is assumed for convergence guarantees in gradient descent.</p>
+<p>In Lipschitz regularization, models are trained to satisfy a Lipschitz constraint to improve stability.</p>
+<p>Approximation and fitting -&gt; Function fitting and interpolation -&gt; constraints -&gt; Lipschitz constraint</p>
+<p>Norm approximation -&gt; Basic norm approximation problem</p>
+<p>The norm approximation problem is a convex problem, and is solvable.</p>
+<p>从 L-光滑性可以推导出的结论: Quadratic Upper Bound (with Taylor series)</p>
+<blockquote>
+<p>Maclaurin series is really just a special case of the Taylor series.</p></blockquote>
+<blockquote>
+<p>But the idea of representing particular functions as sums of power series goes back to Newton.</p></blockquote>
+<h3 id="series">Series</h3>
+<p>What do we mean when we express a number as an infinite decimal?</p>
+<p>The convention behind our decimal notation is that any number can be written as an infinite sum.</p>
+<p>If the sequence is convergent and limit exists as a real number, then the series is called convergent.</p>
+<p>The number is called the sum of the series.</p>
+<p>If the sequence is divergent, then the series is called divergent.</p>
+<blockquote>
+<p>The table shows that as we add more and more terms, these partial sums become closer and closer to 1. In fact, by adding sufficiently many terms of the series we can make the partial sums as close as we like to 1. So it seems reasonable to say that the sum of this infinite series is 1.</p></blockquote>
+<blockquote>
+<p>Thus the sum of a series is the limit of the sequence of partial sums.</p></blockquote>
+<h4 id="geometric-series">Geometric series</h4>
+<p>Each term is obtained from the preceding one by multiplying it by the common ratio r.</p>
+<h3 id="power-series">Power series</h3>
+<p>a series of constants that we can test for convergence or divergence.</p>
+<p>A power series may converge for some values of x and diverge for other values of x.</p>
+<p>Notice that f resembles a polynomial. The only difference is that f has infinitely many terms.</p>
+<p>几何级数是幂级数的特例，即当幂级数的系数 全部相同且中心 为0时，幂级数退化为几何级数。</p>
+<h3 id="representations-of-functions-as-power-series">Representations of Functions as Power Series</h3>
+<p>How to represent certain types of functions as sums of power series by manipulating geometric series or by differentiating or integrating such a series.</p>
+<p>Why we would ever want to express a known function as a sum of infinitely many terms?
+This strategy is useful for integrating functions that don&rsquo;t have elementary antiderivatives, for solving differential equations, and for <strong>approximating functions by polynomials</strong>.</p>
+
   </div>
   
   <a href="/" class="back-link">← Back to home</a>
