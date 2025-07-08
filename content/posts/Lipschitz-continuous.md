@@ -38,7 +38,7 @@ The norm approximation problem is a convex problem, and is solvable.
 > But the idea of representing particular functions as sums of power series goes back to Newton.
 
 
-### Series
+# Series
 
 What do we mean when we express a number as an infinite decimal?
 
@@ -55,7 +55,7 @@ If the sequence is divergent, then the series is called divergent.
 > Thus the sum of a series is the limit of the sequence of partial sums.
 
 
-#### Geometric series
+## Geometric series
 
 Each term is obtained from the preceding one by multiplying it by the common ratio r.
 
@@ -73,9 +73,32 @@ Notice that f resembles a polynomial. The only difference is that f has infinite
 
 
 
-### Representations of Functions as Power Series
+## Representations of Functions as Power Series
 
 How to represent certain types of functions as sums of power series by manipulating geometric series or by differentiating or integrating such a series.
 
 Why we would ever want to express a known function as a sum of infinitely many terms?
 This strategy is useful for integrating functions that don't have elementary antiderivatives, for solving differential equations, and for **approximating functions by polynomials**.
+
+
+
+# Taylor's formula with remainder
+
+
+We turn now to a discussion of the error in the approximation of a function $f$ by its Taylor polynomial $T_nf$ at a point $a$.
+
+The error is defined to be the difference $E_n(x)=f(x)-T_nf(x)$. Thus, if $f$ has a derivative of order $n$ at $a$, we may write 
+
+$f(x)=\sum_{k=0}^{n}\frac{f^{(k)}(a)}{k!}(x-a)^{k}+E_n(x)$
+
+
+This is known as Taylor's formula with remainder $E_n(x)$; it is useful whenever we can estimate the size of $E_n(x)$. We shall express the error as an integral and then estimate the size of the integral.
+
+
+Assume $f$ has a continuous second derivative $f''$ in some neighborhood of $a$. Then, for every $x$ in this neighborhood, we have
+
+$f(x)=f(a)+f'(a)(x-a)+E_1(x)$
+
+where
+
+$E_1(x)=\int_a^x(x-t)f''(t)dt$
