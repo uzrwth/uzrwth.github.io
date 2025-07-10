@@ -40,6 +40,19 @@ The parameter space is not Euclidean but has a Riemannian metric structure in ma
 In these cases, the ordinary gradient does not give the steepest direction of a target function; rather, the steepest direction is given by the natural gradient.
 
 
+> Information geometry is used for calculating the natural gradients in the parameter space of perceptrons, the space of matrices (for blind source separation), and the space of linear dynamical systems (for blind source deconvolution). The dynamical behavior of natural gradient online learning is analyzed and is proved to be Fisher efficient, implying that it has asymptotically the same performance as the optimal batch estimation of parameters. This suggests that the plateau phenomenon, which appears in the backpropagation learning algorithm of multilayer perceptrons, might disappear or might not be so serious when the natural gradient is used. An adaptive method of updating the learning rate is proposed and analyzed.
+
+- certain underlying structure: underlying geometric structure (typically Riemannian manifolds)
+- the ordinary gradient method: the ordinary Euclidean gradient
+- the natural gradient: which accounts for the geometry of the space
+- parameter space: the parameter space is the set of all possible values that the parameters of a model (or system) can take.
+- the parameter space is where all possible configurations of a model's parameters live
+- its structure (Euclidean, curved, constrained) determines how optimization should be performed
+- the natural gradient is crucial when the space has non-Euclidean geometry
+
+
+$\Theta \subseteq \mathbb{R}^n$
+
 # inner/outer product
 
 inner product measures similarity -> scalar
