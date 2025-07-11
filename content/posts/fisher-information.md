@@ -30,8 +30,192 @@ First, in the frequentist paradigm, Fisher information is used to construct hypo
 
 # arg min
 
-$min f(x)$ 表示函数$f(x)的最小值（一个数值）。
+$min\ f(x)$ 表示函数$f(x)的最小值（一个数值）。
 
-$arg min f(x)$ 表示使得 $f(x)$ 取得最小值的$x$的取值
+$arg\ min\ f(x)$ 表示使得 $f(x)$ 取得最小值的$x$的取值
 
 ![](/images/fisher.png)
+
+
+This shows that the natural policy gradient, up to a constant factor, is the solution to a least-squares regression problem.
+
+The idea is: we want to find a weight vector such that the inner product between the policy gradient and the weight vector approximates the advantage $Q^{\pi}(s,a)-b(s)$.
+
+
+# $Q^{\pi}(s,a)-b(s)$
+
+This is a fundamental concept in reinforcement learning, particularly in policy gradient methods and advantage estimation.
+
+$Q^{\pi}(s,a)$: State-Action value function
+
+The expected cumulative future reward (return) when taking action $a$ in state $s$ and therafter following policy $\pi$.
+
+$Q^{\pi}(s,a)$ tells how good action $a$ is at state $s$.
+
+
+$b(s)$: baseline function
+
+A function that depends only on the state $s$ (not the action $a$), used to reduce variance in gradient estimates.
+
+$b(s)$ is a baseline to reduce noise.
+
+$Q^{\pi}(s,a)-b(s)$ gives the advantage of action $a$ over the expected value of the policy.
+
+This helps the learning algorithm focus on actions that perform better than average.
+
+# $\pi_{\theta}(\cdot \mid s)$
+
+This is a parameterized policy: given a state $s$, it returns a probability distribution over actions.
+
+$a \sim \pi_{\theta}(\cdot \mid s)$ means the action $a$ is sampled according to the policy $\pi_{\theta}$ at state $s$.
+
+
+# $d_{\lambda}^{{\pi}_{\theta}}$ 
+
+This is a discounted state distribution under the policy $\pi_{\theta}$
+
+
+Take an expectation of a function
+- state $s$ sampled from the discounted distribution
+- action $a$ sampled from the policy $\pi_{\theta}(a \mid s)$
+
+
+
+# At a high level
+
+Reinforcement learning is learning a policy --- a function that maps states $s$ to actions $a$ --- to maximize expected cumulative reward over time.
+
+## policy: $\pi_{\theta}(a \mid s)$
+
+- A probability distribution over actions given a state.
+- Parameterized by $\theta$, often using a neural network.
+- **Learning goal**: adjust $\theta$ so that the agent chooses better actions more often.
+
+
+- $\pi_{\theta}(\cdot \mid s)$ 表示动作的整体分布
+- $\pi_{\theta}(a \mid s)$  表示在状态 $s$ 下选择具体动作 $a$ 的概率值
+- 动作 $a$ 是你从策略输出的概率分布中采样出来的结果
+- 如果你把策略当成一个函数: 意思是：  输入一个状态 $s$, 输出一个在动作空间 $\mathcal{A}$ 上的概率分布
+- $\pi_{\theta} : \mathcal{S} \rightarrow \mathcal{P}(\mathcal{A})$
+- 状态 $s$ 是策略函数的自变量
+- 参数$\theta$是控制策略的参数（你训练中要更新的东西）
+- 动作 $a$是你从策略输出的概率分布中采样出来的结果
+- 参数可以看作是自变量，并且我们正是对它们进行梯度计算。
+
+## value functions
+
+These are estimates of how good it is to be in a state or take an action.
+
+- $V^{\pi}(s)$: expected return from state $s$
+- $Q^{\pi}(s,a)$: expected return from state $s$, taking action $a$
+- **Learning goal**: learn accurate value estimates to inform the policy
+
+
+
+# What is the score function
+
+In statistics and machine learning, especially in maximum likelihood estimation (MLE) and reinforcement learning, the score function is defined as:
+
+$Score(\theta) = \nabla_\theta\ log\ p(x\mid\theta)$
+
+This is the gradient of the log-likelihood function with respect to the model parameters $\theta$.
+
+The score tells you: In which direction should I move $\theta$ to increase the likelihood of the observed data?
+
+It is both. (both a function and a vector).
+
+
+In reinforcement learning, the score function appears in the policy gradient theorem.
+
+$Score(\theta) = \nabla_\theta\ log\ \pi_\theta(a \mid s)$
+
+It tells us how changing the policy parameters $\theta$ would affect the probability of taking action $a$ in state $s$
+
+
+Fisher information matrix: it is the **expected outer product** of the score vector with itself.
+
+This matrix captures:
+- How much each parameter affects each other in terms of the likelihood's curvature
+- The second-order sensitivity of the model to its parameters --- like a "generalized variance"
+
+
+Main uses of the outer product of the score
+
+- FIM: measures how much information the data carries about the parameters
+- Natural gradient descent: uses the inverse of this matrix to scale gradients efficiently
+- Variance of MLE: the inverse Fisher Information gives the Cramer-Rao lower bound
+
+
+This matrix is symmetric and positive semi-definite. It represents the Fisher Information at that point.
+
+## Summary
+
+The outer product of the score function gives a matrix that captures parameter sensitivity and interaction, and its expectation over the data is the Fisher Information Matrix.
+
+
+
+# Natural policy gradient
+
+Natural policy gradient is an optimization technique used in reinforcement learning to update the parameters of a policy in a way that accounts for the underlying geometry of the parameter space.
+
+
+Unlike the standard policy gradient, which follows the steepest descent direction in the Euclidean space, the natural policy gradient follows the steepest descent direction with respect to the Fisher information metric, leading to more stable and efficient updates.
+
+
+In RL, the goal is to maximize the expected return $J(\theta)$, where $\theta$ represents the parameters of a policy $\pi_\theta$.
+
+The standard policy gradient update is: (SPG)
+
+$\theta_{k+1} = \theta_{k} + \alpha\nabla_\theta\ J(\theta_{k})$.
+
+Where $\alpha$ is the learning rate.
+
+
+
+# Policy gradient theorem
+
+The policy gradient theorem can be generalized to include a comparison of the action value to an arbitrary baseline $b(s)$
+
+
+
+This exercise is about natural policy gradient and connects it with least-squares projection.
+
+The possibility of using natural gradients in online learning was first appreciated in [75]. As shown above, the crucial property of the natural gradient is that it takes into account the structure of the manifold over which the cost function is defined, locally characterized by the Riemannian metric tensor.
+
+
+# Euclidean space 
+
+Euclidean space is the fundamental mathematical framework for classical geometry, where distances and angles are defined in a "flat" (non-curved) manner. It generalizes the intuitive notions of 2D planes and 3D space to any finite dimension $n$.
+
+
+A manifold is a mathematical concept that generalizes the idea of a smooth, curved space to higher dimensions. Intuitively, it is a topological space that locally resembles Euclidean space (e.g., a flat plane) but may have a more complicated global structure.
+
+
+Manifold's Key intuitions:
+- "Locally Euclidean": Near every point, a small patch of the manifold looks like $\mathbb{R}^n$
+- Globally Curved: The overall shape can be more complex (e.g., a sphere, torus, or hyperbolic space).
+
+
+How good is natural gradient learning compared to conventional gradient learning?
+The asymptotic behavior of online natural gradient learning is studied for this purpose.
+
+Training examples can be used only once in online learning when they appear. Therefore, the asymptotic performance of online learning cannot be better than the optimal batch procedure where all the examples can be reused again and again. However, we prove that natural gradient online learning gives the Fisher-efficient estimator in the sense of asymptotic statistics when the loss function is differentiable, so that it is asymptotically equivalent to the optimal batch procedure.
+
+Asymptotic（渐近）
+
+ 函数的渐近行为
+
+
+Consider first just the parameterized stochastic policy $\pi_\theta(x,u)$ at a single state $x$; a probability distribution over the actions $u$. This policy is a point on a manifold of such probability distributions, found at coordinates $\theta$. For a manifold of distributions, the Riemannian tensor is the so-called Fisher information matrix.
+
+
+
+# information geometry
+
+
+This is the ordinary gradient descent method. The natural gradient method would work better, if we had its computational algorithm.
+
+
+## natural gradient learning and its dynamics in singular regions
+
+Learning takes place in a parameter space, which is not Euclidean in general but Riemannian. Therefore, we need to take the Riemannian structure into account when designing a learning method.
