@@ -208,14 +208,229 @@ Asymptotic（渐近）
 
 Consider first just the parameterized stochastic policy $\pi_\theta(x,u)$ at a single state $x$; a probability distribution over the actions $u$. This policy is a point on a manifold of such probability distributions, found at coordinates $\theta$. For a manifold of distributions, the Riemannian tensor is the so-called Fisher information matrix.
 
+# Riemannian Geometry
+
+## Riemannian Metrics
+
+A Riemannian metric (or Riemannian structure) on a differentiable manifold $M$ is a correspondence which associates to each point $p$ of $M$ an inner product $\langle , \rangle_{p}$ (that is, a symmetric, bilinear, positive-definite form) on the tangent space $T_{p}M$, which varies differentiably in the following sense:
+
+
+
+It is clear this definition does not depend on the choice of coordinate system.
+
 
 
 # information geometry
+
+Information geometry is a method of exploring the world of information by means of modern geometry. Theories of information have so far been studied mostly by using algebraic, logical, analytical, and probabilistic methods. Since geometry studies mutual relations between elements such as distance and curvature, it should provide the information sciences with powerful tools.
+
+
+Information geometry has emerged from studies of invariant geometrical structure involved in statistical inference. It defines a **Riemannian metric** together with dually coupled affine connections in **a manifold of probability distributions**. These structures play important roles not only in statistical inference but also in wider areas of information sciences, such as machine learning, signal processing, optimization, and even neuroscience, not to mention mathematics and physics.
+
+
+The text was "Information Theory and Statistics" by S. Kullback, and a professor suggested to me that the Fisher information might be regarded as a Riemannian metric. I calculated the Riemannian metric and curvature of the manifold of Gaussian distributions and found that it is a manifold of constant curvature, which is no different from the famous Poincare half-plane in non-Euclidean geometry. I was enchanted by its beauty. I believed that a beautiful structure must have important practical significance, but I was not able to pursue its consequences further.
+
+Fifteen years later, I was stimulated by a paper by Prof. B. Efron and accompanying discussions by Prof. A.P. Dawid, and restarted my investigation into information geometry. Later, I found that Prof. N.N. Chentsov had developed a theory along similar lines. I was lucky that Sir D. Cox noticed my approach and organized an international workshop on information geometry in 1984, in which many active statisticians participated. This was a good start for information geometry.
 
 
 This is the ordinary gradient descent method. The natural gradient method would work better, if we had its computational algorithm.
 
 
+
+
 ## natural gradient learning and its dynamics in singular regions
 
-Learning takes place in a parameter space, which is not Euclidean in general but Riemannian. Therefore, we need to take the Riemannian structure into account when designing a learning method.
+Learning takes place in a parameter space, which is not Euclidean in general but Riemannian. Therefore, we need to take the Riemannian structure into account when designing a learning method. The natural gradient method, which is a version of stochastic descent learning, is proposed for this purpose, using the Riemannian gradient. It is a Fisher efficient on-line method of estimation. Its performance is excellent in general and it has been used in various types of learning problems such as neural learning, policy gradient in reinforcement learning, optimization by means of stochastic relaxation, independent component analysis, Monte Carlo Markov Chain in a Riemannian manifold and others.
+
+Some statistical models are singular, implying that its parameter space includes singular regions. The multilayer perceptron (MLP) is a typical singular model. Since supervised learning of MLP is involved in deep learning, it is important to study the dynamical behavior of learning in singular regions, in which learning is very slow. This is known as plateau phenomena. The natural gradient method overcomes this difficulty.
+
+
+
+
+
+
+# $\nabla_\theta\ log\ \pi_\theta(a \mid s)$ feature
+
+
+The gradient of the log-policy, is called a feature because it behaves like a feature vector in function approximation or regression.
+
+In policy gradient methods, we try to approximate or regress something like:
+
+$Q^{\pi_\theta}(s, a) - b(s) \approx \omega^{\top} \nabla_\theta\ log\ \pi_\theta (a \mid s)$
+
+This is exactly like linear function approximation, where:
+- $\omega$ is a parameter vector
+- $\nabla_\theta\ log\ \pi_\theta(a\mid s)$ is playing the role of a feature vector
+
+
+It encodes information about the effect of the parameters $\theta$ on the policy's probability distribution --- essentially describing how the policy responds to parameter changes at a specific $(s,a)$.
+
+
+In linear regression: $y \approx \phi(x)^{\top}w$, where $\phi(x)$ is the feature vector for input $x$, and $w$ is the weight vector.
+
+
+# BartoSutton
+
+
+## preface 1
+
+Revive the idea
+- that networks of neuronlike adaptive elements might prove to be a promising approach to artificial adaptive intelligence.
+- A. Harry Klopf's work was a rich source of ideas
+- task became teasing the ideas apart and understanding their relationships and relative importance
+- the simplest of the ideas: a learning system that wants something, that adapts its behavior in order to maximize a special signal from its environment.
+- the special issues involved in learning how to get something from the environment received relatively little attention. (such a fundamental idea had not yet been thoroughly explored)
+
+
+
+
+RL evolves and matures
+- deveopled strong mathematical foundations and impressive applications
+- developing the relationships to the theory of optimal control and dynamic programming.
+- we can now place component ideas, such as temporal-difference learning, dynamic programming, and function approximation, within a coherent perspective with respect to the overall problem
+
+
+Goal of the book
+- provide a clear and simple account of the key ideas and algorithms
+- mathematical detail without distracting from the simplicity and potential generality of the underlying ideas
+
+
+Three parts in the book
+- introductory and problem oriented
+- tabular versions of all the basic solution methods based on estimating action values
+- extending the tabular methods to include various forms of approximation
+- frontiers of reinforcement learning in biology and applications.
+
+
+Supplemented by readings
+- Bertsekas and Tsitsiklis (1996)
+- Szepesvari (2010)
+
+This book can be used
+- a text
+- as a part of a borader course on machine learning, artificial intelligence, or neural networks
+- Part II are best covered in sequence, Chapter 6 is the most important for the subject and for the rest of the book
+
+
+This book is self-contained
+- the only mathematical backround assumed is: probability (expectations of random variables)
+- Chapter 9 is easier to digest with background: artificial neural networks, or some other kind of supervised learning method
+
+
+## preface 2
+
+The edition remains an introduction and we retain a focus on core, online learning algorithms.
+
+Required a bit more mathematics to explain
+- For example, the state, action, and reward at time step $t$ are denoted $S_t, A_t$, and $R_t$, while their possible values might be denoted $s, a$, and $r$.
+- Along with this, it is natural to use lower case for value functions (e.g., $v_{\pi}$) and restrict capitals to their tabular estimates (e.g., $Q_t(s,a)$).
+- Approximate value functions are deterministic functions of random parameters and are thus also in lower case (e.g., $\hat{v}(s,\mathbf{w_t}) \approx v_\pi(s)$).
+- Vectors, such as the weight vector $\mathbf{w_t}$ (formerly $\mathbf{\theta}_t$) and the feature vector $\mathbf{x_t}$ (formerly $\mathbf{\phi_t}$), are bold and written in lowercase even if they are random variables.
+- special notations for the transition probabilities and expected rewards. 
+- first edition
+	- $\mathcal{P}_{ss^{\prime}}^{a}$
+	- $\mathcal{R}_{ss^{\prime}}^{a}$
+	- Weakness of that notation: it still did not fully characterize the dynamics of the rewards, giving only their expectations, which is sufficient for dynamic programming but not for reinforcement learning.
+- this edition
+	- $p(s',r|s,a)$ for the joint probability for the next state and reward given the current state and action
+
+structure of the book
+- introductory
+- first part
+	- without going beyond the tabular case for which exact solutions can be found
+- second part
+	- extending the ideas to function approximation
+-  third part
+	- psychology and neuroscience
+
+used
+- the first ten chapters should be covered in order and form a good core
+
+
+Supplemented by readings
+- Bertsekas and Tsitsiklis (1996)
+- Wiering van Otterlo (2012)
+- Szepesvári (2010)
+
+
+## Chapter 1
+
+
+### Early history of RL
+
+Two main threads
+- learning by trial and error, and originated in the psychology of animal learning
+- the problem of optimal control and its solution using value functions and dynamic programming
+- two threads became interrelated around a third thread concerning temporal-difference methods
+
+
+optimal control
+- designing a controller to minimize or maximize a measure of a dynamical system's behavior over time 
+	- Richard Bellman (extending Hamilton, Jacobi): This approach uses the concepts of a dynamical system's state and of a value function, or "optimal return function," to define a function equation, now often called the Bellman equation.
+	- The class of methods for solving optimal control problems by solving this equation came to be known as dynamic programming
+	- Beelman introduced the discrete stochastic version of the optimal control problem known as Markov decision processes.
+	- Ronald Howard (1960) devised the policy iteration method for MDPs.
+	- All of these are essential elements underlying the theory and algorithms of modern reinforcement learning
+
+
+RL：Sutton & Barto《Reinforcement Learning: An Introduction》
+
+ML：周志华《机器学习》或《Pattern Recognition and Machine Learning》
+
+AI：《Artificial Intelligence: A Modern Approach》
+
+## Policy gradient methods
+
+### The policy gradient theorem
+
+In addition to the practical advantages of policy parameterization over $\varepsilon$-greedy action selection, there is also an important theorectical advantage. With continuous policy parameterization the action probabilities change smoothly as a function of the learned parameter, whereas in $\varepsilon$-greedy selection the action probabilities may change dramatically for an arbitrary small change in the estimated action values, if that change results in a different action having the maximal value.
+
+### Policy parameterization for continuous actions
+
+Policy-based methods offer practical ways of dealing with large actions spaces, even continuous spaces with an infinite number of actions. Instead of computing learned probabilities for each of the many actions, we instead learn statistics of the probability distribution. For example, the action set might be the real numbers, with actions chosen from a normal distribution.
+
+In general, one can take the integral under $p(x)$ for any range of $x$ values to get the probability of $x$ falling within that range.
+
+
+To produce a policy parameterization, the policy can be defined as the normal probability density over a real-valued scalar action, with mean and standard deviation given by parametric function approximators that depend on the state.
+
+
+## REINFORCE with Baseline
+
+The policy gradient theorem can be generalized to include a comparison of the action value to an arbitrary baseline $b(s)$
+
+
+
+The idea that we learn by interacting with our environment is probably the first to occur to us when we think about the nature of learning. When an infant plays, waves its arms, or looks about, it has no explicit teacher, but it does have a direct sensorimotor connection to its environment. Exercising this connection produces a wealth of information about the cause and effect, about the consequences of actions, and about what to do in order to achieve goals. Throughout our lives, such interactions are undoubtedly a major source of knowledge about our environment and ourselves. Whether we are learning to drive a car or hold a conversation, we are acutely aware of how our environment responds to what we do, and we seek to influence what happens through our behavior. Learning from interaction is a foundational idea underlying nearly all theories of learning and intelligence.
+
+In this book we explore a computational approach to learning from interaction. Rather than directly theorizing about how people or animals learn, we primarily explore idealized learning situations and evaluate the effectiveness of various learning methods. That is, we adopt the perspective of an artificial intelligence researcher or engineer. We explore designs for machines that are effective in solving learning problems of scientific or economic interest, evaluating the designs through mathematical analysis or computational experiments. The approach we explore, called reinforcement learning, is much more focused on goal-directed learning from interaction than are other approaches to machine learning.
+
+
+We formalize the problem of reinforcement learning using ideas from dynamical systems theory, specifically, as the optimal control of incompletely-known Markov decision processes. The details of this formalization must wait until Chapter 3, but the basic idea is simply to capture the most important aspects of the real problem facing a learning agent interacting over time with its environment to achieve a goal.
+
+
+
+Approximate Solution Methods
+
+## On-policy prediction with Approximation
+
+ToC:
+- Value-function approximation
+- The prediction objective
+- Stochastic-gradient and Semi-gradient methods
+- Linear methods
+- Feature construction for linear methods
+- Selecting Step-Size parameters manually
+- Nonlinear Function Approximation: Artificial Neural Networks
+- Least-Squares TD
+- Memory-based function approximation
+- Kernel-based function approximation
+
+In this chapter, we begin our study of function approximation in reinforcement learning by considering its use in estimating the state-value function from on-policy data, that is, in approximating $v_\pi$ from experience generated using a known policy $\pi$. The novelty in this chapter is that the approximate value function is represented not as a table but as a parameterized functional form with weight vector $\mathbf{w}$.
+
+One of the most important special cases of function approximation is that in which the approximate function, $\hat{v}(\cdot, \mathbf{w})$, is a linear function of the weight vector, $\mathbf{w}$.
+
+For example, $\hat{v}$ might be a linear function in features of the state, with $\mathbf{w}$ the vector of feature weights.
+
+## On-policy control with Approximation
+
