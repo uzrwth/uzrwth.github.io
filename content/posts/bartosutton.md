@@ -151,6 +151,11 @@ The policy is the core of a reinforcement learning agent in the sense that it al
 
 In general, policies may be stochastic, specifying probabilities for each action
 
+
+
+A reward signal defines the goal of a reinforcement learning problem
+- on each time step, the environment sends to the reinforcement learnint agent a single number called the reward
+
 ## Examples
 
 - chess player
