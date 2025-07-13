@@ -70,7 +70,7 @@ This is a parameterized policy: given a state $s$, it returns a probability dist
 $a \sim \pi_{\theta}(\cdot \mid s)$ means the action $a$ is sampled according to the policy $\pi_{\theta}$ at state $s$.
 
 
-# $d_{\lambda}^{{\pi}_{\theta}}$ 
+# $d_{\lambda}^{{\pi}_{\theta}}$
 
 This is a discounted state distribution under the policy $\pi_{\theta}$
 
@@ -183,7 +183,7 @@ This exercise is about natural policy gradient and connects it with least-square
 The possibility of using natural gradients in online learning was first appreciated in [75]. As shown above, the crucial property of the natural gradient is that it takes into account the structure of the manifold over which the cost function is defined, locally characterized by the Riemannian metric tensor.
 
 
-# Euclidean space 
+# Euclidean space
 
 Euclidean space is the fundamental mathematical framework for classical geometry, where distances and angles are defined in a "flat" (non-curved) manner. It generalizes the intuitive notions of 2D planes and 3D space to any finite dimension $n$.
 
@@ -268,109 +268,6 @@ It encodes information about the effect of the parameters $\theta$ on the policy
 
 In linear regression: $y \approx \phi(x)^{\top}w$, where $\phi(x)$ is the feature vector for input $x$, and $w$ is the weight vector.
 
-
-# BartoSutton
-
-
-## preface 1
-
-Revive the idea
-- that networks of neuronlike adaptive elements might prove to be a promising approach to artificial adaptive intelligence.
-- A. Harry Klopf's work was a rich source of ideas
-- task became teasing the ideas apart and understanding their relationships and relative importance
-- the simplest of the ideas: a learning system that wants something, that adapts its behavior in order to maximize a special signal from its environment.
-- the special issues involved in learning how to get something from the environment received relatively little attention. (such a fundamental idea had not yet been thoroughly explored)
-
-
-
-
-RL evolves and matures
-- deveopled strong mathematical foundations and impressive applications
-- developing the relationships to the theory of optimal control and dynamic programming.
-- we can now place component ideas, such as temporal-difference learning, dynamic programming, and function approximation, within a coherent perspective with respect to the overall problem
-
-
-Goal of the book
-- provide a clear and simple account of the key ideas and algorithms
-- mathematical detail without distracting from the simplicity and potential generality of the underlying ideas
-
-
-Three parts in the book
-- introductory and problem oriented
-- tabular versions of all the basic solution methods based on estimating action values
-- extending the tabular methods to include various forms of approximation
-- frontiers of reinforcement learning in biology and applications.
-
-
-Supplemented by readings
-- Bertsekas and Tsitsiklis (1996)
-- Szepesvari (2010)
-
-This book can be used
-- a text
-- as a part of a borader course on machine learning, artificial intelligence, or neural networks
-- Part II are best covered in sequence, Chapter 6 is the most important for the subject and for the rest of the book
-
-
-This book is self-contained
-- the only mathematical backround assumed is: probability (expectations of random variables)
-- Chapter 9 is easier to digest with background: artificial neural networks, or some other kind of supervised learning method
-
-
-## preface 2
-
-The edition remains an introduction and we retain a focus on core, online learning algorithms.
-
-Required a bit more mathematics to explain
-- For example, the state, action, and reward at time step $t$ are denoted $S_t, A_t$, and $R_t$, while their possible values might be denoted $s, a$, and $r$.
-- Along with this, it is natural to use lower case for value functions (e.g., $v_{\pi}$) and restrict capitals to their tabular estimates (e.g., $Q_t(s,a)$).
-- Approximate value functions are deterministic functions of random parameters and are thus also in lower case (e.g., $\hat{v}(s,\mathbf{w_t}) \approx v_\pi(s)$).
-- Vectors, such as the weight vector $\mathbf{w_t}$ (formerly $\mathbf{\theta}_t$) and the feature vector $\mathbf{x_t}$ (formerly $\mathbf{\phi_t}$), are bold and written in lowercase even if they are random variables.
-- special notations for the transition probabilities and expected rewards. 
-- first edition
-	- $\mathcal{P}_{ss^{\prime}}^{a}$
-	- $\mathcal{R}_{ss^{\prime}}^{a}$
-	- Weakness of that notation: it still did not fully characterize the dynamics of the rewards, giving only their expectations, which is sufficient for dynamic programming but not for reinforcement learning.
-- this edition
-	- $p(s',r|s,a)$ for the joint probability for the next state and reward given the current state and action
-
-structure of the book
-- introductory
-- first part
-	- without going beyond the tabular case for which exact solutions can be found
-- second part
-	- extending the ideas to function approximation
--  third part
-	- psychology and neuroscience
-
-used
-- the first ten chapters should be covered in order and form a good core
-
-
-Supplemented by readings
-- Bertsekas and Tsitsiklis (1996)
-- Wiering van Otterlo (2012)
-- Szepesvári (2010)
-
-
-## Chapter 1
-
-
-### Early history of RL
-
-Two main threads
-- learning by trial and error, and originated in the psychology of animal learning
-- the problem of optimal control and its solution using value functions and dynamic programming
-- two threads became interrelated around a third thread concerning temporal-difference methods
-
-
-optimal control
-- designing a controller to minimize or maximize a measure of a dynamical system's behavior over time 
-	- Richard Bellman (extending Hamilton, Jacobi): This approach uses the concepts of a dynamical system's state and of a value function, or "optimal return function," to define a function equation, now often called the Bellman equation.
-	- The class of methods for solving optimal control problems by solving this equation came to be known as dynamic programming
-	- Beelman introduced the discrete stochastic version of the optimal control problem known as Markov decision processes.
-	- Ronald Howard (1960) devised the policy iteration method for MDPs.
-	- All of these are essential elements underlying the theory and algorithms of modern reinforcement learning
 
 
 RL：Sutton & Barto《Reinforcement Learning: An Introduction》

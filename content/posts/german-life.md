@@ -24,3 +24,21 @@ Senf: 芥末 (英文: mustard)
 
 - “Kann ich bitte den Senf haben?” → “请把芥末递给我好吗？”
 - “Dieser Senf ist zu scharf!” → “这芥末太辣了！”
+
+
+打烊了
+- "Wann schließen Sie heute?"
+（你们今天几点打烊？）
+
+
+- "Das Geschäft ist geschlossen."
+（商店已关门。）
+适用于营业时间结束后的状态说明。
+
+
+- "Wir haben geschlossen."
+（我们打烊了。）
+更口语化，店员直接告知顾客。
+
+- "Die Küche ist aus!"
+（字面：厨房熄火了；类似“收工啦！”）
