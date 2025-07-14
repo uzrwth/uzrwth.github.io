@@ -1,7 +1,7 @@
 ---
 title: "First Order Taylor Approximation"
 date: 2025-07-06T23:12:08+02:00
-draft: false
+draft: true
 ---
 
 

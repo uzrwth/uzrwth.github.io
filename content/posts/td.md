@@ -1,6 +1,7 @@
 ---
 title: "Td"
 date: 2025-07-11T02:33:17+02:00
+draft: true
 ---
 
 TD: Temporal-Difference Learning

@@ -1,6 +1,7 @@
 +++
 date = '2025-07-06T19:52:04+02:00'
 title = 'second-order linear differential equations'
+draft = true
 +++
 
 

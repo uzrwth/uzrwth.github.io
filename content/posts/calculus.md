@@ -1,6 +1,7 @@
 ---
 title: "Calculus"
 date: 2025-07-07T23:44:59+02:00
+draft: true
 ---
 
 Linear algebra has been incorporated, the mean-value theorems and routine applications of calculus are introduced at an earlier stage.

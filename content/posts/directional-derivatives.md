@@ -1,6 +1,7 @@
 +++
 date = '2025-07-06T20:00:19+02:00'
 title = 'Directional Derivatives'
+draft = true
 +++
 
 Travel east from: 从...向东走

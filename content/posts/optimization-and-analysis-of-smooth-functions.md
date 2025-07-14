@@ -1,6 +1,7 @@
 ---
 title: "Optimization and Analysis of Smooth Functions"
 date: 2025-07-07T10:48:23+02:00
+draft: true
 ---
 
 This is the L-Lipschitz continuity of the gradient, i.e., the function f is L-smooth.

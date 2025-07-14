@@ -1,7 +1,7 @@
 ---
 title: "Bartosutton"
 date: 2025-07-13T12:29:33+02:00
-draft: false
+draft: true
 ---
 
 
@@ -134,6 +134,21 @@ another key feature
 The ability of some reinforcement learning methods to learn with parameterized approximators addresses the classical "curse of dimensionality" in operations research and control theory.
 
 
+## Examples
+
+- chess player
+- adaptive controller adjusts parameters of a petroleum refinery's operation in real time
+- Phil prepares his breakfast
+
+All invole interaction between an active decision-making agent and its environment, within which the agent seeks to achieve a goal despite uncertainty about its environment
+
+The agent can use its experience to improve its performance over time
+
+The chess player refines the intuition he uses to evaluate positions
+
+The knowledge the agent brings to the task at the start --- either from previous experience with related tasks or built into it by design or evolution --- influences what is useful or easy to learn, but interaction with the environment is essential for adjusting behavior to exploit specific features of the task.
+
+
 ## Elements of reinforcement learning
 
 - policy
@@ -155,20 +170,64 @@ In general, policies may be stochastic, specifying probabilities for each action
 
 A reward signal defines the goal of a reinforcement learning problem
 - on each time step, the environment sends to the reinforcement learnint agent a single number called the reward
+- the agent's sole objective is to maximize the total reward it receives over the long run
+- the reward signal is the primary basis for altering the policy
+- if an action selected by the policy is followed by low reward, then the policy may be changed to select some other action in that situation in the future
+- In general, reward signals may be stochastic functions of the state of the environment and the actions taken
 
-## Examples
 
-- chess player
-- adaptive controller adjusts parameters of a petroleum refinery's operation in real time
-- Phil prepares his breakfast
+Whereas the reward signal indicates what is good in an immediate sense, a value function specifies what is good in the long run
+- the value of a state is the total amount of reward an agent can expect to accumulate over the future, starting from that state
+- For example, a state might always yield a low immediate reward but still have a high value because it is regularly followed by other states that yield high rewards
+- To make a human analogy, rewards are somewhat like pleasure, whereas values correspond to a more refined and farsighted judgement of how pleased or displeased we are that our environment is in a particular state
+- it is values with which we are most concerned when making and evaluating decisions
+- action choices are made based on value judgements
+- unfortunately, it is much harder to determine values than it is to determine rewards. Rewards are basically given directly by the environment, but values must be estimated and re-estimated from the sequences of observations an agent makes over its entire lifetime
 
-All invole interaction between an active decision-making agent and its environment, within which the agent seeks to achieve a goal despite uncertainty about its environment
+**In fact, the most important component of almost all reinforcement learning algorithms we consider is a method for efficiently estimating values.**
 
-The agent can use its experience to improve its performance over time
+The central role of value estimation is arguably the most important thing that has been learned about reinforcement learning over the last six decades.
 
-The chess player refines the intuition he uses to evaluate positions
 
-The knowledge the agent brings to the task at the start --- either from previous experience with related tasks or built into it by design or evolution --- influences what is useful or easy to learn, but interaction with the environment is essential for adjusting behavior to exploit specific features of the task.
+models are used for planning
+- methods for solving reinforcement learning problems that use models and planning are called model-based methods, as opposed to simpler model-free methods
+- modern reinforcement learning spans the spectrum from low-level, trial-and-error learning to high-level, deliberative planning
+
+
+
+
+## Limitations and scope
+
+RL relies heavily on the concept of state
+- as input to the policy and value function
+- as both input to and output from the model
+- we can think of the state as a signal conveying to the agent some sense of "how the environment is" at a particular time
+- we encourage the reader to follow the informal meaning and think of the state as whatever information is available to the agent about its environment
+- our concern in this book is not with designing the state signal, but with deciding what action to take as a function of whatever state signal is available
+
+
+Most of the reinforcement learning methods we consider are structured around estimating value functions, but it is not strictly necessary to do this to solve reinforcement learning problems
+- our focus is on reinforcement learning methods that learn while interacting with the environment, which evolutionary methods do not do
+- although evolution and learning share many features and naturally work together, we do not consider evolutionary methods by themselves to be especially well suited to reinforcement learning problems and, accordingly, we do not cover them in this book
+
+
+## An Extended Example: Tic-Tac-Toe
+
+let us consider draws and losses to be equally bad for us
+
+cannot be solved in a satisfactory way through classical techniques
+
+the classical "minimax" solution from game theory is not correct here because it assumes a particular way of playing by the opponent
+
+For example, a minimax player would never reach a game state from which it could lose, even if in fact it always won from that state because of incorrect play by the opponent.
+
+
+Classical optimization methods for sequential decision problems, such as dynamic programming, can compute an optimal solution for any opponent, but require as input a complete specification of that opponent, including the probabilities with which the opponent makes each move in each board state. Let us assume that this information is not available a priori for this problem, as it is not for the vast majority of problems of practical interest. On the other hand, such information can be estimated from experience, in this case by playing many games against the opponent. About the best one can do on this problem is first to learn a model of the opponent's behavior, up to some level of confidence, and then apply dynamic programming to compute an optimal solution given the approximate opponent model. In the end, this is not that different from some of the reinforcement learning methods we examine later in this book.
+
+
+Here is how the tic-tac-toe problem would be approached with a method making use of a value function. First we would set up a table of numbers, one for each possible state of the game. Each number will be the latest estimate of the probability of our winning from that state. We treat this estimate as the state's value, and the whole table is the learned value function. State A has higher value than state B, or is considered "better" than state B, if the current estimate of the probability of our winning from A is higher than it is from B. Assuming we always play Xs, then for all states with three Xs in a row the probability of winning is 1, because we have already won. Similarly, for all states with three Os in a row, or that are filled up, the correct probability is 0, as we cannot win from them. We set the initial values of all the other states to 0.5, representing a guess that we have a 50% chance of winning.
+
+We then play many games against the opponent. To select our moves we examine the states that would result from each of our possible moves (one for each blank space on the board) and look up their current values in the table. Most of the time we move greedily, selecting the move that leads to the state with greatest value, that is, with the highest estimated probability of winning. Occasionally, however, we select randomly from among the other moves instead. These are called exploratory moves because they cause us to experience states that we might otherwise never see.
 
 
 ## Early history of RL

@@ -1,6 +1,7 @@
 ---
 title: "Natural Policy Gradient"
 date: 2025-07-08T13:24:07+02:00
+draft: true
 ---
 
 # Natural policy gradient and its projection interpretation

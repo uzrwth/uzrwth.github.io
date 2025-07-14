@@ -1,7 +1,7 @@
 ---
 title: "Fisher Information"
 date: 2025-07-08T16:04:08+02:00
-draft: false
+draft: true
 ---
 
 

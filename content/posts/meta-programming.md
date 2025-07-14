@@ -1,6 +1,7 @@
 ---
 title: "Meta Programming"
 date: 2025-07-09T10:41:49+02:00
+draft: true
 ---
 
 # Processing Terms and Atomic Formulas

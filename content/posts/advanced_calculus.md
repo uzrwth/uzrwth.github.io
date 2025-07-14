@@ -1,6 +1,7 @@
 ---
 title: "Advanced Calculus"
 date: 2025-07-07T23:34:15+02:00
+draft: true
 ---
 
 
