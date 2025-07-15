@@ -1,7 +1,7 @@
 ---
 title: "Bartosutton"
 date: 2025-07-13T12:29:33+02:00
-draft: true
+draft: false
 ---
 
 
@@ -230,6 +230,70 @@ Here is how the tic-tac-toe problem would be approached with a method making use
 We then play many games against the opponent. To select our moves we examine the states that would result from each of our possible moves (one for each blank space on the board) and look up their current values in the table. Most of the time we move greedily, selecting the move that leads to the state with greatest value, that is, with the highest estimated probability of winning. Occasionally, however, we select randomly from among the other moves instead. These are called exploratory moves because they cause us to experience states that we might otherwise never see.
 
 
+back up
+- attempt to make them more accurate estimates of the probabilities of winning
+- we "back up" the value of the state after each greedy move to the state before the move
+- more precisely, the current value of the earlier state is updated to be closer to the value of the later state
+- this can be done by moving the earlier state's value a fraction of the way toward the value of the later state
+- If we let $S_t$ denote the state before the greedy move, and $S_{t+1}$ the state after the move, then the update to the estimated value of $S_t$, denoted $V(S_t)$ can be written as
+	- $V(S_t) \leftarrow V(S_t) +\alpha[V(S_{t+1} - V(S_t)]$
+	- $\alpha$ is a small positive fraction called the step-size parameter, which influences the rate of learning
+	- this update rule is an example of a temporal-difference learning method, so called because its changes are based on a difference, $V(S_{t+1})-V(S_t)$, between estimates at two successive times
+
+moves
+- our second move was an exploratory move, meaning that it was taken even though another sibling move, the one leading to $e^*$, was ranked higher.
+- Exploratory moves do not result in any learning, but each of our other moves does, causing updates as suggested by the red arrows in which estimated values are moved up the tree from later nodes to earlier nodes
+
+
+converges
+- The method described above performs quite well on this task
+- if the step-size parameter is reduced properly over time, then this method converges, for any fixed opponent, to the true probabilities of winning from each state given optimal play by our player
+- in other words, the method converges to an optimal policy for playing the game against this opponent
+- if the step-size parameter is not reduced all the way to zero over time, then this player also plays well against opponents that slowly change their way of playing
+
+the differences between evolutionary methods and methods that learn value functions
+- to evaluate a policy an evolutionary method holds the policy fixed and plays many games against the opponent, or stimulates many games using a model of the opponent
+	- the frequency of wins gives an unbiased estimate of the probability of winning with that policy
+	- can be used to direct the next policy selection
+	- but each policy change is made only after many games, and only the final outcome of each game is used: what happens during the games is ignored
+	- for example, if the player wins, then all of its behavior in the game is given credit, independently of how specific moves might have been critical to the win
+- value function methods, in contrast, allow individual states to be evaluated
+	- in the end, evolutionary and value function methods both search the space of policies, but learning a value function takes advantage of information available during the course of play
+
+
+key features of RL
+- the emphasis on learning while interacting with an environment
+- there is a clear goal, planning or foresight that takes into account delayed effects of one's choices
+- for example, the simple reinforcement learning player would learn to set up multi-move traps for a shortsighted opponent
+- it is a striking feature of the RL solution that it can achieve the effects of planning and lookahead without using a model of the opponent and without conducting an explicit search over possible sequences of future states and actions
+
+
+The general principles apply to continuous-time problems as well, although the theory gets more complicated and we omit it from this introductory treatment
+
+when the state set is very large, or even infinite
+- The artificial neural network provides the program with the ability to generalize from its experience, so that in new states it selects moves based on information saved from similar states faced in the past, as determined by its network
+- How well a RL system can work in problems with such large state sets is intimately tied to how appropriately it can generalize from past experience
+- It is in this role that we have the greatest need for supervised learning methods with RL.
+- Artificial neural networks and deep learning are not the only, or necessarily the best, way to do this
+
+
+RL can be applied in either case
+- A model is not required, but models can easily be used if they are available or can be learned
+- Because models have to be reasonably accurate to be useful, model-free methods can have advantages over more complex methods when the real bottleneck in solving a problem is the difficulty of constructing a sufficiently accurate environment model
+- In this book we devote several chapters to model-free methods before we discuss how they can be used as components of more complex model-based methods
+
+## Summary
+
+RL is a computational approach to understanding and automating goal-directed learning and decision making. It is distinguished from other computational approaches by its emphasis on learning by an agent from direct interaction with its environment, without requiring exemplary supervision or complete models of the environment.
+
+RL uses the formal framework of Markov decision processes to define the interaction between a learning agent and its environment in terms of states, actions, and rewards. This framework is intended to be a simple way of representing essential features of the artificial intelligence problem.
+
+The concepts of value and value function are key to most of the RL methods that we consider in this book.
+We take the position that value functions are important for efficient search in the space of policies.
+
+The use of value functions distinguishes RL methods from evolutionary methods that search directly in policy space guided by evaluations of entire policies.
+
+
 ## Early history of RL
 
 Two main threads
@@ -307,3 +371,15 @@ their interests soon shifted from trial-and-error learning to generalization and
 
 Ian Witten (1977, 1976a) temporal-difference learning rule
 - now called tabular TD for use as part of an adaptive controller for solving MDPs
+
+
+# Part I: Tabular solution methods
+
+core ideas of RL algorithms in their simplest forms
+- that in which the state and action spaces are small enough for the approximate value functions to be represented as arrays, or tables
+- in this case, the methods can often find exact solutions. (exactly the optimal value function and the optimal policy)
+- this contrasts with the approximate methods described in the next part of the book, which only find approximate solutions, but which in return can be applied effectively to much larger problems
+
+
+
+# Chapter 2
