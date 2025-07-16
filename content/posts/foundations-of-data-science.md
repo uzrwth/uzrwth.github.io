@@ -61,6 +61,55 @@ Chapter 10 discusses ranking and social choice as well as problems of sparse rep
 
 # high-dimensional space
 
+## introduction
+
+
+## The law of large numbers
+
+
+Markov's inequality
+
+Chebyshev's inequality
+
+law of large numbers
+
+master tail bounds theorem
+
+
+## The geometry of high dimensions
+
+
+## properties of the unit ball
+
+volume of the unit ball
+
+
+
+volume near the equator
+
+
+near orthogonality
+
+
+## generating points uniformly at random from a Ball
+
+
+## Gaussians in High Dimension
+
+Gaussian Annulus Theorem
+
+
+## Random projection and Johnson-Lindenstrauss Lemma
+
+
+## Separating Gaussians
+
+
+## Fitting a Spherical Gaussian to Data
+
+
+
+
 # best-fit subspaces and SVD
 
 # random walks and markov chains
