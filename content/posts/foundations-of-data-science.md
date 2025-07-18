@@ -125,6 +125,43 @@ Gaussian Annulus Theorem
 
 # random graphs
 
+Large graphs appear in many contexts
+- World Wide Web
+- social networks
+- journal citations
+
+
+difference between modern and traditional graph theory
+- one seeks statistical properties of these very large graphs
+- rather than an exact answer to questions on specific graphs
+- This is akin to the switch physics made in going from mechanics to statistical mechanics
+- the most basic model is the $G(n,p)$ model of a random graph
+
+
+### The $G(n,p)$ model
+
+- $n$ is the number of vertices of the graph
+- $p$ is the edge probability
+- For each pair of distinct vertices, $v$ and $w$, $p$ is the probability that the edge $(v,w)$ is present
+
+
+### Phase transitions
+
+### Giant component
+### Cycles and full connectivity
+
+### Phase transitions for increasing properties
+
+### Branching processes
+
+### CNF-SAT
+
+### Nonuiform models of random graphs
+
+### Growth models
+
+### Small world graphs
+
 
 
 # topic models, nonnegative matrix factorization, hidden Markov models, and graphical models

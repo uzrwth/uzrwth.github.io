@@ -30,6 +30,21 @@ This book is a short, concise, and complete presentation of constraint programmi
 
 ## LP calculus
 
+
+Prolog's origins can be traced back to early work in automated theorem proving and planning.
+- Then David Warren defined the Warren Abstract Machine (WAM) that lead to an efficient implementation of Prolog.
+- The ideas behind the WAM strongly influenced the implementation of more recent languages like Java.
+
+
+Today, Prolog is mainly used commercially in expert systems.
+- It is often the language of choice in implementing prototypes for research in artificial intelligence and computational logic, symbolic computation, and programming languages
+
+
+A goal is either $\top$ or $\bot$, or an atom or a conjunction of goals. $\top$ is also called empty goal.
+
+
+A (Horn) clause is of the form $A \leftarrow G$, where $A$ is an atom and $G$ is a goal. We call $A$ the head and $G$ the body of the clause. Clauses of the form $G \leftarrow \top$ are called facts
+
 ## declarative semantics
 
 ## soundness and completeness

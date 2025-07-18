@@ -42,3 +42,5 @@ Senf: 芥末 (英文: mustard)
 
 - "Die Küche ist aus!"
 （字面：厨房熄火了；类似“收工啦！”）
+
+nft delete table inet filter
