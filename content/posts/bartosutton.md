@@ -382,7 +382,102 @@ core ideas of RL algorithms in their simplest forms
 
 
 
-# Chapter 2
+# Finite Markov Decision Processes
+
+In this chapter we introduce the formal problem of finite Markov decision processes, or finite MDPs, which we try to solve in the rest of the book.
+- This problem involves evaluative feedback, as in bandits, but also an associative aspect--- choosing different actions in different situations
+- MDPs are a classical formalization of sequential decision making, where actions influence not just immediate rewards, but also subsequent situations, or states, and through those future rewards
+- Thus MDPs involve delayed reward and the need to tradeoff immediate and delayed reward
+- whereas in bandit problems we estimated the value $q_\*(a)$ of each action $a$, in MDPs we estimate the value $q_\*(s,a)$ of each action $a$ in each station $s$, or we estimate the value $v_\*(s)$ of each state given optimal action selections
+- These state-dependent quantities are essential to accurately assigning credit for long-term consequences to individual action selections
+
+MDPs are a mathematically idealized form of the reinforcement learning problem for which precise theoretical statements can be made.
+- we introduce key elements of the problem's mathematical structure, such as returns, value functions, and Bellman equations
+- we try to convey the wide range of applications that can be formulated as finite MDPs.
+- as in all of artificial intelligence, there is a tension between breadth of applicability and mathematical tractability
+
+
+## the Agent-Environment interface
+
+## goals and rewards
+
+
+## returns and episodes
+
+## unified notation for episodic and continuing tasks
+
+
+## policies and value functions
+
+
+## optimal policies and optimal value functions
+
+
+## optimality and approximation
+
+We have defined optimal value functions and optimal policies
+- clearly, an agent that learns an optimal policy has done very well, but in practice this rarely happens
+- for the kinds of tasks in which we are interested, optimal policies can be generated only with extreme computational cost
+- A well-defined notion of optimality organizes the approach to learning we describe in this book and provides a way to understand the theoretical properties of various learning algorithms, but it is an ideal that agents can only approximate to varying degrees.
+- even if we have a complete and accurate model of the environment's dynamics, it is usually not possible to simply compute an optimal policy by solving the Bellman optimality equation
+- For example, board games such as chess are a tiny fraction of human experience, yet large, custom-designed computers still cannot compute the optimal moves
+- A critical aspect of the problem facing the agent is always the computational power available to it, in particular, the amount of computation it can perform in a single time step
+
+
+The memory available is also an important constraint
+- A large amount of memory is often required to build up approximations of value functions, policies, and models.
+- In tasks with small, finite state sets, it is possible to form these approximations using arrays or tables with one entry for each state (or state-action pair)
+- This we call the tabular case, and the corresponding methods we call tabular methods.
+- In many cases of practical interest, however, there are far more states than could possibly be entries in a table
+- In these cases the functions must be approximated, using some sort of more compact parameterized function representation
+
+
+Our framing of the reinforcement learning problem forces us to settle for approximations
+- However, it also presents us with some unique opportunities for achieving useful approximations
+- For example, in approximating optimal behavior, there may be many states that the agent faces with such a low probability that selecting suboptimal actions for them has little impact on the amount of reward the agent receives.
+- In fact, it is possible that TD-Gammon makes bad decisions for a large fraction of the game's state set.
+
+
+
+# Dynamic Programming
+
+The term dynamic programming (DP) refers to a collection of algorithms that can be used to compute optimal policies given a perfect model of the environment as a Markov decision process (MDP).
+- Classical DP algorithms are of limited utility in reinforcement learning both because of their assumption of a perfect model and because of their great computational expense, but they are still important theoretically.
+
+We usually assume that the environment is a finite MDP. That is, we assume that its state, action, and reward sets, $\mathcal{S}$, $\mathcal{A}$, and $\mathcal{R}$, are finite, and that its dynamics are given by a set of probabilities $p(s',r \mid s,a)$.
+- Although DP ideas can be applied to problems with continuous state and action spaces, exact solutions are possible only in special cases
+- A common way of obtaining approximate solutions for tasks with continuous states and actions is to quantize the state and action spaces and then apply finite-state DP methods.
+
+The key idea of DP, and of reinforcement learning generally, is the use of value functions to organize and structure the search for good policies.
+- In this chapter we show how DP can be used to compute the value functions defined in Chapter 3.
+- As discussed there, we can easily obtain optimal policies once we have found the optimal value functions, $v_\*$ or $q_\*$, which satisfy the Bellman optimality equations
+- As we shall see, DP algorithms are obtained by turning Bellman equations such as these into assignments, that is, into update rules for improving approximations of the desired value functions
+- $v_\* = \underset{a \in \mathcal{A}}{\max} \mathbb{E}\left[ R_{t+1} + \gamma v_\pi(S_{t+1}) \mid S_t = s, A_t = a \right]$
+- $= \underset{a \in \mathcal{A}}{\max} \sum_{s', r} p(s', r \mid s, a) \left[ r + \gamma v_*(s') \right]$
+- $q_\*(s,a)=\mathbb{E}\left[R_{t+1}+\gamma \underset{a'}{\max}q_\*(S_{t+1},a') \mid S_t=s, A_t=a \right]$
+- $= \sum_{s',r} p(s',r \mid s,a)\left[r+ \gamma \underset{a'}{\max}q_\*(s',a')\right]$
+
+
+## Policy Evaluation (Prediction)
+
+First we consider how to compute the state-value function $v_\pi$ for an arbitrary policy $\pi$. This is called policy evaluation in the DP literature. We also refer to it as the prediction problem.
+
+
+# Monte Carlo Methods
+
+We consider our first learning methods for estimating value functions and discovering optimal policies. Unlike the previous chapter, here we do not assume complete knowledge of the environment.
+
+Monte Carlo methods require only experience---sample sequences of states, actions, and rewards from actual or simulated interaction with an environment.
+
+- Learning from actual experience is striking because it requires no prior knowledge of the environment's dynamics, yet can still attain optimal behavior.
+- Learning from simulated experience is also powerful.
+- Although a model is required, the model need only generate sample transitions, not the complete probability distributions of all possible transitions that is required for dynamic programming (DP).
+- In surprisingly many cases it is easy to generate experience sampled according to the desired probability distributions, but infeasible to obtain the distributions in explicit form.
+
+
+# Temporal-Difference Learning
+
+If one had to identify one idea as central and novel to reinforcement learning, it would undoubtedly be temporal-difference (TD) learning. TD learning is a combination of Monte Carlo ideas and dynamic programming (DP) ideas. Like Monte Carlo methods, TD methods can learn directly from raw experience without a model of the environment's dynamics. Like DP, TD methods update estimates based in part on other learned estimates, without waiting for a final outcome (they bootstrap).
 
 
 
