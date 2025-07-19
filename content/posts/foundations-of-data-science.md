@@ -143,11 +143,24 @@ difference between modern and traditional graph theory
 - $n$ is the number of vertices of the graph
 - $p$ is the edge probability
 - For each pair of distinct vertices, $v$ and $w$, $p$ is the probability that the edge $(v,w)$ is present
+- Erdös and Renyi
+- The presence of each edge is statistically independent of all other edges
+- The graph-valued random variable with these parameters is denoted by $G(n,p)$.
+
+
+The interesting thing about the $G(n,p)$ model is that even though edges are chosen independently with no "collusion", certain global properties of the graph emerge from the independent choices.
+- with $p=d/n, d < 1$, each connected component in the graph is small
+- for $d>1$, there is a giant component consisting of a constant fraction of the vertices
+- in addition, there is a rapid transition at the threshold $d=1$.
+- below the threshold, the probability of a giant component is very small, and above the threshold, the probability is almost one
 
 
 ### Phase transitions
 
 ### Giant component
+
+Consider $p=\frac{1+\epsilon}{n}$ where $\epsilon$ is a constant greater than zero.
+
 ### Cycles and full connectivity
 
 ### Phase transitions for increasing properties
@@ -171,3 +184,52 @@ difference between modern and traditional graph theory
 
 
 # appendix
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# algorithmic foundations of data science
+
+understanding machine learning algorithms
+- basic ML concepts and terminology
+- the nearest neighbour algorithm
+- learning decision trees
+- background: Euclidean geometry
+- linear classifiers
+- k-Means Clustering
+
+
+information and compression
+- background from probability theory
+- concentration inequalities
+- entropy
+
+
+statistical learning theory
+- classification revisited
+- risk and empirical risk minimization
+- the PAC learning framework
+- sample size bounds
+
+
+
+multiplicative weight updates
+- the MWU algorithm
+- boosting weak learning algorithms
+- bandit learning
+
+
+high-dimensional data
+-

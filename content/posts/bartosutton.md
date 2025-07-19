@@ -383,3 +383,17 @@ core ideas of RL algorithms in their simplest forms
 
 
 # Chapter 2
+
+
+
+# Eligibility Traces
+
+Eligibility traces are one of the basic mechanisms of reinforcement learning. For example, in the popular $TD(\lambda)$ algorithm, the $\lambda$ refers to the use of an eligibility trace. Almost any temporal-difference (TD) method, such as Q-learning or Sarsa, can be combined with eligibility traces to obtain a more general method that may learn more efficiently.
+
+Eligibility traces unify and generalize TD and Monte Carlo methods. When TD methods are augmented with eligibility traces, they produce a family of methods spanning a spectrum that has Monte Carlo methods at one end ($\lambda=1)$ and one-step TD methods at the other ($\lambda=0$).
+
+## implementation issues
+
+it might at first appear that tabular methods using eligibility traces are much more complex than one-step methods. A naive implementation would require every state(or state-action pair) to update both its value estimate and its eligibility trace on every time step.
+
+This would not be a problem for implementations on single-instruction, multiple-data, parallel computers or in plausible artificial neural network (ANN) implementations, but it is a problem for implementations on conventional serial computer. Fortunately, for typical values of $\lambda$ and $\gamma$ the eligibility traces of almost all states are almost always nearly zero; only those states that have recently been visited will have traces significantly greater than zero and only these few states need to be updated to closely approximate these algorithms.
