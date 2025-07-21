@@ -519,6 +519,20 @@ The key idea of DP, and of reinforcement learning generally, is the use of value
 First we consider how to compute the state-value function $v_\pi$ for an arbitrary policy $\pi$. This is called policy evaluation in the DP literature. We also refer to it as the prediction problem.
 
 
+## Policy Improvement
+
+Purpose for computing the value function for a policy
+- is to help find better policies
+
+
+the value function $v_{\pi}$ for an deterministic policy $\pi$
+
+for some state $s$ we would like to know whether or not we should change the policy to choose an action $a \neq \pi(s)$.
+
+
+
+
+
 # Monte Carlo Methods
 
 We consider our first learning methods for estimating value functions and discovering optimal policies. Unlike the previous chapter, here we do not assume complete knowledge of the environment.
