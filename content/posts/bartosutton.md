@@ -399,7 +399,37 @@ MDPs are a mathematically idealized form of the reinforcement learning problem f
 
 ## the Agent-Environment interface
 
+MDPs are meant to be a straightforward framing of the problem of learning from interaction to achieve a goal.
+- the learner and decision maker is called the agent
+- the thing it interacts with, comprising everything outside the agent, is called the environment
+- These interact continually, the agent selecting actions and the environment responding to these actions and presenting new situations to the agent
+- the environment also gives rise to rewards, special numerical values that the agent seeks to maximize over time through its choice of actions
+
+
+The MDP and agent together thereby give rise to a sequence or trajectory that begins like this:
+- $S_0, A_0, R_1, S_1, A_1, R_2, S_2, A_2, R_3, ...$
+
+
+
+
+The MDP framework is a considerable abstraction of the problem of goal-directed learning from interaction.
+
+
+Of course, the particular states and actions vary greatly from task to task, and how they are represented can strongly affect performance.
+
+
+In this book we offer some advice and examples regarding good ways of representing states and actions, but our primary focus is on general principles for learning how to behave once the representations have been selected.
+
 ## goals and rewards
+
+
+the agent's goal is to maximize the total amount of reward it receives.
+
+this means maximizing not immediate reward, but cumulative reward in the long run.
+
+
+the use of a reward signal to formalize the idea of a goal is one of the most distinctive features of reinforcement learning
+
 
 
 ## returns and episodes
@@ -436,6 +466,32 @@ Our framing of the reinforcement learning problem forces us to settle for approx
 - However, it also presents us with some unique opportunities for achieving useful approximations
 - For example, in approximating optimal behavior, there may be many states that the agent faces with such a low probability that selecting suboptimal actions for them has little impact on the amount of reward the agent receives.
 - In fact, it is possible that TD-Gammon makes bad decisions for a large fraction of the game's state set.
+- This is one key property that distinguishes reinforcement learning from other approaches to approximately solving MDPs.
+
+
+## summary
+
+The elements of the reinfocement learning problem
+- about learning from interaction how to behave in order to achieve a goal
+- the reinforcement learning agent and its environment interact over a sequence of discrete time steps
+- the specification of their interface defiens a particular task: the actions are the choices made by the agent; the states are the basis for making the choices; and the rewards are the basis for evaluating the choices
+- Everything inside the agent is completely known and controllable by the agent; everything outside is incompletely controllable but may or may not be completely known
+- A policy is a stochastic rule by which the agent selects actions as a function of states
+- the agent's objective is to maximize the amount of reward it receives over time
+
+
+When the reinforcement learning setup described above is formulated with well defined transition probabilities it constitutes a Markov decision process (MDP).
+- a finite MDP is an MDP with finite state, action, and reward sets.
+- much of the current theory of reinforcement learning is restricted to finite MDPs, but the methods and ideas apply more generally.
+
+
+The return is the function of future rewards that the agent seeks to maximize (in expected value). 
+- It has several different definitions depending upon the nature of the task and whether one wishes to discount delayed reward.
+- the undiscounted formulation is appropriate for episodic tasks, in which the agent-environment interaction breaks naturally into episodes; the discounted formulation is appropriate for continuing tasks, in which the interaction does not naturally break into episodes but continues without limit
+- we try to define the returns for the two kinds of tasks such that one set of equations can apply to both the episodic and continuing cases
+
+
+A policy's value functions assign to each state, or state-action pair, the expected return from that state, or state-action pair, given that the agent uses the policy.
 
 
 
