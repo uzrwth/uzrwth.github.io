@@ -1,6 +1,7 @@
 ---
 title: "Foundations of Data Science"
 date: 2025-07-16T00:59:03+02:00
+draft: true
 ---
 
 # introduction
