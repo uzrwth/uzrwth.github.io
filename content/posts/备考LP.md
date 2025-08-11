@@ -1,6 +1,7 @@
 ---
 title: "备考Logic Programming"
 date: 2025-07-27T01:43:19+02:00
+draft: true
 ---
 
 终于，我还是无法承受连续三天考试的压力，调整了考试的时间。
