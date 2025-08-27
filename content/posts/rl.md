@@ -49,7 +49,6 @@ greedy得到的1 per action和one third optimal action是怎么得到的？
 
 Sample averaging方法有一个问题。
 
-我们设想老虎机的reward distrition是stationary的。也就是说它的奖励概率分布是不变的。但现实中，这是不确定的。万一老板哪天就想要调整一下概率分布呢？这时，我们基于sample average的方法，greedy和𝜺-greedy，是否就无法再应用？
+我们设想老虎机的reward distribution是stationary的。也就是说它的奖励概率分布是不变的。但现实中，这是不确定的。万一老板哪天就想要调整一下概率分布呢？这时，我们基于sample average的方法，greedy和𝜺-greedy，是否就无法再应用？
 显然，我们希望最近获得的reward对于我们调整estimate起到更大的作用。这个问题称作: tracking a nonstationary problem。
-incremental updating rule: NewEstimate <- OldEstimate + StepSize[Target - OldEstimate]. 这里Target-OldEstimate也称作error。StepSize通常是1/k，k表示当前的time step。可见，在sample averaging方法下，越到后面，我们就越需要更大的reward值才能对OldEstimate产生客观的更新作用。即使老板最近调整了机器，我们的estimate过于基于历史，无法反应出老板的这个操作带来的影响。
-其中一个办法是用一个constant step size。
+首先，有一个概念用于计算estimate的更新，incremental updating rule: NewEstimate <- OldEstimate + StepSize[Target - OldEstimate]. 这里Target-OldEstimate也称作error。在sample average里step size为1/k，k表示当前的time step。可见，在sample averaging方法下，越到后面，我们就越需要更大的reward值才能对OldEstimate产生可观的更新作用。即使老板最近调整了机器，由于我们的estimate更依赖于历史，无法即时反应出老板的这个操作带来的影响。解决这个问题的常见方法是用一个constant step size。

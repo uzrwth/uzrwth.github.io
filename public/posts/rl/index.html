@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="en-us">
-  <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,8 +19,6 @@
         font-family: 'Inter', sans-serif;
         font-size: 16px;
         line-height: 1.6;
-        color: #4a4b4f;
-        background-color: #fbfbfb;
       }
 
       .container {
@@ -330,7 +328,14 @@
 <li>重复 2000 次，收集所有最大值。</li>
 <li>计算这 2000 个最大值的均值。</li>
 </ul>
-<p>无论time step是</p>
+<p>无论time step是1次还是1000次，我们期望的是发现真实的reward distribution mean，然后持续地exploit这个老虎机。这是最优的策略，这种做法用python程序仿真后，计算得到1.55左右。
+这正好说明𝜺-greedy正在逼近最优策略。而greedy得到的效果是1 per action。</p>
+<p>greedy得到的1 per action和one third optimal action是怎么得到的？</p>
+<p>这个概率，应该是在当前time steps中，我们实际选中了最优老虎机的概率。然后做了2000次实验，算出的平均值（每个time step下都有一个平均值）。这个1 per action，以及上面的1.55，虽然仿真算出来了，但我并不明白。</p>
+<p>Sample averaging方法有一个问题。</p>
+<p>我们设想老虎机的reward distribution是stationary的。也就是说它的奖励概率分布是不变的。但现实中，这是不确定的。万一老板哪天就想要调整一下概率分布呢？这时，我们基于sample average的方法，greedy和𝜺-greedy，是否就无法再应用？
+显然，我们希望最近获得的reward对于我们调整estimate起到更大的作用。这个问题称作: tracking a nonstationary problem。
+首先，有一个概念用于计算estimate的更新，incremental updating rule: NewEstimate &lt;- OldEstimate + StepSize[Target - OldEstimate]. 这里Target-OldEstimate也称作error。在sample average里step size为1/k，k表示当前的time step。可见，在sample averaging方法下，越到后面，我们就越需要更大的reward值才能对OldEstimate产生可观的更新作用。即使老板最近调整了机器，由于我们的estimate更依赖于历史，无法即时反应出老板的这个操作带来的影响。解决这个问题的常见方法是用一个constant step size。</p>
 
   </div>
   
