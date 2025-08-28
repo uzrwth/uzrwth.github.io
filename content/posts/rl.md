@@ -51,4 +51,20 @@ Sample averaging方法有一个问题。
 
 我们设想老虎机的reward distribution是stationary的。也就是说它的奖励概率分布是不变的。但现实中，这是不确定的。万一老板哪天就想要调整一下概率分布呢？这时，我们基于sample average的方法，greedy和𝜺-greedy，是否就无法再应用？
 显然，我们希望最近获得的reward对于我们调整estimate起到更大的作用。这个问题称作: tracking a nonstationary problem。
-首先，有一个概念用于计算estimate的更新，incremental updating rule: NewEstimate <- OldEstimate + StepSize[Target - OldEstimate]. 这里Target-OldEstimate也称作error。在sample average里step size为1/k，k表示当前的time step。可见，在sample averaging方法下，越到后面，我们就越需要更大的reward值才能对OldEstimate产生可观的更新作用。即使老板最近调整了机器，由于我们的estimate更依赖于历史，无法即时反应出老板的这个操作带来的影响。解决这个问题的常见方法是用一个constant step size。
+首先，有一个概念用于计算estimate的更新，incremental updating rule: NewEstimate <- OldEstimate + StepSize[Target - OldEstimate]. 这里Target-OldEstimate也称作error。在sample average里step size为1/k，k表示当前的time step。可见，在sample averaging方法下，越到后面，step size越小，就需要越大的reward值才能对OldEstimate产生可观的更新作用。即使老板最近调整了机器，由于我们的estimate更依赖于历史，无法即时反应出老板的这个操作带来的影响。解决这个问题是不让step size随时间推移变小，用constant step size.
+
+根据the law of large number，sample-average method会收敛到真实均值。然而当distribution不是stationary时，sample-average就行不通了。我们需要即时更新，以跟上distribution的变化。通过调整step size可以确保这一点。constant step size的效果是exponential recency-weighted average.
+但是，假如underlying distribution确实是stationary的话，constant step size反而效果不好，会造成不必要的方差，这个方差也是可以计算出来的。但如果underlying distribution是non-stationary的话，sample-average又会导致estimate跟不上distribution变化的速度。
+
+ERWA放弃了“精确收敛”，换来了“快速适应”。
+
+
+
+使用constant step size （ERWA: exponential recency-weighted average）会得到一个weighted average.
+
+展开递归，得到一个加权平均。加权平均的特点是权重之和为1。加权的内容是初始estimate和各个time step对应的reward。constant step size的效果：历史reward会随着时间推移，用越来越小的比重去影响estimate。如果constant step size为1，则会使历史reward对当前estimate无任何影响：Q = R.
+
+
+证明所有自然数的导数之和发散。
+
+分组 (1) + (1/2) + (1/3 + 1/4) + (1/5+1/6+1/7+1/8) ... 这样的组有无穷多个，而每一个组都 >= 1/2，所以这些组之和为无穷大。
