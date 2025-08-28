@@ -86,4 +86,27 @@ SA研究的是随机采样逼近某个目标的收敛问题。这里的increment
 自然数平方->倒数->求和，结果是什么？
 欧拉解决了这个问题（Basel problem），结果是𝛑 * 𝛑 / 6。所以sample average同时满足了两个conditions，从而我们在两个角度都验证了sample average的收敛性。但是constant step size只满足condition 1，不满足condition 2，所以它不是收敛的。constant step size本身也不应该应用在stationary distribution上，所以它是否收敛并不重要。它的核心是保持对新鲜数据的敏感性。“constant step size方法关注的是适应性而非精确收敛，因此在stationary环境下收敛并非评价它优劣的标准”。
 
+sample average，constant step size，greedy，𝜺-greedy各自影响的是什么？
 
+sample average和constant step size影响的是收敛、适应性，它们对动作决策没有影响。greedy和𝜺-greedy才是影响动作策略的因素，它们影响exploitation和exploration的均衡问题。动作并没有反映在incremental update rule迭代公式上。𝜺为0时，就退化为greedy算法了。
+
+Q值是什么？
+
+在incremental update rule里，Q值表示的是对一个动作的估值。后续研究到full reinforcement learning问题时，状态就不像n-armed bandit问题里的这么简单了。之后研究的Q是特定状态下的特定动作的估值。为什么用Q这个符号？Q表示quality，表示状态-动作对的质量。而V者表示状态的价值。
+
+V值可以看作 Q值对动作的边际（加权平均或最大值）？
+
+加权平均容易理解，但最大值是为什么？一个状态的价值，取决于采取的策略。如果采取最优策略（相当于最优动作的概率为1），那么这个状态的价值就等于在这个状态下，选择最优动作的价值。否则，在一般策略下（概率选择动作），状态的价值就是动作价值的加权平均。对动作的边际意思就是对动作积分或者求和，把动作这个变量消灭掉。
+
+Initial action values对这些算法的影响是什么？
+
+initial action values可能是低估值或者高估值。算法的分类由策略/更新方法决定如
+- greedy + sample average
+- greedy + constant
+- 𝜺-greedy + sample average
+- 𝜺-greedy + constant
+
+通过分类讨论，总共有8种情形。
+
+
+什么是乐观初始值？
