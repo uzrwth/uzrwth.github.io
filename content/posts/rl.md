@@ -56,15 +56,34 @@ Sample averaging方法有一个问题。
 根据the law of large number，sample-average method会收敛到真实均值。然而当distribution不是stationary时，sample-average就行不通了。我们需要即时更新，以跟上distribution的变化。通过调整step size可以确保这一点。constant step size的效果是exponential recency-weighted average.
 但是，假如underlying distribution确实是stationary的话，constant step size反而效果不好，会造成不必要的方差，这个方差也是可以计算出来的。但如果underlying distribution是non-stationary的话，sample-average又会导致estimate跟不上distribution变化的速度。
 
-ERWA放弃了“精确收敛”，换来了“快速适应”。
+ERWA: exponential recency-weighted average放弃了“精确收敛”，换来了“快速适应”。
 
 
 
-使用constant step size （ERWA: exponential recency-weighted average）会得到一个weighted average.
+什么是weighted average？
 
-展开递归，得到一个加权平均。加权平均的特点是权重之和为1。加权的内容是初始estimate和各个time step对应的reward。constant step size的效果：历史reward会随着时间推移，用越来越小的比重去影响estimate。如果constant step size为1，则会使历史reward对当前estimate无任何影响：Q = R.
+ERWA展开递归，得到一个加权平均。加权平均的特点是权重之和为1。加权的内容是初始estimate和各个time step对应的reward。constant step size的效果：历史reward会随着时间推移，用越来越小的比重去影响estimate。如果constant step size为1，则会使历史reward对当前estimate无任何影响：Q = R，得到的极限快速适应。
 
 
-证明所有自然数的导数之和发散。
 
-分组 (1) + (1/2) + (1/3 + 1/4) + (1/5+1/6+1/7+1/8) ... 这样的组有无穷多个，而每一个组都 >= 1/2，所以这些组之和为无穷大。
+stochastic approximation（SA） theory研究的是什么问题？
+
+SA研究的是随机采样逼近某个目标的收敛问题。这里的incremental updating rule是一个迭代算法，也是随机采样为了逼近真实值的过程。
+为了收敛，step size要满足怎样的条件？sample average的step size = 1/k是随着k变小的，它最终收敛到了真实值。constant step size显然是不收敛的。除了1/k和constant step size，step size还有很多变化的可能。所以数学家研究怎样的step size sequence才能达到收敛的效果。
+
+两个针对步长的确保收敛的条件应该怎么理解？
+
+在合适步长条件下（两个确保收敛的conditions），Q-Learning收敛到最优Q值。即Robbins–Monro 定理。这是什么意思？
+
+什么是Robbins–Monro 定理？
+
+他提出Stochastic Approximation（随机逼近）方法。他讲的是如何用随机样本逼近一个未知参数。他提出一个迭代公式，并且给出两个使之收敛的条件。迭代公式包含了步长和带噪音的观测。这一点和incremental update rule其实是一致的。实际上incremental update rule可以写成Robbins-Monro给出的迭代公式形式，它是Robbins-Monro的一个特例而已。所以结论中的两个使之收敛的条件适用于incremental update rule。（🎈补充证明过程）
+
+
+证明sample average满足两个确保收敛的条件？
+
+第一个条件：分组 (1) + (1/2) + (1/3 + 1/4) + (1/5+1/6+1/7+1/8) ... 这样的组有无穷多个，而每一个组都 >= 1/2，所以这些组之和为无穷大。
+自然数平方->倒数->求和，结果是什么？
+欧拉解决了这个问题（Basel problem），结果是𝛑 * 𝛑 / 6。所以sample average同时满足了两个conditions，从而我们在两个角度都验证了sample average的收敛性。但是constant step size只满足condition 1，不满足condition 2，所以它不是收敛的。constant step size本身也不应该应用在stationary distribution上，所以它是否收敛并不重要。它的核心是保持对新鲜数据的敏感性。“constant step size方法关注的是适应性而非精确收敛，因此在stationary环境下收敛并非评价它优劣的标准”。
+
+
