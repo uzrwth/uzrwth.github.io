@@ -319,4 +319,15 @@ $|A \cup B \cup C| = |A| + |B| + |C|- |A \cap B| - |A \cap C| - |B \cap C|+ |A \
 
 
 
+---
 
+Monte Carlo是不需要环境模型吗？
+
+是的，它基于采样。不依赖模型。它的作用是估计状态或状态-动作的价值。环境模型：1. 转移概率 （dynamics），2. 奖励函数。这两者都是不需要的。
+
+
+什么是mean path TD-learning？
+
+为什么说TD是RL最核心的思想？
+
+TD和Monte Carlo、DP的关系？
