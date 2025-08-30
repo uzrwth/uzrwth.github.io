@@ -191,3 +191,4 @@ each preference would be incrementing proportional to：$H_{t+1}(a) - H_{t}(a)$ 
 gradient ascent和gradient descent的区别？
 
 gradient ascent用于最大化目标函数。gradient descent用于最小化目标函数。gradient bandit中学习H是为了最大化目标函数：期望奖励 J = E[R]。在RL中，用J表示期望回报（expected return），目标是最大化期望回报，更新方向是gradient ascent。在supervised learning中则用L（Loss）表示，目标是最小化损失函数，更新方向为gradient descent。
+
