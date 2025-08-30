@@ -219,8 +219,44 @@ $\hat{\nabla}_\theta J(\theta) \approx \frac{1}{N} \sum R(a_i) \nabla \log \pi(a
 
 $\theta \gets \theta + \alpha \hat{\nabla}_\theta J(\theta)$
 
+单样本更新：
+
 $\theta \gets \theta + \alpha R(a) \nabla_\theta \log \pi_\theta(a)$
+
+多样本平均更新：
 
 $\theta \gets \theta + \frac{\alpha}{N} \sum_{i=1}^{N} R(a_i) \nabla_\theta \log \pi_\theta(a_i)$
 
-怎么理解学习率$\alpha$？
+可以引入基线baseline来减少方差。
+
+$\theta \gets \theta + \alpha (R(a) - b) \nabla_\theta \log \pi_\theta(a)$
+
+用采样奖励加权梯度 → 得到近似梯度。
+
+沿梯度上升更新 $\theta$。
+
+我知道梯度可以用于更新参数，但是为什么要用一个学习率去更新呢？怎么理解学习率$\alpha$？
+
+小 $\alpha$ 可以防止梯度更新过猛，保证参数逐步靠近最优值。
+梯度方向只是“上升最快的方向”，步长太大仍可能越过最优点或导致函数震荡。
+学习率有两个作用：应对噪声和梯度更新本身收敛性需要。
+如果已知真实梯度，理论上，可以选择直接沿梯度方向更新到最优点（假设凸函数和小步长条件满足）。
+步长太大 → 一步跨越山顶，甚至滚下另一边。
+
+什么是小步长条件？
+
+小步长条件就是选择 $\alpha$ 使得二阶项足够小，不会抵消一阶增长，保证 $𝐽(\theta)$增加。和可二阶连续可微有关。
+
+什么是二阶梯度？什么是Hessian？
+
+
+怎么理解梯度是上升最快的方向？
+
+梯度是一个向量。向量：大小和方向。
+
+
+什么是SGD？
+
+用近似梯度（采样）代替真实梯度，快速更新参数的一种通用方法。大量数据时，批量梯度下降计算代价高。SGD可以单样本或小批量，迭代快，适合在线学习（on-line）。使用于推荐系统。
+
+
