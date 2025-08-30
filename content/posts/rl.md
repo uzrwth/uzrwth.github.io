@@ -186,9 +186,41 @@ each preference would be incrementing proportional to：$H_{t+1}(a) - H_{t}(a)$ 
 
 目标函数对动作a的偏好参数求偏导，表示什么意思？
 
-表示动作a的偏好参数稍微调整，目标函数会变化多少。就是目标函数相对于动作函数的变化速度。换句话说，它就是 目标函数对动作偏好的敏感度。
+表示动作a的偏好参数稍微调整，目标函数会变化多少。就是目标函数相对于动作函数的变化速度。换句话说，它就是 目标函数对动作偏好的敏感度。导数符号：$\frac{dy}{dx}$，偏导符号：$\frac{\partial f}{\partial x}$。导数符号用在一元函数（单变量函数）中，求导只有一种可能，就是因变量对自变量$x$求导。在多元函数中，偏导的因变量用$f$表示，指定对哪个自变量求导。偏导符号是为了区分导数符号。导数用$d$，表示differential。在exact gradient中，动作偏好迭代式中使用了偏导。期望奖励对动作偏好求偏导。迭代过程更新单个动作，因此仅对当前动作求偏导。如果对所有动作求偏导，那得到的是gradient。动作偏好的变化引起期望奖励的变化。期望奖励的变化受到所有动作偏好变化的影响，但是由于只考虑单个动作偏好的更新，所以仅对该动作求偏导。所得偏导代表了期望奖励在该动作偏好方向上的更新速度，因此自变量在迭代更新中变化的量应该与之proportional。proportional的程度在于step size。
+
+怎么理解$\pi_\theta$？
+
+$\pi$表示概率分布，也就是选择动作的概率（策略）。$\pi(a)$表示选中动作$a$的概率。$\theta$是参数。参数是我们要学习的内容。在gradient bandit中，参数就是$H$，我们要学习偏好。$\pi_\theta$表示策略依赖于参数偏好。
 
 gradient ascent和gradient descent的区别？
 
 gradient ascent用于最大化目标函数。gradient descent用于最小化目标函数。gradient bandit中学习H是为了最大化目标函数：期望奖励 J = E[R]。在RL中，用J表示期望回报（expected return），目标是最大化期望回报，更新方向是gradient ascent。在supervised learning中则用L（Loss）表示，目标是最小化损失函数，更新方向为gradient descent。
 
+梯度上升和偏好迭代的关系？
+
+梯度上升和偏好迭代更新公式是一致的，只不过前者考虑的是向量参数，而后者只是单个动作偏好。
+现实中我们无法得知期望奖励的梯度，所以需要用采样的方式近似梯。
+
+如何求期望奖励的梯度？
+
+期望奖励是一个求和式子。梯度的线性性，这相当于要对各个部分求梯度再求和。动作$a$的期望奖励为$R(a)$与动作偏好$\theta$或者$H$无关，因为参数是和策略相关的，策略一旦确定要执行的动作，奖励就再与策略无关。所以$\pi_\theta(a) * R(a)$求梯度就是$R(a) * \nabla_{\theta} \pi_{\theta}(a)$。用log-derivative trick可以把这个梯度变成$R(a) * \pi_\theta(a) * \nabla_\theta \log \pi_\theta(a)$。
+
+梯度上升的采样形式每次更新参数都只是更新对应动作，而非所有动作？
+
+是的。gradient bandit是stochastic gradient ascent方法。
+
+$J(\theta) = \mathbb{E}_{a \sim \pi}[R(a)]$
+
+$\nabla_\theta J(\theta) = \mathbb{E}_{a \sim \pi} [R(a) \nabla \log \pi (a)]$
+
+$\hat{\nabla}_\theta J(\theta) = R(a)  \nabla \log \pi(a)$
+
+$\hat{\nabla}_\theta J(\theta) \approx \frac{1}{N} \sum R(a_i) \nabla \log \pi(a_i)$
+
+$\theta \gets \theta + \alpha \hat{\nabla}_\theta J(\theta)$
+
+$\theta \gets \theta + \alpha R(a) \nabla_\theta \log \pi_\theta(a)$
+
+$\theta \gets \theta + \frac{\alpha}{N} \sum_{i=1}^{N} R(a_i) \nabla_\theta \log \pi_\theta(a_i)$
+
+怎么理解学习率$\alpha$？
