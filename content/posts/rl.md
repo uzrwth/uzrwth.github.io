@@ -259,4 +259,64 @@ $\theta \gets \theta + \alpha (R(a) - b) \nabla_\theta \log \pi_\theta(a)$
 
 用近似梯度（采样）代替真实梯度，快速更新参数的一种通用方法。大量数据时，批量梯度下降计算代价高。SGD可以单样本或小批量，迭代快，适合在线学习（on-line）。使用于推荐系统。
 
+---
+
+容斥公式？
+
+如果概率写成事件的交集或并集形式，可以考虑用容斥公式变换。如：
+
+$P(A) + P(B) - P(A \cap B) = P(A \ cup B)$
+
+$\sum P(A \cap B_i) = P(A \cap B_1) + P(A \cap B_2) + ...$
+
+$P(A \cap B_1) + P(A \cap B_2) - P(A \cap B_1 \cap A \cap B_2) = P((A \cap B_1) \cup (A \cap B_2))$
+
+如果$B_1 B_2$互斥，那么 $P(A \cap B_1 \cap A \cap B_2)$ 为0。
+右边通过结合率可以写成：
+
+$P(A \cap (B_1 \cup B_2))$， 如果已知 $\cup B_i = \Omega$，则$P(\Omega) = 1$。
+
+差集：
+
+$A \setminus B$ 表示属于A不属于B。
+
+
+什么是Monotonicity of Probability Measures？
+
+如果 $A \subseteq B$，那么$P(A) \leq P(B)$
+
+
+证明 $P(\cup A_i) \leq \sum P(A_i) $：
+
+定义 $\hat{A_i} := A_i \setminus \bigcup_{j=1}^{i-1} A_j $。注意$\hat{A_i}$的含义并非$A_i$和其他所有集合的差，而是与顺序排在它前面的差。
+
+为什么 $P(\cup A_i) = P(\cup \hat{A_i})$ ？
+
+右边求并集时，$\hat{A_1}$ 已经把 $A_1$的计算过。并上$\hat{A_2}$时，在原先基础上补充了$A_2$的新元素，并上$\hat{A_3}$时，并上$A_3$的新元素（新的意思是$A_3$中未出现在$A_1$和$A_2$的元素），这样一并下去得到的正好所$\cup A_i$。$\hat{A_i}$表示都是之前没有出现过的元素，所以$\hat{A_i}$之间互斥。
+
+$P(\cup A_i) = P(\cup \hat{A_i})$，而$\hat{A_i}$各自disjoint，所以
+
+$P(\cup A_i) = P(\cup \hat{A_i}) = \sum P(\hat{A_i})$
+
+由于 $\hat{A_i} \subseteq A_i$，Monotonicity of Probability Measures得到，
+
+$P(\cup A_i) = P(\cup \hat{A_i}) = \sum P(\hat{A_i}) \leq \sum P(A_i)$
+
+为什么不用容斥公式证明以上结论？
+
+因为容斥公式在多个集合时，后面的部分会有加有减，并不像只有两个集合时那样都是减。
+
+$|A \cup B \cup C| = |A| + |B| + |C|- |A \cap B| - |A \cap C| - |B \cap C|+ |A \cap B \cap C|$
+
+这个证明题考察了对差集和单调性的理解。
+
+容斥公式有一个交替加减：
+
+一个集合的和 - 二个集合交集所有组合的和 + 三个集合交集所有组合的和 - ...
+
+
+
+
+
+
 
