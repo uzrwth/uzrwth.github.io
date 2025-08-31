@@ -152,6 +152,27 @@ gradient bandit为什么是stochastic gradient ascent？
 
 exact gradient ascent需要知道q(b)。但是在期望上，gradient bandit更新偏好是等价于exact gradient ascent的更新的，所以称之为stochastic gradient ascent。我们可以把exact gradient ascent的表达式和gradient bandit的表达式放在一起，然后验证在期望下，两者相等。ascent或者descent指的是更新方向。这两个词的出现，应该能让你联想到它们表示某个迭代公式。那么什么是exact gradient ascent？假设我们明确知道一个几何结构，从某一点出发，我们总能找到上升或者下降最快的方向，从而以最快的速度优化到最大或最小值。这里的最快的方向，说的是natural方向。但是exact gradient ascent中的exact又是什么意思？stochastic gradient ascent （SGA）是不知道这个几何结构的，它只能通过采样估计梯度，存在噪声。但是如果明确知道这个几何结构，那么在任何一个点上，都能准确地计算出该点的梯度，也就是说梯度是精确值，没有噪声。
 
+exact gradient ascent？
+
+$H(a) \gets H(a) + \alpha \frac{\partial \mathbb{E}[R]}{\partial H(a)}$
+
+$\mathbb{E}[R] = \sum \pi(b) q(b)$ 这里用小写q，表示真实动作价值。大写Q表示estimate。$H(a)$会影响$\pi$，从而影响期望奖励变化。这里的偏导表示的就是期望奖励随动作偏好$H(a)$的变化关系。如果考虑所有动作，那么这里就把偏导换成梯度。这里需要知道真实动作价值，即每个老虎机的奖励分布。现实中，我们并不知道。所以才有了stochastic gradient ascent的做法，用采样去毕竟梯度。
+
+---
+
+为什么the expected update of the gradient-bandit algorithm is equal to the gradient of expected reward？
+
+$\Delta H(k) = H_{t+1}(k) - H_t(k)$
+
+$\mathbb{E}[\Delta H(k)] = ?$
+
+我们要证明算法的期望更新等于期望奖励函数的梯度。
+
+要证明这一点，需要知道softmax的梯度，以及，baseline不影响梯度（它的期望更新为0）
+
+---
+
+
 natural gradient和普通gradient的区别？
 
 普通gradient假设参数空间是欧几里得空间。自然梯度考虑参数空间的流形几何。
@@ -172,6 +193,7 @@ Gibbs、Boltzmann distribution.
 什么是nonassociative和associative task？
 
 nonassociative指的是动作不需要关联situation。n-armed bandit是单状态的，所以不存在状态-动作对的说法。复杂的RL方法则要考虑动作和状态的关联，称为associative task。task可以是stationary或non-stationary的。stationary下，需要寻找最优action。non-stationary下，则需要跟踪最优action（as it changes over time）。
+
 
 
 gradient bandit，policy gradient，natural gradient，exact gradient ascent？
@@ -321,6 +343,20 @@ $|A \cup B \cup C| = |A| + |B| + |C|- |A \cap B| - |A \cap C| - |B \cap C|+ |A \
 
 ---
 
+
+Monte Carlo方法学习什么？
+
+value functions和optimal policies。
+
+什么是sample episodes？
+
+
+
+Monte Carlo比DP的优势是什么？
+
+DP需要完整的环境动态（environment dynamics）：转移概率和奖励函数，才能进行Bellman更新。
+
+
 Monte Carlo是不需要环境模型吗？
 
 是的，它基于采样。不依赖模型。它的作用是估计状态或状态-动作的价值。环境模型：1. 转移概率 （dynamics），2. 奖励函数。这两者都是不需要的。
@@ -331,3 +367,6 @@ Monte Carlo是不需要环境模型吗？
 为什么说TD是RL最核心的思想？
 
 TD和Monte Carlo、DP的关系？
+
+
+
