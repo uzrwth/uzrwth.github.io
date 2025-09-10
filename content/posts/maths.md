@@ -3,23 +3,40 @@ title: "数学"
 date: 2025-09-06T03:04:21+02:00
 ---
 
+
 # Vitali
 
 Vitali集，测度论中著名的不可测集。
 
-# Weierstrass's theorem
-
-Cornerstone in analysis.
 
 # Theory of approximation of functions of a real variable
 
 To senior mathematical students and to post-graduate students of the faculty of mathematics and physics.
 
-# Structural properties of real functions
+the various structural properties of real functions
 
-# P. L. Chebyshev's concept of the best approximation
+the character of possible approximations to them by polynomials and other functions of simple construction
 
-# The converse theorem of S.N.Bernstein on the existence of a function with a given sequence of best approximations
+the classical approximation theorem of Weierstrass （Cornerstone in analysis.）
+
+Weierstrass定理：Every continuous function on a closed and bounded interval can be uniformly approximated by polynomials.
+（可以被一致逼近：给定任意一个容许误差，存在一个多项式使得近似函数和真实函数在区间上所有x的函数值的差，都小于这个误差）
+
+证明思路：Lebesgue 勒贝格。以测度论和积分论的发展著称。勒贝格积分 (Lebesgue integral)，这是对黎曼积分的重大推广。
+
+Lebesgue应用：概率论（概率空间上的积分就是Lebesgue integral）。实分析与泛函分析。偏微分方程、傅里叶分析。
+
+Weierstraß 他是德国著名数学家，被称为 “现代严格分析之父”，对极限、连续性、逼近理论和实分析的发展做出了奠基性贡献。“论所谓任意实变量函数的解析表示”。
+
+die analytische Darstellbarkeit：可解析表示
+
+
+
+P. L. Chebyshev's concept of the best approximation and the converse theorem of S. N. Bernstein on the existence of a function with a given sequence of best approximations
+
+The extension and refinement of these two fundamental theorems
+
+
 
 # Differential properties of functions with a given sequence of best approximations
 
