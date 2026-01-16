@@ -43,11 +43,11 @@ cat > "$DIST_DIR/index.html" << EOF
 <html lang='en'>
 <head>
   <meta charset='UTF-8'>
-  <title>MS Documents</title>
+	  <title>uz's blog</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>MS Documents</h1>
+  <h1>uz's blog</h1>
   <ul>
 EOF
 

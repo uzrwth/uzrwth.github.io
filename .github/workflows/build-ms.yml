@@ -29,6 +29,13 @@ jobs:
             groff -ms -Thtml -Kutf8 "$f" > "dist/${f%.ms}.html"
           done
 
+
+      - name: Insert CSS into HTML
+        run: |
+          chmod +x scripts/insert_css.sh
+          ./scripts/insert_css.sh dist style.css
+
+
       - name: Generate index.html
         run: |
           chmod +x scripts/generate_index.sh
