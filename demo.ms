@@ -70,9 +70,5 @@ groff 也支持链接（HTML 输出时有效）：
 这个 demo 展示了使用 groff 编写一篇
 技术文档或博客文章所需的核心功能。
 
-.lt 0
-.fi
-.nf
-.ce
-<HTML><img src="image.jpg" alt="示例图片" width="300"></HTML>
-.fi
+.LP
+This is an image: [[IMAGE:image.jpg]]

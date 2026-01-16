@@ -23,6 +23,8 @@ cp images/* "$DIST_DIR/"
 # -----------------------------
 for f in *.ms; do
   groff -ms -Thtml -Kutf8 "$f" > "$DIST_DIR/${f%.ms}.html"
+  sed -i -E 's|\[\[IMAGE:([a-zA-Z0-9._/-]+)\]\]|<img src="\1" alt="\1">|g' "$DIST_DIR/${f%.ms}.html"
+
 done
 
 # -----------------------------
