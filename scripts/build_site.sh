@@ -24,7 +24,14 @@ cp images/* "$DIST_DIR/"
 for f in *.ms; do
   groff -ms -Thtml -Kutf8 "$f" > "$DIST_DIR/${f%.ms}.html"
   sed -i -E 's|\[\[IMAGE:([a-zA-Z0-9._/-]+)\]\]|<img src="\1" alt="\1">|g' "$DIST_DIR/${f%.ms}.html"
-
+  gawk -i inplace '
+/\[\[CODEBLOCK\]\]/ {print "<pre><code>"; inblock=1; next}
+/\[\[ENDCODEBLOCK\]\]/ {print "</code></pre>"; inblock=0; next}
+{
+  gsub(/\[\[IMAGE:([a-zA-Z0-9._/-]+)\]\]/, "<img src=\"\\1\" alt=\"\\1\">")
+}
+{print}
+' "$DIST_DIR/${f%.ms}.html"
 done
 
 # -----------------------------

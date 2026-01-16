@@ -42,16 +42,12 @@ groff 会自动进行断行和排版。
 .SH 代码块示例
 下面是一个等宽、保持格式的代码块：
 
-.DS
-.nf
-#include <stdio.h>
-
-int main(void) {
-    printf("Hello, groff!\n");
-    return 0;
-}
-.fi
-.DE
+.LP
+[[CODEBLOCK]]
+print("Hello")
+for i in range(3):
+    print(i)
+[[ENDCODEBLOCK]]
 
 .SH 字体样式
 你可以使用
