@@ -29,26 +29,6 @@ jobs:
             groff -ms -Thtml -Kutf8 "$f" > "dist/${f%.ms}.html"
           done
 
-          # 生成简单的 index.html
-          echo "<!DOCTYPE html>
-<html lang='en'>
-<head>
-  <meta charset='UTF-8'>
-  <title>MS Documents</title>
-</head>
-<body>
-  <h1>MS Documents</h1>
-  <ul>" > dist/index.html
-
-          for f in *.ms; do
-            html_file="${f%.ms}.html"
-            echo "    <li><a href='$html_file'>$html_file</a></li>" >> dist/index.html
-          done
-
-          echo "  </ul>
-</body>
-</html>" >> dist/index.html
-
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
