@@ -22,27 +22,10 @@ jobs:
       - name: Install groff
         run: sudo apt-get update && sudo apt-get install -y groff
 
-      - name: Build HTML from MS files
+      - name: Build site
         run: |
-          mkdir -p dist
-          for f in *.ms; do
-            groff -ms -Thtml -Kutf8 "$f" > "dist/${f%.ms}.html"
-          done
-
-
-      - name: Insert CSS into HTML
-        run: |
-          chmod +x scripts/insert_css.sh
-          ./scripts/insert_css.sh dist style.css
-
-
-      - name: Generate index.html
-        run: |
-          chmod +x scripts/generate_index.sh
-          ./scripts/generate_index.sh dist
-
-      - name: Disable Jekyll
-        run: touch dist/.nojekyll
+          chmod +x scripts/build_site.sh
+          ./scripts/build_site.sh dist
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
