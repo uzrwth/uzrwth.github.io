@@ -34,6 +34,9 @@ jobs:
           chmod +x scripts/generate_index.sh
           ./scripts/generate_index.sh dist
 
+      - name: Disable Jekyll
+        run: touch dist/.nojekyll
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v3
         with:
