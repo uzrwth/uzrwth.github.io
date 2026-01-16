@@ -25,7 +25,6 @@ jobs:
       - name: Build HTML from MS files
         run: |
           mkdir -p dist
-          # 编译所有 .ms 文件
           for f in *.ms; do
             groff -ms -Thtml -Kutf8 "$f" > "dist/${f%.ms}.html"
           done
