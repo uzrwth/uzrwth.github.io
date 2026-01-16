@@ -1,10 +1,11 @@
+/* 简洁清晰的列表页样式 */
 body {
   font-family: Arial, sans-serif;
   max-width: 800px;
   margin: 40px auto;
   padding: 0 20px;
-  background: #fdfdfd;
   color: #333;
+  line-height: 1.6;
 }
 
 h1 {
@@ -15,16 +16,16 @@ h1 {
 ul {
   list-style: none;
   padding: 0;
+  margin: 0;
 }
 
 li {
-  margin: 10px 0;
-  padding: 10px;
-  background: #ecf0f1;
-  border-radius: 8px;
+  margin: 8px 0;
+  padding: 4px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #ccc; /* 简单分隔线 */
 }
 
 a {
@@ -39,6 +40,6 @@ a:hover {
 
 .time {
   font-size: 0.9em;
-  color: #7f8c8d;
+  color: #666;
 }
 

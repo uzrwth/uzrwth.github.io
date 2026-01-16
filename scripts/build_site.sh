@@ -19,7 +19,7 @@ cp style/style.css "$DIST_DIR/"
 # 2️⃣ 编译所有 .ms 文件 -> HTML
 # -----------------------------
 for f in *.ms; do
-  groff -ms -Thtml "$f" > "$DIST_DIR/${f%.ms}.html"
+  groff -ms -Thtml -Kutf8 "$f" > "$DIST_DIR/${f%.ms}.html"
 done
 
 # -----------------------------
@@ -45,8 +45,9 @@ for f in "$DIST_DIR"/*.html; do
 
   if git ls-files --error-unmatch "$DIST_DIR/$filename" > /dev/null 2>&1; then
     last_commit_time=$(git log -1 --format="%cI" -- "$DIST_DIR/$filename")
+    last_commit_time=$(date -d "$last_commit_time" +"%Y-%m-%d")
   else
-    last_commit_time=$(date -Iseconds)
+    last_commit_time=$(date +"%Y-%m-%d")
   fi
   file_times["$filename"]="$last_commit_time"
 done
