@@ -1,0 +1,103 @@
+<!-- Creator     : groff version 1.23.0 -->
+<!-- CreationDate: Sat Jan 17 01:45:27 2026 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>2026</title>
+
+</head>
+<body>
+
+<h1 align="center">2026</h1>
+
+<a href="#Germany">Germany</a><br>
+<a href="#@RWTH">@RWTH</a><br>
+
+<hr>
+
+
+<p align="center"><i>Rong</i></p>
+
+
+<p align="center" style="margin-top: 1em"><i>ABSTRACT</i></p>
+
+<p style="margin-top: 1em">This is my blog for sharing
+hacking ideas.</p>
+
+<h2>Germany
+<a name="Germany"></a>
+</h2>
+
+
+<h2>@RWTH
+<a name="@RWTH"></a>
+</h2>
+
+
+<p style="margin-top: 1em">I like sports.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="2%">
+
+
+<p style="margin-top: 1em">&bull;</p></td>
+<td width="2%"></td>
+<td width="18%">
+
+
+<p style="margin-top: 1em">Basketball</p></td>
+<td width="78%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="2%">
+
+
+<p>&bull;</p></td>
+<td width="2%"></td>
+<td width="18%">
+
+
+<p>Skateboard</p></td>
+<td width="78%">
+</td></tr>
+</table>
+
+
+<p style="margin-left:4%; margin-top: 1em"><img src="duck.png" alt="Image duck.png" width="300" height="300"></p>
+
+<p style="margin-top: 1em">This blog is built with groff.
+Because I want it to be as simple as possible.</p>
+ 
+<p style="margin-top: 1em"><pre><code>/*
+ *  do_pre - changes to preformated text.
+ */
+
+void html_text::do_pre (void)
+{
+  done_tt();
+  if (is_present(P_TAG)) {
+    html_indent *i = remove_indent(P_TAG);
+    int space = retrieve_para_space();
+    (void)done_para();
+    if (! is_present(PRE_TAG))
+      push_para(PRE_TAG, NULL, i);
+    start_space = space;
+  } else if (! is_present(PRE_TAG))
+    push_para(PRE_TAG, NULL, NULL);
+  dump_stack();
+}</code></pre></p>
+<hr>
+</body>
+</html>
