@@ -51,7 +51,7 @@ Skateboard
 Billiard
 <</>>
 
-.IMG duck.png 300 300
+[[ duck.png width=20% align=left]]
 
 There was a very strange bug. After replacing with placeholders, replace(old, new, 1) failed to effect. This might have to do with Python's inner representation of strings and bytes. This had caused me some troubles many years ago, and now the nightmare is back.
 
@@ -111,3 +111,5 @@ if __name__ == "__main__":
     main()
 
 <</>>
+
+[[ 1.JPG width=80%]]
