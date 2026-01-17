@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Jan 17 08:31:32 2026 -->
+<!-- CreationDate: Sat Jan 17 08:41:53 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -22,10 +22,36 @@
 
 <h1 align="center">association rules</h1>
 
+<a href="#frozenset: sets in .csv">frozenset: sets in .csv</a><br>
+<a href="#mlxtend association_rules">mlxtend association_rules</a><br>
+
 <hr>
+
+
+<h2>frozenset: sets in .csv
+<a name="frozenset: sets in .csv"></a>
+</h2>
+
+
+<p style="margin-top: 1em">Before writing code, we must
+decide how to represent sets in a .csv file.</p>
+
+<h2>mlxtend association_rules
+<a name="mlxtend association_rules"></a>
+</h2>
 
  
 <p style="margin-top: 1em"><pre><code>from mlxtend.frequent_patterns import apriori, association_rules
+
+def safe_convert_frozenset(s):
+    if s.startswith(&quot;frozenset(&quot;) and s.endswith(&quot;)&quot;):
+        inner = s[10:-1]
+        try:
+            inner_value = ast.literal_eval(inner)
+            return frozenset(inner_value)
+        except ValueError:
+            pass
+    raise ValueError(&quot;Invalid frozenset format&quot;)
 
 freq_df = df.copy()
 freq_df[&#x27;itemsets&#x27;] = freq_df[&#x27;itemsets&#x27;].apply(safe_convert_frozenset)
