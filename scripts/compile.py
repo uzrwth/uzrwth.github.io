@@ -41,7 +41,7 @@ def main():
     # 5️⃣ 按顺序回填代码块，自动 HTML 转义
     for code in code_blocks:
         code_html = f"<pre><code>{html.escape(code.strip())}</code></pre>"
-        html_content = html_content.replace(MARK, code_html, count=1)  # 只替换第一个匹配
+        html_content = html_content.replace(MARK, code_html, 1)  # 只替换第一个匹配
 
     # 6️⃣ 写出最终 HTML 文件
     with open(output_file, "w", encoding="utf-8") as f:
