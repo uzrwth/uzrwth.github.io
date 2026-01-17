@@ -1,10 +1,30 @@
 .TL
 association rules
 
+
+.SH
+frozenset: sets in .csv
+
+.PP
+Before writing code, we must decide how to represent sets in a .csv file.
+
+.SH
+mlxtend association_rules
+
 .PP
 
 <<>>
 from mlxtend.frequent_patterns import apriori, association_rules
+
+def safe_convert_frozenset(s):
+    if s.startswith("frozenset(") and s.endswith(")"):
+        inner = s[10:-1]
+        try:
+            inner_value = ast.literal_eval(inner)
+            return frozenset(inner_value)
+        except ValueError:
+            pass
+    raise ValueError("Invalid frozenset format")
 
 freq_df = df.copy()
 freq_df['itemsets'] = freq_df['itemsets'].apply(safe_convert_frozenset)

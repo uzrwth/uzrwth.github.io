@@ -78,7 +78,7 @@ def main():
         entries.append((ts, date_str, html_file, title))
 
     # 按 Git 首次提交时间排序（早 → 晚）
-    entries.sort(key=lambda x: x[0])
+    entries.sort(key=lambda x: x[0], reverse=True)
 
     with open(output_html, "w", encoding="utf-8") as f:
         f.write("""<!DOCTYPE html>
