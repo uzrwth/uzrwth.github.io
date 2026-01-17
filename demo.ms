@@ -55,11 +55,11 @@ groff 会自动进行断行和排版。
 .SH 代码块示例
 下面是一个等宽、保持格式的代码块：
 
+.PP
+
 <<>>
-int main()
-{
-	return 0;
-}
+for i in range(5):
+    print(i)
 <</>>
 
 .SH 字体样式
@@ -69,6 +69,15 @@ int main()
 以及
 \f(CW等宽字体\fP
 来强调内容。
+
+
+.PP
+<<>>
+int main()
+{
+	return 0;
+}
+<</>>
 
 .SH 链接示例
 groff 也支持链接（HTML 输出时有效）：
@@ -86,5 +95,12 @@ This is an image:
 
 <<>>
 for i in range(3):
+    print(i)
+<</>>
+
+
+
+<<>>
+for i in range(4):
     print(i)
 <</>>
