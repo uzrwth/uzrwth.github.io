@@ -91,7 +91,7 @@ groff 也支持链接（HTML 输出时有效）：
 
 .LP
 This is an image: 
-.IMG image.png 
+.IMG image.jpg 300 300
 
 
 <<>>
