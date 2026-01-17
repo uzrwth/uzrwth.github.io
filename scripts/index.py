@@ -134,7 +134,7 @@ ul.doc-list li {
 </head>
 <body>
 
-<h1>Documents</h1>
+<h1>uz's blog</h1>
 <ul class="doc-list">
 """)
 

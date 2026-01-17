@@ -25,12 +25,11 @@ for f in *.ms; do
   python ./scripts/compile.py "$f" "$DIST_DIR/${f%.ms}.html"
 done
 
-python ./scripts/index.py . $DIST_DIR/index.html"
+python ./scripts/index.py . $DIST_DIR/index.html
 
 # -----------------------------
 # 7️⃣ 生成 .nojekyll 避免 GitHub Pages 使用 Jekyll
 # -----------------------------
 touch "$DIST_DIR/.nojekyll"
 
-echo "Site build complete in $DIST_DIR"
 
