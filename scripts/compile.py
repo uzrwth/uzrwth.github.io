@@ -24,7 +24,7 @@ def main():
 
     # 4️⃣ 调用 groff，直接从内存获取 HTML
     result = subprocess.run(
-        ["groff", "-Thtml", "-ms"],
+        ["groff", "-Thtml", "-ms", "-Kutf8"],
         input=ms_content_placeholder,
         capture_output=True,
         text=True,
