@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Jan 17 09:36:18 2026 -->
+<!-- CreationDate: Sat Jan 17 17:09:31 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -35,6 +35,185 @@
 
 <p style="margin-top: 1em">Before writing code, we must
 decide how to represent sets in a .csv file.</p>
+
+<p style="margin-top: 1em"><pre><code>support,itemsets
+0.11872533300444006,frozenset({13176})
+0.05557782437099161,frozenset({47209})
+0.002081277750370005,&quot;frozenset({46979, 48679})&quot;</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import pandas
+&gt;&gt;&gt; import pandas as pd
+&gt;&gt;&gt; df = pd.read_csv(&quot;frequent_itemsets.csv&quot;)
+&gt;&gt;&gt; df.dtypes
+support     float64
+itemsets     object
+dtype: object
+&gt;&gt;&gt; df2 = pd.read_csv(&quot;groceries_basket.csv&quot;)
+&gt;&gt;&gt; df2.dtypes
+order_id                       int64
+product_id                     int64
+product_name                  object
+category                      object
+add_to_cart_sequence_index     int64
+dtype: object
+&gt;&gt;&gt;
+
+
+&gt;&gt;&gt; df2[&#x27;product_name&#x27;].values
+array([&#x27;Bulgarian Yogurt&#x27;, &#x27;Organic Celery Hearts&#x27;,
+       &#x27;Lightly Smoked Sardines in Olive Oil&#x27;, ...,
+       &#x27;Organic Unsweetened Almond Milk&#x27;, &#x27;Creamy Peanut Butter&#x27;,
+       &#x27;Broccoli Florettes&#x27;], shape=(573124,), dtype=object)
+&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;].values)
+&lt;class &#x27;numpy.ndarray&#x27;&gt;
+
+&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;].values[0])
+&lt;class &#x27;str&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">pandas&rsquo; read_csv() parses
+data into basic types: int64, float64, object.</p>
+
+<p style="margin-top: 1em">Although shown as
+&rsquo;object&rsquo; by dtypes, its real data type is
+&lt;class &rsquo;str&rsquo;&gt;.</p>
+
+<p style="margin-top: 1em">When reduced to one dimension,
+df becomes a series. <pre><code>&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;])
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">To construct a .csv file with
+strings that have &quot;,&quot; within it, we need to quote
+the string. After that, the parsing has no difference from a
+normal .csv file.</p>
+
+<p style="margin-top: 1em">To retrieve the original set
+object from the &lt;class &rsquo;str&rsquo;&gt;, there is
+the frozenset library.</p>
+
+<p style="margin-top: 1em">The ast module helps processing
+trees of the Python abstract syntax grammar. In fact, in the
+.csv file, the set is stored as a line of Python code. With
+literal_eval, we reconstruct the frozenset object from the
+literal.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import ast
+&gt;&gt;&gt; def safe_convert_frozenset(s):
+...     if s.startswith(&quot;frozenset(&quot;) and s.endswith(&quot;)&quot;):
+...         inner = s[10:-1]
+...         try:
+...             inner_value = ast.literal_eval(inner)
+...             return frozenset(inner_value)
+...         except ValueError:
+...             pass
+...     raise ValueError(&quot;Invalid frozenset format&quot;)
+...
+... freq_df = df.copy()
+... freq_df[&#x27;itemsets&#x27;] = freq_df[&#x27;itemsets&#x27;].apply(safe_convert_frozenset)
+...
+&gt;&gt;&gt; freq_df.dtypes
+support     float64
+itemsets     object
+dtype: object</code></pre></p>
+
+<p style="margin-top: 1em">Why do we need frozenset? Why
+not just using the simple set?</p>
+
+<p style="margin-top: 1em">frozenset is immutable and
+hashable. Therefore, if we want it to be used as the key in
+a dict, then we should use frozenset rather than the simple
+set.</p>
+
+<p style="margin-top: 1em">For an object to be hashable, it
+must be immutable. A string can be used as a key because it
+is immutable. Any operation on a string always creates a new
+string object.</p>
+
+<p style="margin-top: 1em"><b>something deep in
+Python</b></p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; a = frozenset({1})
+&gt;&gt;&gt; b = frozenset({1})
+&gt;&gt;&gt; id(a)
+140178894736064
+&gt;&gt;&gt; id(b)
+140178894736288
+&gt;&gt;&gt; c[a] = 9
+&gt;&gt;&gt; c[b]
+9
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; a.__hash__()
+-558064481276695278
+&gt;&gt;&gt; b.__hash__()
+-558064481276695278
+&gt;&gt;&gt;
+
+&gt;&gt;&gt; e=&quot;a&quot;
+&gt;&gt;&gt; e.__hash__()
+-3006155391340656490
+&gt;&gt;&gt; &quot;a&quot;.__hash__()
+-3006155391340656490
+
+
+&gt;&gt;&gt; a = 5
+&gt;&gt;&gt; a.__hash__()
+5
+&gt;&gt;&gt; a=1.23
+&gt;&gt;&gt; a.__hash__()
+530343892119149569
+
+&gt;&gt;&gt; type(a)
+&lt;class &#x27;float&#x27;&gt;
+&gt;&gt;&gt; type(5)
+&lt;class &#x27;int&#x27;&gt;
+
+&gt;&gt;&gt; c[{}] = 9
+Traceback (most recent call last):
+  File &quot;&lt;python-input-58&gt;&quot;, line 1, in &lt;module&gt;
+    c[{}] = 9
+    ~^^^^
+TypeError: unhashable type: &#x27;dict&#x27;
+
+&gt;&gt;&gt; t={}
+&gt;&gt;&gt; t.__hash__()
+Traceback (most recent call last):
+  File &quot;&lt;python-input-60&gt;&quot;, line 1, in &lt;module&gt;
+    t.__hash__()
+    ~~~~~~~~~~^^
+TypeError: &#x27;NoneType&#x27; object is not callable
+&gt;&gt;&gt; t.__hash__
+&gt;&gt;&gt; type(t.__hash__)
+&lt;class &#x27;NoneType&#x27;&gt;
+
+
+&gt;&gt;&gt; type(None)
+&lt;class &#x27;NoneType&#x27;&gt;
+&gt;&gt;&gt; id(None)
+94040144899728
+
+&gt;&gt;&gt; a = None
+&gt;&gt;&gt; b = None
+&gt;&gt;&gt; id(a)
+94040144899728
+&gt;&gt;&gt; id(b)
+94040144899728
+&gt;&gt;&gt; a = 3
+&gt;&gt;&gt; b = 3
+&gt;&gt;&gt; id(a)
+94040145005360
+&gt;&gt;&gt; id(b)
+94040145005360
+
+
+# COW
+
+&gt;&gt;&gt; b = 4
+&gt;&gt;&gt; id(b)
+94040145005392</code></pre></p>
+
+<p style="margin-top: 1em">Everything in Python is an
+object. We&rsquo;re getting off track, let&rsquo;s return to
+the main point.</p>
 
 <h2>mlxtend association_rules
 <a name="mlxtend association_rules"></a>
