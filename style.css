@@ -43,3 +43,20 @@ a:hover {
   color: #666;
 }
 
+ul {
+  list-style: none;
+}
+
+ul li {
+  position: relative;
+  padding-left: 1.2em;
+}
+
+ul li::before {
+  content: "■";
+  position: absolute;
+  left: 0;
+  top: 0.15em;
+  font-size: 0.6em;
+  color: #444;
+}

@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Jan 17 06:53:07 2026 -->
+<!-- CreationDate: Sat Jan 17 07:39:53 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -18,71 +18,136 @@
 
 </head>
 <body>
+<a href="index.html" class="home-button">Home</a>
 
 <h1 align="center">for hacking</h1>
+
+<a href="#some words to say about the blog">some words to say about the blog</a><br>
+<a href="#some tools for the ease of serving the blog locally">some tools for the ease of serving the blog locally</a><br>
+<a href="#me">me</a><br>
 
 <hr>
 
 
-<p style="margin-top: 1em">Data Science Msc. @RWTH</p>
+<h2>some words to say about the blog
+<a name="some words to say about the blog"></a>
+</h2>
 
-<p style="margin-top: 1em">I like sports.</p>
-
-<table width="100%" border="0" rules="none" frame="void"
-       cellspacing="0" cellpadding="0">
-<tr valign="top" align="left">
-<td width="2%">
-
-
-<p style="margin-top: 1em">&bull;</p></td>
-<td width="2%"></td>
-<td width="18%">
-
-
-<p style="margin-top: 1em">Basketball</p></td>
-<td width="78%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="2%">
-
-
-<p>&bull;</p></td>
-<td width="2%"></td>
-<td width="18%">
-
-
-<p>Skateboard</p></td>
-<td width="78%">
-</td></tr>
-<tr valign="top" align="left">
-<td width="2%">
-
-
-<p>&bull;</p></td>
-<td width="2%"></td>
-<td width="18%">
-
-
-<p>Billiard</p></td>
-<td width="78%">
-</td></tr>
-</table>
-
-
-<p style="margin-left:4%; margin-top: 1em"><img src="duck.png" alt="Image duck.png" width="300" height="300"></p>
 
 <p style="margin-top: 1em">This blog is built with groff. I
 thought about using hugo, but it makes the website fancier
 than I wanted it to be. So I chose a more traditional
-tool.</p>
+approach. A small issue with this approach is that
+groff&rsquo;s rendering of code blocks is not as well
+supported in HTML as it is in PDF. I failed to find any
+macros that output &lt;pre&gt;. Browsing through the source
+code of groff, I did find some references to PRE_TAG, but I
+am not certain about the way of invoke. Finally, I resorted
+to using Python to do some ugly placeholder and manipulating
+tricks. It seems to be working sufficiently well enough not
+to distract me from writing blogs.</p>
+
+<p style="margin-top: 1em">It&rsquo;s possible to add some
+special css and javascript to this static blog website and
+that seems to be an interesting thing to do, even if it
+doesn&rsquo;t have much significance in itself,
+there&rsquo;s at least fun in it.</p>
+
+<p style="margin-top: 1em">I am interested in code and
+maths. Posting ideas on coding here might be easier than
+posting ideas on maths, but I will try. Using images to
+illustrate maths might still be the best option I have.</p>
+
+<h2>some tools for the ease of serving the blog locally
+<a name="some tools for the ease of serving the blog locally"></a>
+</h2>
+
 
 <p style="margin-top: 1em">live reload</p>
 
 <p style="margin-top: 1em"><pre><code>browser-sync start --server --files &quot;*.html, *.css, *.js&quot;</code></pre></p>
 
-<p style="margin-top: 1em">make after Put</p>
- 
+<p style="margin-top: 1em">make after Put (in acme)</p>
+
 <p style="margin-top: 1em"><pre><code>ls *.ms| entr -r make</code></pre></p>
+
+<h2>me
+<a name="me"></a>
+</h2>
+
+
+<p style="margin-top: 1em">Data Science Msc. @RWTH</p>
+
+<p style="margin-top: 1em">Email:
+zhongjian.rong@rwth-aachen.de</p>
+
+<p style="margin-top: 1em">I like sports. <pre><code>Basketball
+Skateboard
+Billiard</code></pre></p>
+
+
+<p style="margin-top: 1em"><img src="duck.png" alt="Image duck.png" width="300" height="300"></p>
+
+<p style="margin-top: 1em">There was a very strange bug.
+After replacing with placeholders, replace(old, new, 1)
+failed to effect. This might have to do with Python&rsquo;s
+inner representation of strings and bytes. This had caused
+me some troubles many years ago, and now the nightmare is
+back.</p>
+ 
+<p style="margin-top: 1em"><pre><code>import re
+import subprocess
+import re
+import subprocess
+import sys
+import html
+
+# 占位符标记
+MARK = &quot;###CODE###&quot;
+
+def main():
+    if len(sys.argv) != 3:
+        print(f&quot;用法: python {sys.argv[0]} 输入文件.ms 输出文件.html&quot;)
+        sys.exit(1)
+
+    input_file = sys.argv[1]
+    output_file = sys.argv[2]
+
+    # 1️⃣ 读取 MS 文件
+    with open(input_file, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+        ms_content = f.read()
+
+    # 2️⃣ 提取占位符里的代码块（按顺序）
+    # 支持占位符前后空格或缩进
+    pattern = re.compile(r&quot;&lt;&lt;&gt;&gt;\s*\n(.*?)\n\s*&lt;&lt;/&gt;&gt;&quot;, re.DOTALL)
+    code_blocks = pattern.findall(ms_content)
+
+    # 3️⃣ 将原文中代码块替换为占位符
+    ms_content_placeholder = pattern.sub(MARK, ms_content)
+
+    # 4️⃣ 调用 groff，直接从内存获取 HTML
+    result = subprocess.run(
+        [&quot;groff&quot;, &quot;-Thtml&quot;, &quot;-ms&quot;, &quot;-Kutf8&quot;],
+        input=ms_content_placeholder,
+        capture_output=True,
+        text=True,
+        check=True
+    )
+    html_content = result.stdout
+
+    # 5️⃣ 按顺序回填代码块，自动 HTML 转义
+    for code in code_blocks:
+        code_html = f&quot;&lt;pre&gt;&lt;code&gt;{html.escape(code.strip())}&lt;/code&gt;&lt;/pre&gt;&quot;
+        html_content = html_content.replace(MARK, code_html, 1)  # 只替换第一个匹配
+
+    # 6️⃣ 写出最终 HTML 文件
+    with open(output_file, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+        f.write(html_content)
+
+    print(f&quot;生成完成：{output_file}&quot;)
+
+if __name__ == &quot;__main__&quot;:
+    main()</code></pre></p>
 <hr>
 </body>
 </html>
