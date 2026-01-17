@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Jan 17 17:09:31 2026 -->
+<!-- CreationDate: Sat Jan 17 21:01:56 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -212,14 +212,70 @@ TypeError: &#x27;NoneType&#x27; object is not callable
 94040145005392</code></pre></p>
 
 <p style="margin-top: 1em">Everything in Python is an
-object. We&rsquo;re getting off track, let&rsquo;s return to
-the main point.</p>
+object.</p>
+
+<p style="margin-top: 1em">We&rsquo;re getting off track,
+let&rsquo;s return to the main point.</p>
 
 <h2>mlxtend association_rules
 <a name="mlxtend association_rules"></a>
 </h2>
 
- 
+
+<p style="margin-top: 1em">checking for the source
+file:</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import mlxtend
+&gt;&gt;&gt; mlxtend.__file__
+&#x27;/home/l/micromamba/envs/py313/lib/python3.13/site-packages/mlxtend/__init__.py&#x27;</code></pre></p>
+
+<p style="margin-top: 1em"><b>some basic Python
+concepts</b></p>
+
+<p style="margin-top: 1em">There is an __init__.py in the
+directory, so mlxtend is a package.</p>
+
+<p style="margin-top: 1em">Every .py file is a module.</p>
+
+<p style="margin-top: 1em">import mlxtend: importing the
+package.</p>
+
+<p style="margin-top: 1em">from mlxtend.frequent_patterns
+import apriori, association_rules: importing functions
+apriori and association_rules.</p>
+
+<p style="margin-top: 1em">functions are also objects, of
+type &lt;class &rsquo;function&rsquo;&gt;.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; type(association_rules)
+&lt;class &#x27;function&#x27;&gt;
+&gt;&gt;&gt; def a():
+...     return 1
+...
+&gt;&gt;&gt; type(a)
+&lt;class &#x27;function&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">import foo: first check if the
+name is a directory, if yes, look for __init__.py, if found,
+then this is a package. if not, look for foo.py. if found,
+it is a module. then load it. loading a module: if the
+module object already exists, then returns. Otherwise,
+executes the code in foo.py from top to bottom, creates a
+module object and returns it.</p>
+
+<p style="margin-top: 1em">What do we need to put in
+__init__.py when we want to create a package?</p>
+
+<p style="margin-top: 1em">__init__.py can be empty if we
+just want a package.</p>
+
+<p style="margin-top: 1em">In __init__.py we can expose
+some modules. We can use __all__ to control what we want to
+expose. Without __all__, everything will be exposed.</p>
+
+<p style="margin-top: 1em"><pre><code>from .module1 import foo
+from .module2 import bar</code></pre></p>
+
 <p style="margin-top: 1em"><pre><code>from mlxtend.frequent_patterns import apriori, association_rules
 
 def safe_convert_frozenset(s):
@@ -238,6 +294,277 @@ freq_df[&#x27;itemsets&#x27;] = freq_df[&#x27;itemsets&#x27;].apply(safe_convert
 rules = association_rules(freq_df, metric=&quot;confidence&quot;, min_threshold=0.2, num_itemsets=orders_num).round(2)
 lifts = rules[&#x27;lift&#x27;]
 display(f&quot;Lift&#x27;s mean: {lifts.mean().round(2)}. Lift&#x27;s median: {lifts.median().round(2)}.&quot;)</code></pre></p>
+
+<p style="margin-top: 1em">association_rules requires df to
+have mandatory columns:</p>
+
+<p style="margin-top: 1em"><pre><code># check for mandatory columns
+    if not all(col in df.columns for col in [&quot;support&quot;, &quot;itemsets&quot;]):
+        raise ValueError(
+            &quot;Dataframe needs to contain the\
+                         columns &#x27;support&#x27; and &#x27;itemsets&#x27;&quot;
+        )</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.columns
+Index([&#x27;order_id&#x27;, &#x27;product_id&#x27;, &#x27;product_name&#x27;, &#x27;category&#x27;,
+       &#x27;add_to_cart_sequence_index&#x27;],
+      dtype=&#x27;object&#x27;)
+&gt;&gt;&gt; &#x27;order_id&#x27; in df.columns
+True
+&gt;&gt;&gt; type(df.columns)
+&lt;class &#x27;pandas.core.indexes.base.Index&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">How does &rsquo;in&rsquo; work
+in Python?</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.columns.__contains__
+&lt;bound method Index.__contains__ of Index([&#x27;order_id&#x27;, &#x27;product_id&#x27;, &#x27;product_name&#x27;, &#x27;category&#x27;,
+       &#x27;add_to_cart_sequence_index&#x27;],
+      dtype=&#x27;object&#x27;)&gt;
+&gt;&gt;&gt; a=[]
+&gt;&gt;&gt; type(a.__contains__)
+&lt;class &#x27;method-wrapper&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">If I implement a class with the
+function __contains__, then such a class works with the
+&rsquo;in&rsquo; keyword.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; class MyContainer:
+...     def __contains__(self, item):
+...         return item % 2 == 0  # only even numbers are &quot;in&quot; this container
+...
+... c = MyContainer()
+...
+... print(2 in c)  # True
+... print(3 in c)  # False
+...
+True
+False</code></pre></p>
+
+<p style="margin-top: 1em">Kulczynski similarity
+coefficient: it&rsquo;s a measure of similarity between sets
+or vectors.</p>
+
+<p style="margin-top: 1em"><pre><code>def kulczynski_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
+        conf_AC = sAC * (num_itemsets - disAC) / (sA * (num_itemsets - disA) - dis_int)
+        conf_CA = sAC * (num_itemsets - disAC) / (sC * (num_itemsets - disC) - dis_int_)
+        kulczynski = (conf_AC + conf_CA) / 2
+        return kulczynski
+
+
+ # metrics for association rules
+    metric_dict = {
+        &quot;antecedent support&quot;: lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
+        &quot;consequent support&quot;: lambda _, __, sC, ____, _____, ______, _______, ________: sC,
+        &quot;support&quot;: lambda sAC, _, __, ___, ____, _____, ______, _______: sAC,
+        &quot;confidence&quot;: lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
+            sAC * (num_itemsets - disAC)
+        )
+        / (sA * (num_itemsets - disA) - dis_int),
+        &quot;lift&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
+            &quot;confidence&quot;
+        ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
+        / sC,
+        &quot;representativity&quot;: lambda _, __, ___, disAC, ____, ______, _______, ________: (
+            num_itemsets - disAC
+        )
+        / num_itemsets,
+        &quot;leverage&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: metric_dict[
+            &quot;support&quot;
+        ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
+        - sA * sC,
+        &quot;conviction&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: conviction_helper(
+            metric_dict[&quot;confidence&quot;](
+                sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+            ),
+            sC,
+        ),
+        &quot;zhangs_metric&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: zhangs_metric_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+        &quot;jaccard&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: jaccard_metric_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+        &quot;certainty&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: certainty_metric_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+        &quot;kulczynski&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(
+            sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+        ),
+    }</code></pre></p>
+
+<p style="margin-top: 1em">What is the zip object?</p>
+
+<p style="margin-top: 1em"><pre><code>zip(*iterables, strict=False)
+
+&gt;&gt;&gt; a = range(3)
+&gt;&gt;&gt; type(a)
+&lt;class &#x27;range&#x27;&gt;
+&gt;&gt;&gt; a.__iter__()
+&lt;range_iterator object at 0x7f8f317819b0&gt;
+&gt;&gt;&gt;
+&gt;&gt;&gt; b=&#x27;abcd&#x27;
+&gt;&gt;&gt; b.__iter__()
+&lt;str_ascii_iterator object at 0x7f8f327acaf0&gt;
+&gt;
+&gt;&gt;&gt; bi = b.__iter__()
+&gt;&gt;&gt; type(bi)
+&lt;class &#x27;str_ascii_iterator&#x27;&gt;
+&gt;&gt;&gt; ai=a.__iter__()
+&gt;&gt;&gt; type(ai)
+&lt;class &#x27;range_iterator&#x27;&gt;
+
+&gt;&gt;&gt; list(zip(&#x27;abcdefg&#x27;, range(3), range(4)))
+[(&#x27;a&#x27;, 0, 0), (&#x27;b&#x27;, 1, 1), (&#x27;c&#x27;, 2, 2)]
+&gt;&gt;&gt; type(t)
+&lt;class &#x27;zip&#x27;&gt;
+&gt;&gt;&gt; t.__iter__()
+&lt;zip object at 0x7f8f31136000&gt;
+&gt;&gt;&gt; type(t.__iter__())
+&lt;class &#x27;zip&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">*iterables: * unlimited input
+parameters.</p>
+
+<p style="margin-top: 1em"><pre><code># get dict of {frequent itemset} -&gt; support
+    keys = df[&quot;itemsets&quot;].values
+    values = df[&quot;support&quot;].values
+    frozenset_vect = np.vectorize(lambda x: frozenset(x))
+    frequent_items_dict = dict(zip(frozenset_vect(keys), values))</code></pre></p>
+
+<p style="margin-top: 1em">zip: create a zip object, each
+element is a tuple of key-value.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; d = dict([(&#x27;a&#x27;, 2), (&#x27;b&#x27;, 3)])
+&gt;&gt;&gt; d
+{&#x27;a&#x27;: 2, &#x27;b&#x27;: 3}
+
+&gt;&gt;&gt; type(df[&quot;order_id&quot;].values)
+&lt;class &#x27;numpy.ndarray&#x27;&gt;
+&gt;&gt;&gt; type(df[&quot;order_id&quot;].values[0])
+&lt;class &#x27;numpy.int64&#x27;&gt;
+
+Help on class zip in module builtins:
+Help on class int64 in module numpy:
+
+import numpy
+import builtins
+
+help(numpy)
+Help on package numpy:
+
+NAME
+    numpy
+
+DESCRIPTION
+    NumPy
+    =====
+
+    Provides
+      1. An array object of arbitrary homogeneous items
+      2. Fast mathematical operations over arrays
+      3. Linear Algebra, Fourier Transforms, Random Number Generation
+
+    How to use the documentation
+    ----------------------------
+
+help(builtins)
+Help on built-in module builtins:
+
+NAME
+    builtins - Built-in functions, types, exceptions, and other objects.
+
+DESCRIPTION
+    This module provides direct access to all &#x27;built-in&#x27;
+    identifiers of Python; for example, builtins.len is
+    the full name for the built-in function len().
+
+    This module is not normally accessed explicitly by most
+    applications, but can be useful in modules that provide
+    objects with the same name as a built-in value, but in
+    which the built-in of that name is also needed.
+
+&gt;&gt;&gt; builtins.__file__
+Traceback (most recent call last):
+  File &quot;&lt;python-input-59&gt;&quot;, line 1, in &lt;module&gt;
+    builtins.__file__
+AttributeError: module &#x27;builtins&#x27; has no attribute &#x27;__file__&#x27;. Did you mean: &#x27;__name__&#x27;?
+&gt;&gt;&gt; numpy.__file__
+&#x27;/home/l/micromamba/envs/py313/lib/python3.13/site-packages/numpy/__init__.py&#x27;</code></pre></p>
+
+<p style="margin-top: 1em">The builtins module is
+implemented in Python/bltinmodule.c (cpython).</p>
+
+<p style="margin-top: 1em">builtins is a module, but numpy
+is a package.</p>
+
+<p style="margin-top: 1em"><pre><code>PyTypeObject PyFilter_Type = {
+PyTypeObject PyMap_Type = {
+PyTypeObject PyZip_Type = {
+
+    SETBUILTIN(&quot;None&quot;,                  Py_None);
+    SETBUILTIN(&quot;Ellipsis&quot;,              Py_Ellipsis);
+    SETBUILTIN(&quot;NotImplemented&quot;,        Py_NotImplemented);
+    SETBUILTIN(&quot;False&quot;,                 Py_False);
+    SETBUILTIN(&quot;True&quot;,                  Py_True);
+    SETBUILTIN(&quot;bool&quot;,                  &amp;PyBool_Type);
+    SETBUILTIN(&quot;memoryview&quot;,        &amp;PyMemoryView_Type);
+    SETBUILTIN(&quot;bytearray&quot;,             &amp;PyByteArray_Type);
+    SETBUILTIN(&quot;bytes&quot;,                 &amp;PyBytes_Type);
+    SETBUILTIN(&quot;classmethod&quot;,           &amp;PyClassMethod_Type);
+    SETBUILTIN(&quot;complex&quot;,               &amp;PyComplex_Type);
+    SETBUILTIN(&quot;dict&quot;,                  &amp;PyDict_Type);
+    SETBUILTIN(&quot;enumerate&quot;,             &amp;PyEnum_Type);
+    SETBUILTIN(&quot;filter&quot;,                &amp;PyFilter_Type);
+    SETBUILTIN(&quot;float&quot;,                 &amp;PyFloat_Type);
+    SETBUILTIN(&quot;frozenset&quot;,             &amp;PyFrozenSet_Type);
+
+    SETBUILTIN(&quot;dict&quot;,                  &amp;PyDict_Type);</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; type(numpy)
+&lt;class &#x27;module&#x27;&gt;
+&gt;&gt;&gt; type(numpy.int64)
+&lt;class &#x27;type&#x27;&gt;
+&gt;&gt;&gt; type(builtins)
+&lt;class &#x27;module&#x27;&gt;</code></pre></p>
+
+<p style="margin-top: 1em">Both packages and modules are
+represented as &lt;class &rsquo;module&rsquo;&gt; in
+Python&rsquo;s runtime.</p>
+
+<p style="margin-top: 1em">packages and modules are mostly
+the same. A package in its nature is no more than modules
+living in a namespace specified by __init__.py.</p>
+
+<p style="margin-top: 1em">Now that association_rules has
+built the frequent_items_dict. It&rsquo;s time to collect
+frequent rules.</p>
+
+<p style="margin-top: 1em"><pre><code># prepare buckets to collect frequent rules
+    rule_antecedents = []
+    rule_consequents = []
+    rule_supports = []</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>null_values : bool (default: False)
+      In case there are null values as NaNs in the original input data
+
+
+    # if null values exist, df_orig must be provided
+    if null_values and df_orig is None:
+        raise TypeError(&quot;If null values exist, df_orig must be provided.&quot;)
+    # if null values exist, num_itemsets must be provided
+    if null_values and num_itemsets == 1:
+        raise TypeError(&quot;If null values exist, num_itemsets must be provided.&quot;)
+
+
+    for k in frequent_items_dict.keys():
+        sAC = frequent_items_dict[k]
+        # to find all possible combinations</code></pre></p>
+
+<p style="margin-top: 1em">Iteration through a dict with
+.keys() is not as efficient as with .items(). Because with
+.keys(), it needs one more indexing step to fetch the
+value.</p>
 <hr>
 </body>
 </html>
