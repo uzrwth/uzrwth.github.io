@@ -1,3 +1,16 @@
+.de PRE    \" 开始代码块
+.sp \\n[PD]u
+.nf          \" 不填充文本
+.ft CW       \" 使用等宽字体
+.in +4n      \" 缩进
+..
+.de PE      \" 结束代码块
+.in          \" 恢复缩进
+.ft          \" 恢复字体
+.fi          \" 恢复填充
+.sp \\n[PD]u
+..
+
 .\" ===============================
 .\" groff 文档 Demo（-ms 宏包）
 .\" ===============================
@@ -42,13 +55,6 @@ groff 会自动进行断行和排版。
 .SH 代码块示例
 下面是一个等宽、保持格式的代码块：
 
-.LP
-[[CODEBLOCK]]
-print("Hello")
-for i in range(3):
-    print(i)
-[[ENDCODEBLOCK]]
-
 .SH 字体样式
 你可以使用
 \fB粗体\fP、
@@ -67,4 +73,11 @@ groff 也支持链接（HTML 输出时有效）：
 技术文档或博客文章所需的核心功能。
 
 .LP
-This is an image: [[IMAGE:image.jpg]]
+This is an image: 
+.IMG image.png 300 300
+
+
+<<>>
+for i in range(3):
+    print(i)
+<</>>
