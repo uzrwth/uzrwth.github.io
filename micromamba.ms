@@ -10,3 +10,9 @@ Then I did some research and tried to use pyenv. However, pyenv is still too int
 
 Then I learnt about micromamba. It does seem that micromamba offers a promising solution. I can created different environments with different Python versions and export the environment.yml file. With this file alone, anyone is able to recreate the environment I setup on my machine. 
 
+
+<<>>
+micromamba env list
+micromamba activate py313
+<</>>
+

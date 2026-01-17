@@ -8,7 +8,7 @@ some words to say about the blog
 
 .LP
 
-This blog is built with groff. I thought about using hugo, but it makes the website fancier than I wanted it to be. So I chose a more traditional approach. A small issue with this approach is that groff’s rendering of code blocks is not as well supported in HTML as it is in PDF. I failed to find any macros that output <pre>. Browsing through the source code of groff, I did find some references to PRE_TAG, but I am not certain about the way of invoke. Finally, I resorted to using Python to do some ugly placeholder and manipulating tricks. It seems to be working sufficiently well enough not to distract me from writing blogs. 
+This blog is built with groff. I thought about using hugo, but it makes the website fancier than I wanted it to be. So I chose a more traditional approach. A small issue with this approach is that groff’s rendering of code blocks is not as well supported in HTML as it is in PDF. I failed to find any macros that output <pre>. Browsing through the source code of groff, I did find some references to PRE_TAG, but I am not certain about the way of invoke. Finally, I resorted to using Python to do some ugly placeholder and maneuver. It seems to be working sufficiently well enough not to distract me from writing blogs. 
 
 It's possible to add some special css and javascript to this static blog website and that seems to be an interesting thing to do, even if it doesn't have much significance in itself, there's at least fun in it.
 
