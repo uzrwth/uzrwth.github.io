@@ -23,6 +23,8 @@ cp images/* "$DIST_DIR/"
 # -----------------------------
 for f in *.ms; do
   python ./scripts/compile.py "$f" "$DIST_DIR/${f%.ms}.html"
+  sed -i '/<\/title>/a\<link rel="stylesheet" href="style.css">' "$DIST_DIR/${f%.ms}.html"
+
 done
 
 python ./scripts/index.py . $DIST_DIR/index.html
