@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Jan 18 15:58:57 2026 -->
+<!-- CreationDate: Sun Jan 18 16:09:16 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -871,6 +871,25 @@ True.</p>
 
 <p style="margin-top: 1em">The result is a Series with
 column names as indices.</p>
+
+<p style="margin-top: 1em"><pre><code>df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+            .all()
+            .all()
+
+&gt;&gt;&gt; df.all().all()
+np.False_
+&gt;&gt;&gt; t=df.all().all()
+&gt;&gt;&gt; t.__bool__()
+False
+&gt;&gt;&gt; False.__bool__()
+False</code></pre></p>
+
+<p style="margin-top: 1em">By applying all() for 2 times,
+this line checks whether all values in the 2-dimensional
+matrix are all True values.</p>
+
+<p style="margin-top: 1em">Applying all() on a Series
+reduces a Series to a single value.</p>
 <hr>
 </body>
 </html>
