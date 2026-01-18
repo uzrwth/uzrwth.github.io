@@ -18,6 +18,8 @@ cp style/* "$DIST_DIR/"
 cp images/* "$DIST_DIR/"
 
 
+python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
+
 # -----------------------------
 # 2️⃣ 编译所有 .ms 文件 -> HTML
 # -----------------------------
@@ -29,7 +31,6 @@ for f in *.ms; do
 
 done
 
-python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
 
 # -----------------------------
 # 7️⃣ 生成 .nojekyll 避免 GitHub Pages 使用 Jekyll
