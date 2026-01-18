@@ -186,7 +186,7 @@ TypeError: 'NoneType' object is not callable
 
 <</>>
 
-Everything in Python is an object. 
+Everything in Python is an object.
 
 We’re getting off track, let’s return to the main point.
 
@@ -560,3 +560,175 @@ Now that association_rules has built the frequent_items_dict. It's time to colle
 Iteration through a dict with .keys() is not as efficient as with .items(). Because with .keys(), it needs one more indexing step to fetch the value.
 
 
+<<>>
+        # to find all possible combinations
+        for idx in range(len(k) - 1, 0, -1):
+            # of antecedent and consequent
+
+>>> for i in range(5, 0, -1):
+...     print(i)
+...
+5
+4
+3
+2
+1
+>>> for i in range(0, 5):
+...     print(i)
+...
+0
+1
+2
+3
+4
+
+>>> a=frozenset({1,2})
+>>> b=frozenset({2,1})
+>>> a
+frozenset({1, 2})
+>>> b
+frozenset({1, 2})
+>>> a==b
+True
+
+>>> for i in range(0, 0, -1):
+...     print(i)
+...
+>>>
+
+# loops: 0
+<</>>
+
+<<>>
+from itertools import combinations
+
+            # of antecedent and consequent
+            for c in combinations(k, r=idx):
+                antecedent = frozenset(c)
+                consequent = k.difference(antecedent)
+
+class combinations(builtins.object)
+ |  combinations(iterable, r)
+ |
+ |  Return successive r-length combinations of elements in the iterable.
+ |
+ |  combinations(range(4), 3) --> (0,1,2), (0,1,3), (0,2,3), (1,2,3)
+<</>>
+
+The support_only parameter:
+
+<<>>
+                    try:
+                        sA = frequent_items_dict[antecedent]
+                        sC = frequent_items_dict[consequent]
+
+
+                    except KeyError as e:
+                        s = (
+                            str(e) + "You are likely getting this error"
+                            " because the DataFrame is missing "
+                            " antecedent and/or consequent "
+                            " information."
+                            " You can try using the "
+                            " `support_only=True` option"
+                        )
+                        raise KeyError(s)
+
+    support_only : bool (default: False)
+      Only computes the rule support and fills the other
+      metric columns with NaNs. This is useful if:
+
+      a) the input DataFrame is incomplete, e.g., does
+      not contain support values for all rule antecedents
+      and consequents
+
+      b) you simply want to speed up the computation because
+      you don't need the other metrics.
+
+<</>>
+
+If a set is a frequent itemset, then all of its subsets are also frequent itemsets. This means we won't need to use the support_only in most cases.
+
+How does it handle with null_values?
+<<>>
+
+
+    # if null values exist, df_orig must be provided
+    if null_values and df_orig is None:
+        raise TypeError("If null values exist, df_orig must be provided.")
+
+    # check for valid input
+    fpc.valid_input_check(df_orig, null_values)
+
+<</>>
+
+<<>>
+>>> df.shape
+(1977, 2)
+>>> df.shape[0]
+1977
+>>> len(df)
+1977
+
+>>> hasattr(df, "sparse")
+False
+>>> hasattr(df, "dtypes")
+True
+>>> hasattr(df, "groupby")
+True
+
+Help on built-in function hasattr in module builtins:
+
+hasattr(obj, name, /)
+    Return whether the object has an attribute with the given name.
+
+    This is done by calling getattr(obj, name) and catching AttributeError.
+<</>>
+
+df.dtypes is a series.
+
+<<>>
+>>> df.dtypes
+support     float64
+itemsets     object
+dtype: object
+>>> type(df.dtypes)
+<class 'pandas.core.series.Series'>
+
+
+    if f"{type(df)}" == "<class 'pandas.core.frame.SparseDataFrame'>":
+        msg = (
+            "SparseDataFrame support has been deprecated in pandas 1.0,"
+            " and is no longer supported in mlxtend. "
+            " Please"
+            " see the pandas migration guide at"
+            " https://pandas.pydata.org/pandas-docs/"
+            "stable/user_guide/sparse.html#sparse-data-structures"
+            " for supporting sparse data in DataFrames."
+        )
+        raise TypeError(msg)
+
+    # Fast path: if all columns are boolean, there is nothing to checks
+    if null_values:
+        all_bools = (
+            df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+            .all()
+            .all()
+        )
+    else:
+        all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
+    if not all_bools:
+        ...
+
+
+Help on function is_bool_dtype in module pandas.core.dtypes.common:
+
+is_bool_dtype(arr_or_dtype) -> 'bool'
+    Check whether the provided array or dtype is of a boolean dtype.
+
+>>> df["a"]=False
+>>> pd.api.types.is_bool_dtype(df["a"])
+True
+>>> pd.api.types.is_bool_dtype([True])
+False
+<</>>

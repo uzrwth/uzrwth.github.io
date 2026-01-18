@@ -31,7 +31,7 @@ browser-sync start --server --files "*.html, *.css, *.js"
 make after Put (in acme)
 
 <<>>
-ls *.ms| entr -r make
+find . -maxdepth 1 -name '*.ms' | entr -dr make
 <</>>
 
 

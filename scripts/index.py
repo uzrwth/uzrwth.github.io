@@ -28,13 +28,11 @@ def git_first_commit_time(path: str) -> int:
     try:
         result = subprocess.run(
             [
-                "git",
-                "log",
+                "git", "log",
                 "--diff-filter=A",
                 "--follow",
                 "--format=%ct",
-                "--",
-                path,
+                "--", path,
             ],
             capture_output=True,
             text=True,
@@ -48,112 +46,58 @@ def git_first_commit_time(path: str) -> int:
     return 0
 
 
+def render_template(template: str, **kwargs) -> str:
+    for k, v in kwargs.items():
+        template = template.replace(f"{{{{ {k} }}}}", v)
+    return template
+
+
 def main():
-    if len(sys.argv) != 3:
-        print(f"用法: python {sys.argv[0]} <ms目录> <输出.html>")
+    if len(sys.argv) != 4:
+        print(f"用法: python {sys.argv[0]} <ms目录> <模板.html> <输出.html>")
         sys.exit(1)
 
     docs_dir = Path(sys.argv[1])
-    output_html = Path(sys.argv[2])
+    template_path = Path(sys.argv[2])
+    output_html = Path(sys.argv[3])
 
-    if not docs_dir.is_dir():
-        print(f"错误：{docs_dir} 不是目录")
-        sys.exit(1)
+    template = template_path.read_text(encoding="utf-8")
 
     entries = []
 
     for ms_file in docs_dir.glob("*.ms"):
-        with open(ms_file, encoding="utf-8") as f:
-            content = f.read()
-
+        content = ms_file.read_text(encoding="utf-8")
         title = extract_title_from_ms(content) or ms_file.stem
-        html_file = ms_file.with_suffix(".html").name
         ts = git_first_commit_time(str(ms_file))
 
         date_str = (
             datetime.fromtimestamp(ts).strftime("%Y-%m-%d")
-            if ts > 0 else ""
+            if ts else ""
         )
 
-        entries.append((ts, date_str, html_file, title))
+        entries.append((ts, date_str, ms_file.with_suffix(".html").name, title))
 
-    # 按 Git 首次提交时间排序（早 → 晚）
     entries.sort(key=lambda x: x[0], reverse=True)
 
-    with open(output_html, "w", encoding="utf-8") as f:
-        f.write("""<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<title>uz's blog</title>
-<style>
-body {
-    max-width: 900px;
-    margin: 3em auto;
-    padding: 0 1em;
-    font-family: -apple-system, BlinkMacSystemFont,
-                 "Segoe UI", Helvetica, Arial, sans-serif;
-    color: #222;
-    background: #fff;
-}
-
-h1 {
-    font-weight: 600;
-    margin-bottom: 1.5em;
-}
-
-ul.doc-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-ul.doc-list li {
-    display: flex;
-    gap: 1.2em;
-    padding: 0.4em 0;
-    border-bottom: 1px solid #eee;
-}
-
-.doc-date {
-    color: #888;
-    font-family: monospace;
-    min-width: 7em;
-    text-align: right;
-}
-
-.doc-title a {
-    color: #0066cc;
-    text-decoration: none;
-}
-
-.doc-title a:hover {
-    text-decoration: underline;
-}
-</style>
-</head>
-<body>
-
-<ul class="doc-list">
-""")
-
-        for _, date_str, href, title in entries:
-            f.write(
-                f"""<li>
-  <span class="doc-date">{date_str}</span>
-  <span class="doc-title">
+    items_html = []
+    for _, date_str, href, title in entries:
+        items_html.append(
+            f"""<li class="item">
+  <span class="item-date">{date_str}</span>
+  <span class="item-title">
     <a href="{href}">{html.escape(title)}</a>
   </span>
-</li>
-"""
-            )
+</li>"""
+        )
 
-        f.write("""
-</ul>
-</body>
-</html>
-""")
+    final_html = render_template(
+        template,
+        title="uz's blog",
+        css_path="../style/list.css",
+        items="\n".join(items_html),
+    )
 
+    output_html.write_text(final_html, encoding="utf-8")
     print(f"生成完成：{output_html}")
 
 
