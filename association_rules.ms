@@ -731,4 +731,144 @@ is_bool_dtype(arr_or_dtype) -> 'bool'
 True
 >>> pd.api.types.is_bool_dtype([True])
 False
+
+>>> isinstance(1, int)
+True
+
+
+>>> df.apply(lambda x: print(type(x)))
+<class 'pandas.core.series.Series'>
+<class 'pandas.core.series.Series'>
+<class 'pandas.core.series.Series'>
+support     None
+itemsets    None
+a           None
+dtype: object
+>>> df
+       support                      itemsets      a
+0     0.118725            frozenset({13176})  False
+1     0.055578            frozenset({47209})  False
+2     0.015432            frozenset({22035})  False
+3     0.008048            frozenset({10246})  False
+4     0.029462            frozenset({46979})  False
+...        ...                           ...    ...
+1972  0.003176     frozenset({46906, 24852})  False
+1973  0.001542     frozenset({46906, 21903})  False
+1974  0.001634     frozenset({18523, 24852})  False
+1975  0.001788     frozenset({33754, 33787})  False
+1976  0.001788  frozenset({33754, 99933787})  False
+
+[1977 rows x 3 columns]
+
+Help on method apply in module pandas.core.frame:
+
+apply(
+    func: 'AggFuncType',
+    axis: 'Axis' = 0,
+    raw: 'bool' = False,
+    result_type: "Literal['expand', 'reduce', 'broadcast'] | None" = None,
+    args=(),
+    by_row: "Literal[False, 'compat']" = 'compat',
+    engine: "Literal['python', 'numba']" = 'python',
+    engine_kwargs: 'dict[str, bool] | None' = None,
+    **kwargs
+) method of pandas.core.frame.DataFrame instance
+    Apply a function along an axis of the DataFrame.
+
+    Objects passed to the function are Series objects whose index is
+    either the DataFrame's index (``axis=0``) or the DataFrame's columns
+    (``axis=1``). By default (``result_type=None``), the final return type
+    is inferred from the return type of the applied function. Otherwise,
+    it depends on the `result_type` argument.
+
+df.apply(func, axis=0) # default axis=0
 <</>>
+
+
+axis=0: move in the direction of rows, that is, to apply on a column
+
+axis=1: move in the direction of columns, that is, to apply on a row
+
+The default axis is 0, therefore, df.apply applies the function on columns.
+
+<<>>
+>>> df.apply(lambda x: print(1))
+1
+1
+1
+support     None
+itemsets    None
+a           None
+dtype: object
+
+>>> b=df.apply(lambda x: print(1))
+1
+1
+1
+>>> b
+support     None
+itemsets    None
+a           None
+dtype: object
+
+>>> type(b)
+<class 'pandas.core.series.Series'>
+
+>>> b=df.apply(lambda x: 1)
+>>> b
+support     1
+itemsets    1
+a           1
+dtype: int64
+>>> b.dtype
+dtype('int64')
+
+>>> df.apply(lambda x: type(x.dtype))
+support     <class 'numpy.dtypes.Float64DType'>
+itemsets     <class 'numpy.dtypes.ObjectDType'>
+a              <class 'numpy.dtypes.BoolDType'>
+dtype: object
+<</>>
+
+
+This line iterates through columns of df, and for each column (type Series) iterates through each value, and for each value checks isna or isinstance.
+
+The shape of the resulting df is the same as the original, but values are transformed into bools.
+
+<<>>
+            df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+
+>>> b = df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+>>> type(b)
+<class 'pandas.core.frame.DataFrame'>
+>>> b
+      support  itemsets     a
+0       False     False  True
+1       False     False  True
+2       False     False  True
+3       False     False  True
+4       False     False  True
+...       ...       ...   ...
+1972    False     False  True
+1973    False     False  True
+1974    False     False  True
+1975    False     False  True
+1976    False     False  True
+
+[1977 rows x 3 columns]
+
+
+Help on method all in module pandas.core.frame:
+
+all(
+    axis: 'Axis | None' = 0,
+    bool_only: 'bool' = False,
+    skipna: 'bool' = True,
+    **kwargs
+) -> 'Series | bool' method of pandas.core.frame.DataFrame instance
+    Return whether all elements are True, potentially over an axis.
+<</>>
+
+Without specifying axis, all() iterates through all columns (in the direction of rows), treated each column as an array and checks if all values are True.
+
+The result is a Series with column names as indices.
