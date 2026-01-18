@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sat Jan 17 21:01:56 2026 -->
+<!-- CreationDate: Sun Jan 18 15:58:57 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -565,6 +565,312 @@ frequent rules.</p>
 .keys() is not as efficient as with .items(). Because with
 .keys(), it needs one more indexing step to fetch the
 value.</p>
+
+<p style="margin-top: 1em"><pre><code># to find all possible combinations
+        for idx in range(len(k) - 1, 0, -1):
+            # of antecedent and consequent
+
+&gt;&gt;&gt; for i in range(5, 0, -1):
+...     print(i)
+...
+5
+4
+3
+2
+1
+&gt;&gt;&gt; for i in range(0, 5):
+...     print(i)
+...
+0
+1
+2
+3
+4
+
+&gt;&gt;&gt; a=frozenset({1,2})
+&gt;&gt;&gt; b=frozenset({2,1})
+&gt;&gt;&gt; a
+frozenset({1, 2})
+&gt;&gt;&gt; b
+frozenset({1, 2})
+&gt;&gt;&gt; a==b
+True
+
+&gt;&gt;&gt; for i in range(0, 0, -1):
+...     print(i)
+...
+&gt;&gt;&gt;
+
+# loops: 0</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>from itertools import combinations
+
+            # of antecedent and consequent
+            for c in combinations(k, r=idx):
+                antecedent = frozenset(c)
+                consequent = k.difference(antecedent)
+
+class combinations(builtins.object)
+ |  combinations(iterable, r)
+ |
+ |  Return successive r-length combinations of elements in the iterable.
+ |
+ |  combinations(range(4), 3) --&gt; (0,1,2), (0,1,3), (0,2,3), (1,2,3)</code></pre></p>
+
+<p style="margin-top: 1em">The support_only parameter:</p>
+
+<p style="margin-top: 1em"><pre><code>try:
+                        sA = frequent_items_dict[antecedent]
+                        sC = frequent_items_dict[consequent]
+
+
+                    except KeyError as e:
+                        s = (
+                            str(e) + &quot;You are likely getting this error&quot;
+                            &quot; because the DataFrame is missing &quot;
+                            &quot; antecedent and/or consequent &quot;
+                            &quot; information.&quot;
+                            &quot; You can try using the &quot;
+                            &quot; `support_only=True` option&quot;
+                        )
+                        raise KeyError(s)
+
+    support_only : bool (default: False)
+      Only computes the rule support and fills the other
+      metric columns with NaNs. This is useful if:
+
+      a) the input DataFrame is incomplete, e.g., does
+      not contain support values for all rule antecedents
+      and consequents
+
+      b) you simply want to speed up the computation because
+      you don&#x27;t need the other metrics.</code></pre></p>
+
+<p style="margin-top: 1em">If a set is a frequent itemset,
+then all of its subsets are also frequent itemsets. This
+means we won&rsquo;t need to use the support_only in most
+cases.</p>
+
+<p style="margin-top: 1em">How does it handle with
+null_values? <pre><code># if null values exist, df_orig must be provided
+    if null_values and df_orig is None:
+        raise TypeError(&quot;If null values exist, df_orig must be provided.&quot;)
+
+    # check for valid input
+    fpc.valid_input_check(df_orig, null_values)</code></pre></p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.shape
+(1977, 2)
+&gt;&gt;&gt; df.shape[0]
+1977
+&gt;&gt;&gt; len(df)
+1977
+
+&gt;&gt;&gt; hasattr(df, &quot;sparse&quot;)
+False
+&gt;&gt;&gt; hasattr(df, &quot;dtypes&quot;)
+True
+&gt;&gt;&gt; hasattr(df, &quot;groupby&quot;)
+True
+
+Help on built-in function hasattr in module builtins:
+
+hasattr(obj, name, /)
+    Return whether the object has an attribute with the given name.
+
+    This is done by calling getattr(obj, name) and catching AttributeError.</code></pre></p>
+
+<p style="margin-top: 1em">df.dtypes is a series.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.dtypes
+support     float64
+itemsets     object
+dtype: object
+&gt;&gt;&gt; type(df.dtypes)
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+
+
+    if f&quot;{type(df)}&quot; == &quot;&lt;class &#x27;pandas.core.frame.SparseDataFrame&#x27;&gt;&quot;:
+        msg = (
+            &quot;SparseDataFrame support has been deprecated in pandas 1.0,&quot;
+            &quot; and is no longer supported in mlxtend. &quot;
+            &quot; Please&quot;
+            &quot; see the pandas migration guide at&quot;
+            &quot; https://pandas.pydata.org/pandas-docs/&quot;
+            &quot;stable/user_guide/sparse.html#sparse-data-structures&quot;
+            &quot; for supporting sparse data in DataFrames.&quot;
+        )
+        raise TypeError(msg)
+
+    # Fast path: if all columns are boolean, there is nothing to checks
+    if null_values:
+        all_bools = (
+            df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+            .all()
+            .all()
+        )
+    else:
+        all_bools = df.dtypes.apply(pd.api.types.is_bool_dtype).all()
+    if not all_bools:
+        ...
+
+
+Help on function is_bool_dtype in module pandas.core.dtypes.common:
+
+is_bool_dtype(arr_or_dtype) -&gt; &#x27;bool&#x27;
+    Check whether the provided array or dtype is of a boolean dtype.
+
+&gt;&gt;&gt; df[&quot;a&quot;]=False
+&gt;&gt;&gt; pd.api.types.is_bool_dtype(df[&quot;a&quot;])
+True
+&gt;&gt;&gt; pd.api.types.is_bool_dtype([True])
+False
+
+&gt;&gt;&gt; isinstance(1, int)
+True
+
+
+&gt;&gt;&gt; df.apply(lambda x: print(type(x)))
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+support     None
+itemsets    None
+a           None
+dtype: object
+&gt;&gt;&gt; df
+       support                      itemsets      a
+0     0.118725            frozenset({13176})  False
+1     0.055578            frozenset({47209})  False
+2     0.015432            frozenset({22035})  False
+3     0.008048            frozenset({10246})  False
+4     0.029462            frozenset({46979})  False
+...        ...                           ...    ...
+1972  0.003176     frozenset({46906, 24852})  False
+1973  0.001542     frozenset({46906, 21903})  False
+1974  0.001634     frozenset({18523, 24852})  False
+1975  0.001788     frozenset({33754, 33787})  False
+1976  0.001788  frozenset({33754, 99933787})  False
+
+[1977 rows x 3 columns]
+
+Help on method apply in module pandas.core.frame:
+
+apply(
+    func: &#x27;AggFuncType&#x27;,
+    axis: &#x27;Axis&#x27; = 0,
+    raw: &#x27;bool&#x27; = False,
+    result_type: &quot;Literal[&#x27;expand&#x27;, &#x27;reduce&#x27;, &#x27;broadcast&#x27;] | None&quot; = None,
+    args=(),
+    by_row: &quot;Literal[False, &#x27;compat&#x27;]&quot; = &#x27;compat&#x27;,
+    engine: &quot;Literal[&#x27;python&#x27;, &#x27;numba&#x27;]&quot; = &#x27;python&#x27;,
+    engine_kwargs: &#x27;dict[str, bool] | None&#x27; = None,
+    **kwargs
+) method of pandas.core.frame.DataFrame instance
+    Apply a function along an axis of the DataFrame.
+
+    Objects passed to the function are Series objects whose index is
+    either the DataFrame&#x27;s index (``axis=0``) or the DataFrame&#x27;s columns
+    (``axis=1``). By default (``result_type=None``), the final return type
+    is inferred from the return type of the applied function. Otherwise,
+    it depends on the `result_type` argument.
+
+df.apply(func, axis=0) # default axis=0</code></pre></p>
+
+<p style="margin-top: 1em">axis=0: move in the direction of
+rows, that is, to apply on a column</p>
+
+<p style="margin-top: 1em">axis=1: move in the direction of
+columns, that is, to apply on a row</p>
+
+<p style="margin-top: 1em">The default axis is 0,
+therefore, df.apply applies the function on columns.</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.apply(lambda x: print(1))
+1
+1
+1
+support     None
+itemsets    None
+a           None
+dtype: object
+
+&gt;&gt;&gt; b=df.apply(lambda x: print(1))
+1
+1
+1
+&gt;&gt;&gt; b
+support     None
+itemsets    None
+a           None
+dtype: object
+
+&gt;&gt;&gt; type(b)
+&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+
+&gt;&gt;&gt; b=df.apply(lambda x: 1)
+&gt;&gt;&gt; b
+support     1
+itemsets    1
+a           1
+dtype: int64
+&gt;&gt;&gt; b.dtype
+dtype(&#x27;int64&#x27;)
+
+&gt;&gt;&gt; df.apply(lambda x: type(x.dtype))
+support     &lt;class &#x27;numpy.dtypes.Float64DType&#x27;&gt;
+itemsets     &lt;class &#x27;numpy.dtypes.ObjectDType&#x27;&gt;
+a              &lt;class &#x27;numpy.dtypes.BoolDType&#x27;&gt;
+dtype: object</code></pre></p>
+
+<p style="margin-top: 1em">This line iterates through
+columns of df, and for each column (type Series) iterates
+through each value, and for each value checks isna or
+isinstance.</p>
+
+<p style="margin-top: 1em">The shape of the resulting df is
+the same as the original, but values are transformed into
+bools.</p>
+
+<p style="margin-top: 1em"><pre><code>df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+
+&gt;&gt;&gt; b = df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+&gt;&gt;&gt; type(b)
+&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;
+&gt;&gt;&gt; b
+      support  itemsets     a
+0       False     False  True
+1       False     False  True
+2       False     False  True
+3       False     False  True
+4       False     False  True
+...       ...       ...   ...
+1972    False     False  True
+1973    False     False  True
+1974    False     False  True
+1975    False     False  True
+1976    False     False  True
+
+[1977 rows x 3 columns]
+
+
+Help on method all in module pandas.core.frame:
+
+all(
+    axis: &#x27;Axis | None&#x27; = 0,
+    bool_only: &#x27;bool&#x27; = False,
+    skipna: &#x27;bool&#x27; = True,
+    **kwargs
+) -&gt; &#x27;Series | bool&#x27; method of pandas.core.frame.DataFrame instance
+    Return whether all elements are True, potentially over an axis.</code></pre></p>
+
+<p style="margin-top: 1em">Without specifying axis, all()
+iterates through all columns (in the direction of rows),
+treated each column as an array and checks if all values are
+True.</p>
+
+<p style="margin-top: 1em">The result is a Series with
+column names as indices.</p>
 <hr>
 </body>
 </html>
