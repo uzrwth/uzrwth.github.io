@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Jan 18 16:09:16 2026 -->
+<!-- CreationDate: Sun Jan 18 17:28:30 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -890,6 +890,207 @@ matrix are all True values.</p>
 
 <p style="margin-top: 1em">Applying all() on a Series
 reduces a Series to a single value.</p>
+
+<p style="margin-top: 1em">valid_input_check returns
+nothing. It raises an exception only if it finds the data
+invalid. Whether the data is all True or nothing, it
+won&rsquo;t matter.</p>
+
+<p style="margin-top: 1em">In association_rules(), it
+checks for df_orig, which defaults to None, hence this check
+never fails for our case.</p>
+
+<p style="margin-top: 1em"><pre><code># check for valid input
+    fpc.valid_input_check(df_orig, null_values)</code></pre></p>
+
+<p style="margin-top: 1em">Supports of antecedent and
+consequent.</p>
+
+<p style="margin-top: 1em"><pre><code>sA = frequent_items_dict[antecedent]
+                        sC = frequent_items_dict[consequent]
+
+                        # if the input dataframe is complete
+                        if not null_values:
+                            disAC, disA, disC, dis_int, dis_int_ = 0, 0, 0, 0, 0
+
+                        else:
+                            an = list(antecedent)</code></pre></p>
+
+<p style="margin-top: 1em">A large part of the code handles
+the case with null_values = True. In our case, we passed in
+df and used the default null_values = False.</p>
+
+<p style="margin-top: 1em">Hence, we jump directly to the
+core logic.</p>
+
+<p style="margin-top: 1em"><pre><code>score = metric_dict[metric](
+                    sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+                )
+                if score &gt;= min_threshold:
+                    rule_antecedents.append(antecedent)
+                    rule_consequents.append(consequent)
+                    rule_supports.append(
+                        [sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_]
+                    )</code></pre></p>
+
+<p style="margin-top: 1em">We keep the rule if we found it
+larger than the min_threshold.</p>
+
+<p style="margin-top: 1em">These dis* values are all zeros
+because our input dataframe is complete.</p>
+
+<p style="margin-top: 1em">The computation for the
+confidence metric is simple:</p>
+
+<p style="margin-top: 1em"><pre><code>&quot;confidence&quot;: lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
+            sAC * (num_itemsets - disAC)
+        )
+        / (sA * (num_itemsets - disA) - dis_int),</code></pre></p>
+
+<p style="margin-top: 1em">The dis* prefix means disabled.
+In our case, our df is complete, so there are no disabled
+itemsets.</p>
+
+<p style="margin-top: 1em">In our case, since df is a
+complete dataframe, the value of num_itemsets is canceled
+out.</p>
+
+<p style="margin-top: 1em">Basically,
+&quot;confidence&quot; computes the probability of: if A
+happens, then what is the probability of C happens.
+P(C|A).</p>
+
+<p style="margin-top: 1em">Association rules are computed
+only from frequent itemsets with at least two items.</p>
+
+<p style="margin-top: 1em">In Python, if we loaded a
+module, and then we modified it in the source code and
+import again, the module doesn&rsquo;t get changed. Because
+the runtime thinks the module has been loaded already, the
+duplicated import statement will be ignored.</p>
+
+<p style="margin-top: 1em">To force a reload, use this:</p>
+
+<p style="margin-top: 1em"><pre><code>importlib.reload(mymodule)</code></pre></p>
+
+<p style="margin-top: 1em">To check an empty list:</p>
+
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; a=[]
+&gt;&gt;&gt; if a:
+...     print(1)
+...
+&gt;&gt;&gt; a=[1]
+&gt;&gt;&gt; if a:
+...     print(1)
+...
+1
+
+
+
+    # check if frequent rule was generated
+    if not rule_supports:
+        return pd.DataFrame(columns=[&quot;antecedents&quot;, &quot;consequents&quot;] + return_metrics)
+
+    else:
+        # generate metrics
+        rule_supports = np.array(rule_supports).T.astype(float)
+
+_metrics = [
+    &quot;antecedent support&quot;,
+    &quot;consequent support&quot;,
+    &quot;support&quot;,
+    &quot;confidence&quot;,
+    &quot;lift&quot;,
+    &quot;representativity&quot;,
+    &quot;leverage&quot;,
+    &quot;conviction&quot;,
+    &quot;zhangs_metric&quot;,
+    &quot;jaccard&quot;,
+    &quot;certainty&quot;,
+    &quot;kulczynski&quot;,
+]</code></pre></p>
+
+<p style="margin-top: 1em">Construct the output:</p>
+
+<p style="margin-top: 1em"><pre><code># generate metrics
+        rule_supports = np.array(rule_supports).T.astype(float)
+        df_res = pd.DataFrame(
+            data=list(zip(rule_antecedents, rule_consequents)),
+            columns=[&quot;antecedents&quot;, &quot;consequents&quot;],
+        )
+
+        if support_only:
+            sAC = rule_supports[0]
+            for m in return_metrics:
+                df_res[m] = np.nan
+            df_res[&quot;support&quot;] = sAC
+
+        else:
+            sAC = rule_supports[0]
+            sA = rule_supports[1]
+            sC = rule_supports[2]
+            disAC = rule_supports[3]
+            disA = rule_supports[4]
+            disC = rule_supports[5]
+            dis_int = rule_supports[6]
+            dis_int_ = rule_supports[7]
+
+            for m in return_metrics:
+                df_res[m] = metric_dict[m](
+                    sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+                )
+
+        return df_res
+
+
+&gt;&gt;&gt; rule_supports=[[1,2,3],[4,5,6]]
+&gt;&gt;&gt; rule_supports = np.array(rule_supports).T.astype(float)
+&gt;&gt;&gt; type(rule_supports)
+&lt;class &#x27;numpy.ndarray&#x27;&gt;
+&gt;&gt;&gt; rule_supports
+array([[1., 4.],
+       [2., 5.],
+       [3., 6.]])
+&gt;&gt;&gt; rule_supports[0]
+array([1., 4.])
+&gt;&gt;&gt; rule_supports[0][1]
+np.float64(4.0)</code></pre></p>
+
+<p style="margin-top: 1em">np.array transforms an array
+into a matrix. This makes adding columns to df easy.</p>
+
+<p style="margin-top: 1em">Here it only checks the score
+for the specific metric and makes sure it is above
+threshold. For the result output, it computes all available
+metrics.</p>
+
+<p style="margin-top: 1em">That is also why we have lifts
+in the returning result.</p>
+
+<p style="margin-top: 1em"><pre><code>score = metric_dict[metric](
+                    sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+                )
+                if score &gt;= min_threshold:
+                    rule_antecedents.append(antecedent)
+                    rule_consequents.append(consequent)
+                    rule_supports.append(
+                        [sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_]
+                    )
+
+            for m in return_metrics:
+                df_res[m] = metric_dict[m](
+                    sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
+                )
+
+        &quot;lift&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
+            &quot;confidence&quot;
+        ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
+        / sC,</code></pre></p>
+
+<p style="margin-top: 1em">Lift is computed as confidence
+divided by the consequent. (P(AC) / P(A) / P(C))</p>
+ 
+<p style="margin-top: 1em"><img src="lift.png" style="display:block; margin:auto;"></p>
 <hr>
 </body>
 </html>
