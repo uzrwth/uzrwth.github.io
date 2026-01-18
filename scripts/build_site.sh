@@ -13,7 +13,7 @@ mkdir -p "$DIST_DIR"
 # -----------------------------
 # 1️⃣ 复制 CSS
 # -----------------------------
-cp style/style.css "$DIST_DIR/"
+cp style/* "$DIST_DIR/"
 
 cp images/* "$DIST_DIR/"
 

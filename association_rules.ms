@@ -872,3 +872,22 @@ all(
 Without specifying axis, all() iterates through all columns (in the direction of rows), treated each column as an array and checks if all values are True.
 
 The result is a Series with column names as indices.
+
+
+<<>>
+            df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
+            .all()
+            .all()
+
+>>> df.all().all()
+np.False_
+>>> t=df.all().all()
+>>> t.__bool__()
+False
+>>> False.__bool__()
+False
+<</>>
+
+By applying all() for 2 times, this line checks whether all values in the 2-dimensional matrix are all True values.
+
+Applying all() on a Series reduces a Series to a single value.
