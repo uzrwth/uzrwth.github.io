@@ -93,7 +93,7 @@ def main():
     final_html = render_template(
         template,
         title="uz's blog",
-        css_path="../style/list.css",
+        css_path="list.css",
         items="\n".join(items_html),
     )
 
