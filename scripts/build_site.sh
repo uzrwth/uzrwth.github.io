@@ -29,7 +29,7 @@ for f in *.ms; do
 
 done
 
-python ./scripts/index.py . $DIST_DIR/index.html
+python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
 
 # -----------------------------
 # 7️⃣ 生成 .nojekyll 避免 GitHub Pages 使用 Jekyll
