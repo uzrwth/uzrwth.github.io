@@ -1,5 +1,5 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Sun Jan 18 17:28:30 2026 -->
+<!-- CreationDate: Mon Jan 19 08:26:19 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -1061,8 +1061,8 @@ into a matrix. This makes adding columns to df easy.</p>
 
 <p style="margin-top: 1em">Here it only checks the score
 for the specific metric and makes sure it is above
-threshold. For the result output, it computes all available
-metrics.</p>
+threshold. For the returning output, it computes all
+available metrics.</p>
 
 <p style="margin-top: 1em">That is also why we have lifts
 in the returning result.</p>
@@ -1089,8 +1089,13 @@ in the returning result.</p>
 
 <p style="margin-top: 1em">Lift is computed as confidence
 divided by the consequent. (P(AC) / P(A) / P(C))</p>
- 
+
 <p style="margin-top: 1em"><img src="lift.png" style="display:block; margin:auto;"></p>
+
+<p style="margin-top: 1em">This makes sense. If events A
+and C are independent, then the lift is 1. That is, the
+occuring of one event does not improve the odds for the
+other.</p>
 <hr>
 </body>
 </html>
