@@ -3,7 +3,7 @@ import subprocess
 import html
 from pathlib import Path
 from datetime import datetime
-
+from itertools import chain
 
 def extract_title_from_ms(ms_content: str) -> str | None:
     lines = ms_content.splitlines()
@@ -65,7 +65,8 @@ def main():
 
     entries = []
 
-    for ms_file in docs_dir.glob("*.ms"):
+    files = chain.from_iterable(docs_dir.glob(ext) for ext in ["*.m", "*.ms"])
+    for ms_file in files:
         content = ms_file.read_text(encoding="utf-8")
         title = extract_title_from_ms(content) or ms_file.stem
         ts = git_first_commit_time(str(ms_file))

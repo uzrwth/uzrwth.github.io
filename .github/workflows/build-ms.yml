@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout main branch
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Install groff
         run: sudo apt-get update && sudo apt-get install -y groff && pip install bs4 ansi2html
