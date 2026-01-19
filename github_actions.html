@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                  <span class="ansi1">github actions complete clone</span>
+
+
+
+
+
+     By default, github actions only do:
+
+
+     git fetch ‐‐depth=1
+
+This causes a small problem for my blog to create the index page.
+In  my blog, I uses git commit timestamp to track the create time
+of each post.
+
+Adding the following lines in workflows, it should be fine.
+
+
+     ‐ uses: actions/checkout@v3
+       with:
+         fetch‐depth: 0  # 完整 clone
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>
