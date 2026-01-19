@@ -2,7 +2,7 @@
 .TL
 for hacking
 
-
+.DA
 .SH
 some words to say about the blog
 
@@ -13,8 +13,6 @@ This blog is built with groff. I thought about using hugo, but it makes the webs
 It's possible to add some special css and javascript to this static blog website and that seems to be an interesting thing to do, even if it doesn't have much significance in itself, there's at least fun in it.
 
 I am interested in code and maths. Posting ideas on coding here might be easier than posting ideas on maths, but I will try. Using images to illustrate maths might still be the best option I have.
-
-一步一个脚印。
 
 
 .SH

@@ -23,10 +23,10 @@ python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
 # -----------------------------
 # 2️⃣ 编译所有 .ms 文件 -> HTML
 # -----------------------------
-for f in *.ms; do
-  python ./scripts/compile.py "$f" "$DIST_DIR/${f%.ms}.html"
-  sed -i '/<\/title>/a\<link rel="stylesheet" href="style.css">' "$DIST_DIR/${f%.ms}.html"
-  sed -i 's|<body>|<body>\n<a href="index.html" class="home-button">Home</a>|' "$DIST_DIR/${f%.ms}.html"
+for f in *.ms *.m; do
+  python ./scripts/compile.py "$f" "$DIST_DIR/${f%.*}.html"
+  #sed -i '/<\/title>/a\<link rel="stylesheet" href="style.css">' "$DIST_DIR/${f%.*}.html"
+  #sed -i 's|<body>|<body>\n<a href="index.html" class="home-button">Home</a>|' "$DIST_DIR/${f%.*}.html"
 
 
 done
