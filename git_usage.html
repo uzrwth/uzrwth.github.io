@@ -1,42 +1,28 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Mon Jan 19 08:26:19 2026 -->
+<!-- CreationDate: Mon Jan 19 10:15:57 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
-<meta name="generator" content="groff -Thtml, see www.gnu.org">
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="Content-Style" content="text/css">
-<style type="text/css">
-       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       h1      { text-align: center }
-</style>
+<meta content="groff -Thtml, see www.gnu.org" name="generator"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="text/css" name="Content-Style"/>
+
 <title>git usage</title>
-<link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-<a href="index.html" class="home-button">Home</a>
-
+<link href="style.css" rel="stylesheet"/></head>
+<body><a class="home-button" href="/">Home</a>
 <h1 align="center">git usage</h1>
-
-<hr>
-
-
+<hr/>
 <p style="margin-top: 1em">--diff-filter=AD: Add and
 Delete</p>
-
 <p style="margin-top: 1em">-- : end of arguments, the
 remaining are the files for the command to apply on</p>
-
 <p style="margin-top: 1em">%ct: commit timestamp</p>
- 
 <p style="margin-top: 1em"><pre><code>git log --diff-filter=A --follow --format=%ct -- 2.ms
 [l@archlinux uzrwth.github.io]$ git log --diff-filter=A  --format=%ct -- 2.ms
 1768613587
-[l@archlinux uzrwth.github.io]$ git log -1 --format=&quot;%cd - %ct&quot; -- 2.ms
+[l@archlinux uzrwth.github.io]$ git log -1 --format="%cd - %ct" -- 2.ms
 Sun Jan 18 16:27:46 2026 +0100 - 1768750066
 [l@archlinux uzrwth.github.io]$
 
@@ -50,6 +36,6 @@ Sun Jan 18 16:27:46 2026 +0100 - 1768750066
 1768614580
 1768614377
 1768613587</code></pre></p>
-<hr>
+<hr/>
 </body>
 </html>

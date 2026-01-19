@@ -1,44 +1,30 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Mon Jan 19 08:26:19 2026 -->
+<!-- CreationDate: Mon Jan 19 10:15:56 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
-<meta name="generator" content="groff -Thtml, see www.gnu.org">
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="Content-Style" content="text/css">
-<style type="text/css">
-       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       h1      { text-align: center }
-</style>
+<meta content="groff -Thtml, see www.gnu.org" name="generator"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="text/css" name="Content-Style"/>
+
 <title>for hacking</title>
-<link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-<a href="index.html" class="home-button">Home</a>
-
+<link href="style.css" rel="stylesheet"/></head>
+<body><a class="home-button" href="/">Home</a>
 <h1 align="center">for hacking</h1>
-
-<a href="#some words to say about the blog">some words to say about the blog</a><br>
-<a href="#some tools for the ease of serving the blog locally">some tools for the ease of serving the blog locally</a><br>
-<a href="#me">me</a><br>
-
-<hr>
-
-
+<a href="#some words to say about the blog">some words to say about the blog</a><br/>
+<a href="#some tools for the ease of serving the blog locally">some tools for the ease of serving the blog locally</a><br/>
+<a href="#me">me</a><br/>
+<hr/>
 <h2>some words to say about the blog
 <a name="some words to say about the blog"></a>
 </h2>
-
-
 <p style="margin-top: 1em">This blog is built with groff. I
 thought about using hugo, but it makes the website fancier
 than I wanted it to be. So I chose a more traditional
 approach. A small issue with this approach is that
-groff&rsquo;s rendering of code blocks is not as well
+groff’s rendering of code blocks is not as well
 supported in HTML as it is in PDF. I failed to find any
 macros that output &lt;pre&gt;. Browsing through the source
 code of groff, I did find some references to PRE_TAG, but I
@@ -46,57 +32,38 @@ am not certain about the way of invoke. Finally, I resorted
 to using Python to do some ugly placeholder and maneuver. It
 seems to be working sufficiently well enough not to distract
 me from writing blogs.</p>
-
-<p style="margin-top: 1em">It&rsquo;s possible to add some
+<p style="margin-top: 1em">It’s possible to add some
 special css and javascript to this static blog website and
 that seems to be an interesting thing to do, even if it
-doesn&rsquo;t have much significance in itself,
-there&rsquo;s at least fun in it.</p>
-
+doesn’t have much significance in itself,
+there’s at least fun in it.</p>
 <p style="margin-top: 1em">I am interested in code and
 maths. Posting ideas on coding here might be easier than
 posting ideas on maths, but I will try. Using images to
 illustrate maths might still be the best option I have.</p>
-
-<p style="margin-top: 1em">&#19968; &#27493; &#19968;
-&#20010; &#33050; &#21360; &#12290;</p>
-
 <h2>some tools for the ease of serving the blog locally
 <a name="some tools for the ease of serving the blog locally"></a>
 </h2>
-
-
 <p style="margin-top: 1em">live reload</p>
-
-<p style="margin-top: 1em"><pre><code>browser-sync start --server --files &quot;*.html, *.css, *.js&quot;</code></pre></p>
-
+<p style="margin-top: 1em"><pre><code>browser-sync start --server --files "*.html, *.css, *.js"</code></pre></p>
 <p style="margin-top: 1em">make after Put (in acme)</p>
-
-<p style="margin-top: 1em"><pre><code>find . -maxdepth 1 -name &#x27;*.ms&#x27; | entr -dr make</code></pre></p>
-
+<p style="margin-top: 1em"><pre><code>find . -maxdepth 1 -name '*.ms' | entr -dr make</code></pre></p>
 <h2>me
 <a name="me"></a>
 </h2>
-
-
 <p style="margin-top: 1em">Data Science Msc. @RWTH</p>
-
 <p style="margin-top: 1em">Email:
 zhongjian.rong@rwth-aachen.de</p>
-
 <p style="margin-top: 1em">I like sports. <pre><code>Basketball
 Skateboard
 Billiard</code></pre></p>
-
-<p style="margin-top: 1em"><img src="duck.png" style="display:block; margin-left:0; margin-right:auto; width:20%;"></p>
-
+<p style="margin-top: 1em"><img src="duck.png" style="display:block; margin-left:0; margin-right:auto; width:20%;"/></p>
 <p style="margin-top: 1em">There was a very strange bug.
 After replacing with placeholders, replace(old, new, 1)
-failed to effect. This might have to do with Python&rsquo;s
+failed to effect. This might have to do with Python’s
 inner representation of strings and bytes. This had caused
 me some troubles many years ago, and now the nightmare is
 back.</p>
-
 <p style="margin-top: 1em"><pre><code>import re
 import subprocess
 import re
@@ -105,23 +72,23 @@ import sys
 import html
 
 # 占位符标记
-MARK = &quot;###CODE###&quot;
+MARK = "###CODE###"
 
 def main():
     if len(sys.argv) != 3:
-        print(f&quot;用法: python {sys.argv[0]} 输入文件.ms 输出文件.html&quot;)
+        print(f"用法: python {sys.argv[0]} 输入文件.ms 输出文件.html")
         sys.exit(1)
 
     input_file = sys.argv[1]
     output_file = sys.argv[2]
 
     # 1️⃣ 读取 MS 文件
-    with open(input_file, &quot;r&quot;, encoding=&quot;utf-8&quot;) as f:
+    with open(input_file, "r", encoding="utf-8") as f:
         ms_content = f.read()
 
     # 2️⃣ 提取占位符里的代码块（按顺序）
     # 支持占位符前后空格或缩进
-    pattern = re.compile(r&quot;&lt;&lt;&gt;&gt;\s*\n(.*?)\n\s*&lt;&lt;/&gt;&gt;&quot;, re.DOTALL)
+    pattern = re.compile(r"&lt;&lt;&gt;&gt;\s*\n(.*?)\n\s*&lt;&lt;/&gt;&gt;", re.DOTALL)
     code_blocks = pattern.findall(ms_content)
 
     # 3️⃣ 将原文中代码块替换为占位符
@@ -129,7 +96,7 @@ def main():
 
     # 4️⃣ 调用 groff，直接从内存获取 HTML
     result = subprocess.run(
-        [&quot;groff&quot;, &quot;-Thtml&quot;, &quot;-ms&quot;, &quot;-Kutf8&quot;],
+        ["groff", "-Thtml", "-ms", "-Kutf8"],
         input=ms_content_placeholder,
         capture_output=True,
         text=True,
@@ -139,19 +106,18 @@ def main():
 
     # 5️⃣ 按顺序回填代码块，自动 HTML 转义
     for code in code_blocks:
-        code_html = f&quot;&lt;pre&gt;&lt;code&gt;{html.escape(code.strip())}&lt;/code&gt;&lt;/pre&gt;&quot;
+        code_html = f"&lt;pre&gt;&lt;code&gt;{html.escape(code.strip())}&lt;/code&gt;&lt;/pre&gt;"
         html_content = html_content.replace(MARK, code_html, 1)  # 只替换第一个匹配
 
     # 6️⃣ 写出最终 HTML 文件
-    with open(output_file, &quot;w&quot;, encoding=&quot;utf-8&quot;) as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write(html_content)
 
-    print(f&quot;生成完成：{output_file}&quot;)
+    print(f"生成完成：{output_file}")
 
-if __name__ == &quot;__main__&quot;:
+if __name__ == "__main__":
     main()</code></pre></p>
- 
-<p style="margin-top: 1em"><img src="1.JPG" style="display:block; margin:auto; width:80%;"></p>
-<hr>
+<p style="margin-top: 1em"><img src="1.JPG" style="display:block; margin:auto; width:80%;"/></p>
+<hr/>
 </body>
 </html>

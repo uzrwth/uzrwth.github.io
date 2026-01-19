@@ -1,54 +1,38 @@
 <!-- Creator     : groff version 1.23.0 -->
-<!-- CreationDate: Mon Jan 19 08:26:19 2026 -->
+<!-- CreationDate: Mon Jan 19 10:15:57 2026 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
-<meta name="generator" content="groff -Thtml, see www.gnu.org">
-<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
-<meta name="Content-Style" content="text/css">
-<style type="text/css">
-       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
-       h1      { text-align: center }
-</style>
+<meta content="groff -Thtml, see www.gnu.org" name="generator"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="text/css" name="Content-Style"/>
+
 <title>association rules</title>
-<link rel="stylesheet" href="style.css">
-
-</head>
-<body>
-<a href="index.html" class="home-button">Home</a>
-
+<link href="style.css" rel="stylesheet"/></head>
+<body><a class="home-button" href="/">Home</a>
 <h1 align="center">association rules</h1>
-
-<a href="#frozenset: sets in .csv">frozenset: sets in .csv</a><br>
-<a href="#mlxtend association_rules">mlxtend association_rules</a><br>
-
-<hr>
-
-
+<a href="#frozenset: sets in .csv">frozenset: sets in .csv</a><br/>
+<a href="#mlxtend association_rules">mlxtend association_rules</a><br/>
+<hr/>
 <h2>frozenset: sets in .csv
 <a name="frozenset: sets in .csv"></a>
 </h2>
-
-
 <p style="margin-top: 1em">Before writing code, we must
 decide how to represent sets in a .csv file.</p>
-
 <p style="margin-top: 1em"><pre><code>support,itemsets
 0.11872533300444006,frozenset({13176})
 0.05557782437099161,frozenset({47209})
-0.002081277750370005,&quot;frozenset({46979, 48679})&quot;</code></pre></p>
-
+0.002081277750370005,"frozenset({46979, 48679})"</code></pre></p>
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import pandas
 &gt;&gt;&gt; import pandas as pd
-&gt;&gt;&gt; df = pd.read_csv(&quot;frequent_itemsets.csv&quot;)
+&gt;&gt;&gt; df = pd.read_csv("frequent_itemsets.csv")
 &gt;&gt;&gt; df.dtypes
 support     float64
 itemsets     object
 dtype: object
-&gt;&gt;&gt; df2 = pd.read_csv(&quot;groceries_basket.csv&quot;)
+&gt;&gt;&gt; df2 = pd.read_csv("groceries_basket.csv")
 &gt;&gt;&gt; df2.dtypes
 order_id                       int64
 product_id                     int64
@@ -59,78 +43,66 @@ dtype: object
 &gt;&gt;&gt;
 
 
-&gt;&gt;&gt; df2[&#x27;product_name&#x27;].values
-array([&#x27;Bulgarian Yogurt&#x27;, &#x27;Organic Celery Hearts&#x27;,
-       &#x27;Lightly Smoked Sardines in Olive Oil&#x27;, ...,
-       &#x27;Organic Unsweetened Almond Milk&#x27;, &#x27;Creamy Peanut Butter&#x27;,
-       &#x27;Broccoli Florettes&#x27;], shape=(573124,), dtype=object)
-&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;].values)
-&lt;class &#x27;numpy.ndarray&#x27;&gt;
+&gt;&gt;&gt; df2['product_name'].values
+array(['Bulgarian Yogurt', 'Organic Celery Hearts',
+       'Lightly Smoked Sardines in Olive Oil', ...,
+       'Organic Unsweetened Almond Milk', 'Creamy Peanut Butter',
+       'Broccoli Florettes'], shape=(573124,), dtype=object)
+&gt;&gt;&gt; type(df2['product_name'].values)
+&lt;class 'numpy.ndarray'&gt;
 
-&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;].values[0])
-&lt;class &#x27;str&#x27;&gt;</code></pre></p>
-
-<p style="margin-top: 1em">pandas&rsquo; read_csv() parses
+&gt;&gt;&gt; type(df2['product_name'].values[0])
+&lt;class 'str'&gt;</code></pre></p>
+<p style="margin-top: 1em">pandas’ read_csv() parses
 data into basic types: int64, float64, object.</p>
-
 <p style="margin-top: 1em">Although shown as
-&rsquo;object&rsquo; by dtypes, its real data type is
-&lt;class &rsquo;str&rsquo;&gt;.</p>
-
+’object’ by dtypes, its real data type is
+&lt;class ’str’&gt;.</p>
 <p style="margin-top: 1em">When reduced to one dimension,
-df becomes a series. <pre><code>&gt;&gt;&gt; type(df2[&#x27;product_name&#x27;])
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;</code></pre></p>
-
+df becomes a series. <pre><code>&gt;&gt;&gt; type(df2['product_name'])
+&lt;class 'pandas.core.series.Series'&gt;</code></pre></p>
 <p style="margin-top: 1em">To construct a .csv file with
-strings that have &quot;,&quot; within it, we need to quote
+strings that have "," within it, we need to quote
 the string. After that, the parsing has no difference from a
 normal .csv file.</p>
-
 <p style="margin-top: 1em">To retrieve the original set
-object from the &lt;class &rsquo;str&rsquo;&gt;, there is
+object from the &lt;class ’str’&gt;, there is
 the frozenset library.</p>
-
 <p style="margin-top: 1em">The ast module helps processing
 trees of the Python abstract syntax grammar. In fact, in the
 .csv file, the set is stored as a line of Python code. With
 literal_eval, we reconstruct the frozenset object from the
 literal.</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import ast
 &gt;&gt;&gt; def safe_convert_frozenset(s):
-...     if s.startswith(&quot;frozenset(&quot;) and s.endswith(&quot;)&quot;):
+...     if s.startswith("frozenset(") and s.endswith(")"):
 ...         inner = s[10:-1]
 ...         try:
 ...             inner_value = ast.literal_eval(inner)
 ...             return frozenset(inner_value)
 ...         except ValueError:
 ...             pass
-...     raise ValueError(&quot;Invalid frozenset format&quot;)
+...     raise ValueError("Invalid frozenset format")
 ...
 ... freq_df = df.copy()
-... freq_df[&#x27;itemsets&#x27;] = freq_df[&#x27;itemsets&#x27;].apply(safe_convert_frozenset)
+... freq_df['itemsets'] = freq_df['itemsets'].apply(safe_convert_frozenset)
 ...
 &gt;&gt;&gt; freq_df.dtypes
 support     float64
 itemsets     object
 dtype: object</code></pre></p>
-
 <p style="margin-top: 1em">Why do we need frozenset? Why
 not just using the simple set?</p>
-
 <p style="margin-top: 1em">frozenset is immutable and
 hashable. Therefore, if we want it to be used as the key in
 a dict, then we should use frozenset rather than the simple
 set.</p>
-
 <p style="margin-top: 1em">For an object to be hashable, it
 must be immutable. A string can be used as a key because it
 is immutable. Any operation on a string always creates a new
 string object.</p>
-
 <p style="margin-top: 1em"><b>something deep in
 Python</b></p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; a = frozenset({1})
 &gt;&gt;&gt; b = frozenset({1})
 &gt;&gt;&gt; id(a)
@@ -148,10 +120,10 @@ Python</b></p>
 -558064481276695278
 &gt;&gt;&gt;
 
-&gt;&gt;&gt; e=&quot;a&quot;
+&gt;&gt;&gt; e="a"
 &gt;&gt;&gt; e.__hash__()
 -3006155391340656490
-&gt;&gt;&gt; &quot;a&quot;.__hash__()
+&gt;&gt;&gt; "a".__hash__()
 -3006155391340656490
 
 
@@ -163,31 +135,31 @@ Python</b></p>
 530343892119149569
 
 &gt;&gt;&gt; type(a)
-&lt;class &#x27;float&#x27;&gt;
+&lt;class 'float'&gt;
 &gt;&gt;&gt; type(5)
-&lt;class &#x27;int&#x27;&gt;
+&lt;class 'int'&gt;
 
 &gt;&gt;&gt; c[{}] = 9
 Traceback (most recent call last):
-  File &quot;&lt;python-input-58&gt;&quot;, line 1, in &lt;module&gt;
+  File "&lt;python-input-58&gt;", line 1, in &lt;module&gt;
     c[{}] = 9
     ~^^^^
-TypeError: unhashable type: &#x27;dict&#x27;
+TypeError: unhashable type: 'dict'
 
 &gt;&gt;&gt; t={}
 &gt;&gt;&gt; t.__hash__()
 Traceback (most recent call last):
-  File &quot;&lt;python-input-60&gt;&quot;, line 1, in &lt;module&gt;
+  File "&lt;python-input-60&gt;", line 1, in &lt;module&gt;
     t.__hash__()
     ~~~~~~~~~~^^
-TypeError: &#x27;NoneType&#x27; object is not callable
+TypeError: 'NoneType' object is not callable
 &gt;&gt;&gt; t.__hash__
 &gt;&gt;&gt; type(t.__hash__)
-&lt;class &#x27;NoneType&#x27;&gt;
+&lt;class 'NoneType'&gt;
 
 
 &gt;&gt;&gt; type(None)
-&lt;class &#x27;NoneType&#x27;&gt;
+&lt;class 'NoneType'&gt;
 &gt;&gt;&gt; id(None)
 94040144899728
 
@@ -210,51 +182,37 @@ TypeError: &#x27;NoneType&#x27; object is not callable
 &gt;&gt;&gt; b = 4
 &gt;&gt;&gt; id(b)
 94040145005392</code></pre></p>
-
 <p style="margin-top: 1em">Everything in Python is an
 object.</p>
-
-<p style="margin-top: 1em">We&rsquo;re getting off track,
-let&rsquo;s return to the main point.</p>
-
+<p style="margin-top: 1em">We’re getting off track,
+let’s return to the main point.</p>
 <h2>mlxtend association_rules
 <a name="mlxtend association_rules"></a>
 </h2>
-
-
 <p style="margin-top: 1em">checking for the source
 file:</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; import mlxtend
 &gt;&gt;&gt; mlxtend.__file__
-&#x27;/home/l/micromamba/envs/py313/lib/python3.13/site-packages/mlxtend/__init__.py&#x27;</code></pre></p>
-
+'/home/l/micromamba/envs/py313/lib/python3.13/site-packages/mlxtend/__init__.py'</code></pre></p>
 <p style="margin-top: 1em"><b>some basic Python
 concepts</b></p>
-
 <p style="margin-top: 1em">There is an __init__.py in the
 directory, so mlxtend is a package.</p>
-
 <p style="margin-top: 1em">Every .py file is a module.</p>
-
 <p style="margin-top: 1em">import mlxtend: importing the
 package.</p>
-
 <p style="margin-top: 1em">from mlxtend.frequent_patterns
 import apriori, association_rules: importing functions
 apriori and association_rules.</p>
-
 <p style="margin-top: 1em">functions are also objects, of
-type &lt;class &rsquo;function&rsquo;&gt;.</p>
-
+type &lt;class ’function’&gt;.</p>
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; type(association_rules)
-&lt;class &#x27;function&#x27;&gt;
+&lt;class 'function'&gt;
 &gt;&gt;&gt; def a():
 ...     return 1
 ...
 &gt;&gt;&gt; type(a)
-&lt;class &#x27;function&#x27;&gt;</code></pre></p>
-
+&lt;class 'function'&gt;</code></pre></p>
 <p style="margin-top: 1em">import foo: first check if the
 name is a directory, if yes, look for __init__.py, if found,
 then this is a package. if not, look for foo.py. if found,
@@ -262,76 +220,64 @@ it is a module. then load it. loading a module: if the
 module object already exists, then returns. Otherwise,
 executes the code in foo.py from top to bottom, creates a
 module object and returns it.</p>
-
 <p style="margin-top: 1em">What do we need to put in
 __init__.py when we want to create a package?</p>
-
 <p style="margin-top: 1em">__init__.py can be empty if we
 just want a package.</p>
-
 <p style="margin-top: 1em">In __init__.py we can expose
 some modules. We can use __all__ to control what we want to
 expose. Without __all__, everything will be exposed.</p>
-
 <p style="margin-top: 1em"><pre><code>from .module1 import foo
 from .module2 import bar</code></pre></p>
-
 <p style="margin-top: 1em"><pre><code>from mlxtend.frequent_patterns import apriori, association_rules
 
 def safe_convert_frozenset(s):
-    if s.startswith(&quot;frozenset(&quot;) and s.endswith(&quot;)&quot;):
+    if s.startswith("frozenset(") and s.endswith(")"):
         inner = s[10:-1]
         try:
             inner_value = ast.literal_eval(inner)
             return frozenset(inner_value)
         except ValueError:
             pass
-    raise ValueError(&quot;Invalid frozenset format&quot;)
+    raise ValueError("Invalid frozenset format")
 
 freq_df = df.copy()
-freq_df[&#x27;itemsets&#x27;] = freq_df[&#x27;itemsets&#x27;].apply(safe_convert_frozenset)
+freq_df['itemsets'] = freq_df['itemsets'].apply(safe_convert_frozenset)
 
-rules = association_rules(freq_df, metric=&quot;confidence&quot;, min_threshold=0.2, num_itemsets=orders_num).round(2)
-lifts = rules[&#x27;lift&#x27;]
-display(f&quot;Lift&#x27;s mean: {lifts.mean().round(2)}. Lift&#x27;s median: {lifts.median().round(2)}.&quot;)</code></pre></p>
-
+rules = association_rules(freq_df, metric="confidence", min_threshold=0.2, num_itemsets=orders_num).round(2)
+lifts = rules['lift']
+display(f"Lift's mean: {lifts.mean().round(2)}. Lift's median: {lifts.median().round(2)}.")</code></pre></p>
 <p style="margin-top: 1em">association_rules requires df to
 have mandatory columns:</p>
-
 <p style="margin-top: 1em"><pre><code># check for mandatory columns
-    if not all(col in df.columns for col in [&quot;support&quot;, &quot;itemsets&quot;]):
+    if not all(col in df.columns for col in ["support", "itemsets"]):
         raise ValueError(
-            &quot;Dataframe needs to contain the\
-                         columns &#x27;support&#x27; and &#x27;itemsets&#x27;&quot;
+            "Dataframe needs to contain the\
+                         columns 'support' and 'itemsets'"
         )</code></pre></p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.columns
-Index([&#x27;order_id&#x27;, &#x27;product_id&#x27;, &#x27;product_name&#x27;, &#x27;category&#x27;,
-       &#x27;add_to_cart_sequence_index&#x27;],
-      dtype=&#x27;object&#x27;)
-&gt;&gt;&gt; &#x27;order_id&#x27; in df.columns
+Index(['order_id', 'product_id', 'product_name', 'category',
+       'add_to_cart_sequence_index'],
+      dtype='object')
+&gt;&gt;&gt; 'order_id' in df.columns
 True
 &gt;&gt;&gt; type(df.columns)
-&lt;class &#x27;pandas.core.indexes.base.Index&#x27;&gt;</code></pre></p>
-
-<p style="margin-top: 1em">How does &rsquo;in&rsquo; work
+&lt;class 'pandas.core.indexes.base.Index'&gt;</code></pre></p>
+<p style="margin-top: 1em">How does ’in’ work
 in Python?</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.columns.__contains__
-&lt;bound method Index.__contains__ of Index([&#x27;order_id&#x27;, &#x27;product_id&#x27;, &#x27;product_name&#x27;, &#x27;category&#x27;,
-       &#x27;add_to_cart_sequence_index&#x27;],
-      dtype=&#x27;object&#x27;)&gt;
+&lt;bound method Index.__contains__ of Index(['order_id', 'product_id', 'product_name', 'category',
+       'add_to_cart_sequence_index'],
+      dtype='object')&gt;
 &gt;&gt;&gt; a=[]
 &gt;&gt;&gt; type(a.__contains__)
-&lt;class &#x27;method-wrapper&#x27;&gt;</code></pre></p>
-
+&lt;class 'method-wrapper'&gt;</code></pre></p>
 <p style="margin-top: 1em">If I implement a class with the
 function __contains__, then such a class works with the
-&rsquo;in&rsquo; keyword.</p>
-
+’in’ keyword.</p>
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; class MyContainer:
 ...     def __contains__(self, item):
-...         return item % 2 == 0  # only even numbers are &quot;in&quot; this container
+...         return item % 2 == 0  # only even numbers are "in" this container
 ...
 ... c = MyContainer()
 ...
@@ -340,11 +286,9 @@ function __contains__, then such a class works with the
 ...
 True
 False</code></pre></p>
-
 <p style="margin-top: 1em">Kulczynski similarity
-coefficient: it&rsquo;s a measure of similarity between sets
+coefficient: it’s a measure of similarity between sets
 or vectors.</p>
-
 <p style="margin-top: 1em"><pre><code>def kulczynski_helper(sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_):
         conf_AC = sAC * (num_itemsets - disAC) / (sA * (num_itemsets - disA) - dis_int)
         conf_CA = sAC * (num_itemsets - disAC) / (sC * (num_itemsets - disC) - dis_int_)
@@ -354,95 +298,89 @@ or vectors.</p>
 
  # metrics for association rules
     metric_dict = {
-        &quot;antecedent support&quot;: lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
-        &quot;consequent support&quot;: lambda _, __, sC, ____, _____, ______, _______, ________: sC,
-        &quot;support&quot;: lambda sAC, _, __, ___, ____, _____, ______, _______: sAC,
-        &quot;confidence&quot;: lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
+        "antecedent support": lambda _, sA, ___, ____, _____, ______, _______, ________: sA,
+        "consequent support": lambda _, __, sC, ____, _____, ______, _______, ________: sC,
+        "support": lambda sAC, _, __, ___, ____, _____, ______, _______: sAC,
+        "confidence": lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
             sAC * (num_itemsets - disAC)
         )
         / (sA * (num_itemsets - disA) - dis_int),
-        &quot;lift&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
-            &quot;confidence&quot;
+        "lift": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
+            "confidence"
         ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
         / sC,
-        &quot;representativity&quot;: lambda _, __, ___, disAC, ____, ______, _______, ________: (
+        "representativity": lambda _, __, ___, disAC, ____, ______, _______, ________: (
             num_itemsets - disAC
         )
         / num_itemsets,
-        &quot;leverage&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: metric_dict[
-            &quot;support&quot;
+        "leverage": lambda sAC, sA, sC, _, __, ____, _____, ______: metric_dict[
+            "support"
         ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
         - sA * sC,
-        &quot;conviction&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: conviction_helper(
-            metric_dict[&quot;confidence&quot;](
+        "conviction": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: conviction_helper(
+            metric_dict["confidence"](
                 sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
             ),
             sC,
         ),
-        &quot;zhangs_metric&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: zhangs_metric_helper(
+        "zhangs_metric": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: zhangs_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
-        &quot;jaccard&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: jaccard_metric_helper(
+        "jaccard": lambda sAC, sA, sC, _, __, ____, _____, ______: jaccard_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
-        &quot;certainty&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: certainty_metric_helper(
+        "certainty": lambda sAC, sA, sC, _, __, ____, _____, ______: certainty_metric_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
-        &quot;kulczynski&quot;: lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(
+        "kulczynski": lambda sAC, sA, sC, _, __, ____, _____, ______: kulczynski_helper(
             sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
         ),
     }</code></pre></p>
-
 <p style="margin-top: 1em">What is the zip object?</p>
-
 <p style="margin-top: 1em"><pre><code>zip(*iterables, strict=False)
 
 &gt;&gt;&gt; a = range(3)
 &gt;&gt;&gt; type(a)
-&lt;class &#x27;range&#x27;&gt;
+&lt;class 'range'&gt;
 &gt;&gt;&gt; a.__iter__()
 &lt;range_iterator object at 0x7f8f317819b0&gt;
 &gt;&gt;&gt;
-&gt;&gt;&gt; b=&#x27;abcd&#x27;
+&gt;&gt;&gt; b='abcd'
 &gt;&gt;&gt; b.__iter__()
 &lt;str_ascii_iterator object at 0x7f8f327acaf0&gt;
 &gt;
 &gt;&gt;&gt; bi = b.__iter__()
 &gt;&gt;&gt; type(bi)
-&lt;class &#x27;str_ascii_iterator&#x27;&gt;
+&lt;class 'str_ascii_iterator'&gt;
 &gt;&gt;&gt; ai=a.__iter__()
 &gt;&gt;&gt; type(ai)
-&lt;class &#x27;range_iterator&#x27;&gt;
+&lt;class 'range_iterator'&gt;
 
-&gt;&gt;&gt; list(zip(&#x27;abcdefg&#x27;, range(3), range(4)))
-[(&#x27;a&#x27;, 0, 0), (&#x27;b&#x27;, 1, 1), (&#x27;c&#x27;, 2, 2)]
+&gt;&gt;&gt; list(zip('abcdefg', range(3), range(4)))
+[('a', 0, 0), ('b', 1, 1), ('c', 2, 2)]
 &gt;&gt;&gt; type(t)
-&lt;class &#x27;zip&#x27;&gt;
+&lt;class 'zip'&gt;
 &gt;&gt;&gt; t.__iter__()
 &lt;zip object at 0x7f8f31136000&gt;
 &gt;&gt;&gt; type(t.__iter__())
-&lt;class &#x27;zip&#x27;&gt;</code></pre></p>
-
+&lt;class 'zip'&gt;</code></pre></p>
 <p style="margin-top: 1em">*iterables: * unlimited input
 parameters.</p>
-
 <p style="margin-top: 1em"><pre><code># get dict of {frequent itemset} -&gt; support
-    keys = df[&quot;itemsets&quot;].values
-    values = df[&quot;support&quot;].values
+    keys = df["itemsets"].values
+    values = df["support"].values
     frozenset_vect = np.vectorize(lambda x: frozenset(x))
     frequent_items_dict = dict(zip(frozenset_vect(keys), values))</code></pre></p>
-
 <p style="margin-top: 1em">zip: create a zip object, each
 element is a tuple of key-value.</p>
-
-<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; d = dict([(&#x27;a&#x27;, 2), (&#x27;b&#x27;, 3)])
+<p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; d = dict([('a', 2), ('b', 3)])
 &gt;&gt;&gt; d
-{&#x27;a&#x27;: 2, &#x27;b&#x27;: 3}
+{'a': 2, 'b': 3}
 
-&gt;&gt;&gt; type(df[&quot;order_id&quot;].values)
-&lt;class &#x27;numpy.ndarray&#x27;&gt;
-&gt;&gt;&gt; type(df[&quot;order_id&quot;].values[0])
-&lt;class &#x27;numpy.int64&#x27;&gt;
+&gt;&gt;&gt; type(df["order_id"].values)
+&lt;class 'numpy.ndarray'&gt;
+&gt;&gt;&gt; type(df["order_id"].values[0])
+&lt;class 'numpy.int64'&gt;
 
 Help on class zip in module builtins:
 Help on class int64 in module numpy:
@@ -475,7 +413,7 @@ NAME
     builtins - Built-in functions, types, exceptions, and other objects.
 
 DESCRIPTION
-    This module provides direct access to all &#x27;built-in&#x27;
+    This module provides direct access to all 'built-in'
     identifiers of Python; for example, builtins.len is
     the full name for the built-in function len().
 
@@ -486,86 +424,75 @@ DESCRIPTION
 
 &gt;&gt;&gt; builtins.__file__
 Traceback (most recent call last):
-  File &quot;&lt;python-input-59&gt;&quot;, line 1, in &lt;module&gt;
+  File "&lt;python-input-59&gt;", line 1, in &lt;module&gt;
     builtins.__file__
-AttributeError: module &#x27;builtins&#x27; has no attribute &#x27;__file__&#x27;. Did you mean: &#x27;__name__&#x27;?
+AttributeError: module 'builtins' has no attribute '__file__'. Did you mean: '__name__'?
 &gt;&gt;&gt; numpy.__file__
-&#x27;/home/l/micromamba/envs/py313/lib/python3.13/site-packages/numpy/__init__.py&#x27;</code></pre></p>
-
+'/home/l/micromamba/envs/py313/lib/python3.13/site-packages/numpy/__init__.py'</code></pre></p>
 <p style="margin-top: 1em">The builtins module is
 implemented in Python/bltinmodule.c (cpython).</p>
-
 <p style="margin-top: 1em">builtins is a module, but numpy
 is a package.</p>
-
 <p style="margin-top: 1em"><pre><code>PyTypeObject PyFilter_Type = {
 PyTypeObject PyMap_Type = {
 PyTypeObject PyZip_Type = {
 
-    SETBUILTIN(&quot;None&quot;,                  Py_None);
-    SETBUILTIN(&quot;Ellipsis&quot;,              Py_Ellipsis);
-    SETBUILTIN(&quot;NotImplemented&quot;,        Py_NotImplemented);
-    SETBUILTIN(&quot;False&quot;,                 Py_False);
-    SETBUILTIN(&quot;True&quot;,                  Py_True);
-    SETBUILTIN(&quot;bool&quot;,                  &amp;PyBool_Type);
-    SETBUILTIN(&quot;memoryview&quot;,        &amp;PyMemoryView_Type);
-    SETBUILTIN(&quot;bytearray&quot;,             &amp;PyByteArray_Type);
-    SETBUILTIN(&quot;bytes&quot;,                 &amp;PyBytes_Type);
-    SETBUILTIN(&quot;classmethod&quot;,           &amp;PyClassMethod_Type);
-    SETBUILTIN(&quot;complex&quot;,               &amp;PyComplex_Type);
-    SETBUILTIN(&quot;dict&quot;,                  &amp;PyDict_Type);
-    SETBUILTIN(&quot;enumerate&quot;,             &amp;PyEnum_Type);
-    SETBUILTIN(&quot;filter&quot;,                &amp;PyFilter_Type);
-    SETBUILTIN(&quot;float&quot;,                 &amp;PyFloat_Type);
-    SETBUILTIN(&quot;frozenset&quot;,             &amp;PyFrozenSet_Type);
+    SETBUILTIN("None",                  Py_None);
+    SETBUILTIN("Ellipsis",              Py_Ellipsis);
+    SETBUILTIN("NotImplemented",        Py_NotImplemented);
+    SETBUILTIN("False",                 Py_False);
+    SETBUILTIN("True",                  Py_True);
+    SETBUILTIN("bool",                  &amp;PyBool_Type);
+    SETBUILTIN("memoryview",        &amp;PyMemoryView_Type);
+    SETBUILTIN("bytearray",             &amp;PyByteArray_Type);
+    SETBUILTIN("bytes",                 &amp;PyBytes_Type);
+    SETBUILTIN("classmethod",           &amp;PyClassMethod_Type);
+    SETBUILTIN("complex",               &amp;PyComplex_Type);
+    SETBUILTIN("dict",                  &amp;PyDict_Type);
+    SETBUILTIN("enumerate",             &amp;PyEnum_Type);
+    SETBUILTIN("filter",                &amp;PyFilter_Type);
+    SETBUILTIN("float",                 &amp;PyFloat_Type);
+    SETBUILTIN("frozenset",             &amp;PyFrozenSet_Type);
 
-    SETBUILTIN(&quot;dict&quot;,                  &amp;PyDict_Type);</code></pre></p>
-
+    SETBUILTIN("dict",                  &amp;PyDict_Type);</code></pre></p>
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; type(numpy)
-&lt;class &#x27;module&#x27;&gt;
+&lt;class 'module'&gt;
 &gt;&gt;&gt; type(numpy.int64)
-&lt;class &#x27;type&#x27;&gt;
+&lt;class 'type'&gt;
 &gt;&gt;&gt; type(builtins)
-&lt;class &#x27;module&#x27;&gt;</code></pre></p>
-
+&lt;class 'module'&gt;</code></pre></p>
 <p style="margin-top: 1em">Both packages and modules are
-represented as &lt;class &rsquo;module&rsquo;&gt; in
-Python&rsquo;s runtime.</p>
-
+represented as &lt;class ’module’&gt; in
+Python’s runtime.</p>
 <p style="margin-top: 1em">packages and modules are mostly
 the same. A package in its nature is no more than modules
 living in a namespace specified by __init__.py.</p>
-
 <p style="margin-top: 1em">Now that association_rules has
-built the frequent_items_dict. It&rsquo;s time to collect
+built the frequent_items_dict. It’s time to collect
 frequent rules.</p>
-
 <p style="margin-top: 1em"><pre><code># prepare buckets to collect frequent rules
     rule_antecedents = []
     rule_consequents = []
     rule_supports = []</code></pre></p>
-
 <p style="margin-top: 1em"><pre><code>null_values : bool (default: False)
       In case there are null values as NaNs in the original input data
 
 
     # if null values exist, df_orig must be provided
     if null_values and df_orig is None:
-        raise TypeError(&quot;If null values exist, df_orig must be provided.&quot;)
+        raise TypeError("If null values exist, df_orig must be provided.")
     # if null values exist, num_itemsets must be provided
     if null_values and num_itemsets == 1:
-        raise TypeError(&quot;If null values exist, num_itemsets must be provided.&quot;)
+        raise TypeError("If null values exist, num_itemsets must be provided.")
 
 
     for k in frequent_items_dict.keys():
         sAC = frequent_items_dict[k]
         # to find all possible combinations</code></pre></p>
-
 <p style="margin-top: 1em">Iteration through a dict with
 .keys() is not as efficient as with .items(). Because with
 .keys(), it needs one more indexing step to fetch the
 value.</p>
-
 <p style="margin-top: 1em"><pre><code># to find all possible combinations
         for idx in range(len(k) - 1, 0, -1):
             # of antecedent and consequent
@@ -602,7 +529,6 @@ True
 &gt;&gt;&gt;
 
 # loops: 0</code></pre></p>
-
 <p style="margin-top: 1em"><pre><code>from itertools import combinations
 
             # of antecedent and consequent
@@ -616,9 +542,7 @@ class combinations(builtins.object)
  |  Return successive r-length combinations of elements in the iterable.
  |
  |  combinations(range(4), 3) --&gt; (0,1,2), (0,1,3), (0,2,3), (1,2,3)</code></pre></p>
-
 <p style="margin-top: 1em">The support_only parameter:</p>
-
 <p style="margin-top: 1em"><pre><code>try:
                         sA = frequent_items_dict[antecedent]
                         sC = frequent_items_dict[consequent]
@@ -626,12 +550,12 @@ class combinations(builtins.object)
 
                     except KeyError as e:
                         s = (
-                            str(e) + &quot;You are likely getting this error&quot;
-                            &quot; because the DataFrame is missing &quot;
-                            &quot; antecedent and/or consequent &quot;
-                            &quot; information.&quot;
-                            &quot; You can try using the &quot;
-                            &quot; `support_only=True` option&quot;
+                            str(e) + "You are likely getting this error"
+                            " because the DataFrame is missing "
+                            " antecedent and/or consequent "
+                            " information."
+                            " You can try using the "
+                            " `support_only=True` option"
                         )
                         raise KeyError(s)
 
@@ -644,21 +568,18 @@ class combinations(builtins.object)
       and consequents
 
       b) you simply want to speed up the computation because
-      you don&#x27;t need the other metrics.</code></pre></p>
-
+      you don't need the other metrics.</code></pre></p>
 <p style="margin-top: 1em">If a set is a frequent itemset,
 then all of its subsets are also frequent itemsets. This
-means we won&rsquo;t need to use the support_only in most
+means we won’t need to use the support_only in most
 cases.</p>
-
 <p style="margin-top: 1em">How does it handle with
 null_values? <pre><code># if null values exist, df_orig must be provided
     if null_values and df_orig is None:
-        raise TypeError(&quot;If null values exist, df_orig must be provided.&quot;)
+        raise TypeError("If null values exist, df_orig must be provided.")
 
     # check for valid input
     fpc.valid_input_check(df_orig, null_values)</code></pre></p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.shape
 (1977, 2)
 &gt;&gt;&gt; df.shape[0]
@@ -666,11 +587,11 @@ null_values? <pre><code># if null values exist, df_orig must be provided
 &gt;&gt;&gt; len(df)
 1977
 
-&gt;&gt;&gt; hasattr(df, &quot;sparse&quot;)
+&gt;&gt;&gt; hasattr(df, "sparse")
 False
-&gt;&gt;&gt; hasattr(df, &quot;dtypes&quot;)
+&gt;&gt;&gt; hasattr(df, "dtypes")
 True
-&gt;&gt;&gt; hasattr(df, &quot;groupby&quot;)
+&gt;&gt;&gt; hasattr(df, "groupby")
 True
 
 Help on built-in function hasattr in module builtins:
@@ -679,26 +600,24 @@ hasattr(obj, name, /)
     Return whether the object has an attribute with the given name.
 
     This is done by calling getattr(obj, name) and catching AttributeError.</code></pre></p>
-
 <p style="margin-top: 1em">df.dtypes is a series.</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.dtypes
 support     float64
 itemsets     object
 dtype: object
 &gt;&gt;&gt; type(df.dtypes)
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+&lt;class 'pandas.core.series.Series'&gt;
 
 
-    if f&quot;{type(df)}&quot; == &quot;&lt;class &#x27;pandas.core.frame.SparseDataFrame&#x27;&gt;&quot;:
+    if f"{type(df)}" == "&lt;class 'pandas.core.frame.SparseDataFrame'&gt;":
         msg = (
-            &quot;SparseDataFrame support has been deprecated in pandas 1.0,&quot;
-            &quot; and is no longer supported in mlxtend. &quot;
-            &quot; Please&quot;
-            &quot; see the pandas migration guide at&quot;
-            &quot; https://pandas.pydata.org/pandas-docs/&quot;
-            &quot;stable/user_guide/sparse.html#sparse-data-structures&quot;
-            &quot; for supporting sparse data in DataFrames.&quot;
+            "SparseDataFrame support has been deprecated in pandas 1.0,"
+            " and is no longer supported in mlxtend. "
+            " Please"
+            " see the pandas migration guide at"
+            " https://pandas.pydata.org/pandas-docs/"
+            "stable/user_guide/sparse.html#sparse-data-structures"
+            " for supporting sparse data in DataFrames."
         )
         raise TypeError(msg)
 
@@ -717,11 +636,11 @@ dtype: object
 
 Help on function is_bool_dtype in module pandas.core.dtypes.common:
 
-is_bool_dtype(arr_or_dtype) -&gt; &#x27;bool&#x27;
+is_bool_dtype(arr_or_dtype) -&gt; 'bool'
     Check whether the provided array or dtype is of a boolean dtype.
 
-&gt;&gt;&gt; df[&quot;a&quot;]=False
-&gt;&gt;&gt; pd.api.types.is_bool_dtype(df[&quot;a&quot;])
+&gt;&gt;&gt; df["a"]=False
+&gt;&gt;&gt; pd.api.types.is_bool_dtype(df["a"])
 True
 &gt;&gt;&gt; pd.api.types.is_bool_dtype([True])
 False
@@ -731,9 +650,9 @@ True
 
 
 &gt;&gt;&gt; df.apply(lambda x: print(type(x)))
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+&lt;class 'pandas.core.series.Series'&gt;
+&lt;class 'pandas.core.series.Series'&gt;
+&lt;class 'pandas.core.series.Series'&gt;
 support     None
 itemsets    None
 a           None
@@ -757,35 +676,31 @@ dtype: object
 Help on method apply in module pandas.core.frame:
 
 apply(
-    func: &#x27;AggFuncType&#x27;,
-    axis: &#x27;Axis&#x27; = 0,
-    raw: &#x27;bool&#x27; = False,
-    result_type: &quot;Literal[&#x27;expand&#x27;, &#x27;reduce&#x27;, &#x27;broadcast&#x27;] | None&quot; = None,
+    func: 'AggFuncType',
+    axis: 'Axis' = 0,
+    raw: 'bool' = False,
+    result_type: "Literal['expand', 'reduce', 'broadcast'] | None" = None,
     args=(),
-    by_row: &quot;Literal[False, &#x27;compat&#x27;]&quot; = &#x27;compat&#x27;,
-    engine: &quot;Literal[&#x27;python&#x27;, &#x27;numba&#x27;]&quot; = &#x27;python&#x27;,
-    engine_kwargs: &#x27;dict[str, bool] | None&#x27; = None,
+    by_row: "Literal[False, 'compat']" = 'compat',
+    engine: "Literal['python', 'numba']" = 'python',
+    engine_kwargs: 'dict[str, bool] | None' = None,
     **kwargs
 ) method of pandas.core.frame.DataFrame instance
     Apply a function along an axis of the DataFrame.
 
     Objects passed to the function are Series objects whose index is
-    either the DataFrame&#x27;s index (``axis=0``) or the DataFrame&#x27;s columns
+    either the DataFrame's index (``axis=0``) or the DataFrame's columns
     (``axis=1``). By default (``result_type=None``), the final return type
     is inferred from the return type of the applied function. Otherwise,
     it depends on the `result_type` argument.
 
 df.apply(func, axis=0) # default axis=0</code></pre></p>
-
 <p style="margin-top: 1em">axis=0: move in the direction of
 rows, that is, to apply on a column</p>
-
 <p style="margin-top: 1em">axis=1: move in the direction of
 columns, that is, to apply on a row</p>
-
 <p style="margin-top: 1em">The default axis is 0,
 therefore, df.apply applies the function on columns.</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; df.apply(lambda x: print(1))
 1
 1
@@ -806,7 +721,7 @@ a           None
 dtype: object
 
 &gt;&gt;&gt; type(b)
-&lt;class &#x27;pandas.core.series.Series&#x27;&gt;
+&lt;class 'pandas.core.series.Series'&gt;
 
 &gt;&gt;&gt; b=df.apply(lambda x: 1)
 &gt;&gt;&gt; b
@@ -815,28 +730,25 @@ itemsets    1
 a           1
 dtype: int64
 &gt;&gt;&gt; b.dtype
-dtype(&#x27;int64&#x27;)
+dtype('int64')
 
 &gt;&gt;&gt; df.apply(lambda x: type(x.dtype))
-support     &lt;class &#x27;numpy.dtypes.Float64DType&#x27;&gt;
-itemsets     &lt;class &#x27;numpy.dtypes.ObjectDType&#x27;&gt;
-a              &lt;class &#x27;numpy.dtypes.BoolDType&#x27;&gt;
+support     &lt;class 'numpy.dtypes.Float64DType'&gt;
+itemsets     &lt;class 'numpy.dtypes.ObjectDType'&gt;
+a              &lt;class 'numpy.dtypes.BoolDType'&gt;
 dtype: object</code></pre></p>
-
 <p style="margin-top: 1em">This line iterates through
 columns of df, and for each column (type Series) iterates
 through each value, and for each value checks isna or
 isinstance.</p>
-
 <p style="margin-top: 1em">The shape of the resulting df is
 the same as the original, but values are transformed into
 bools.</p>
-
 <p style="margin-top: 1em"><pre><code>df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
 
 &gt;&gt;&gt; b = df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
 &gt;&gt;&gt; type(b)
-&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;
+&lt;class 'pandas.core.frame.DataFrame'&gt;
 &gt;&gt;&gt; b
       support  itemsets     a
 0       False     False  True
@@ -857,21 +769,18 @@ bools.</p>
 Help on method all in module pandas.core.frame:
 
 all(
-    axis: &#x27;Axis | None&#x27; = 0,
-    bool_only: &#x27;bool&#x27; = False,
-    skipna: &#x27;bool&#x27; = True,
+    axis: 'Axis | None' = 0,
+    bool_only: 'bool' = False,
+    skipna: 'bool' = True,
     **kwargs
-) -&gt; &#x27;Series | bool&#x27; method of pandas.core.frame.DataFrame instance
+) -&gt; 'Series | bool' method of pandas.core.frame.DataFrame instance
     Return whether all elements are True, potentially over an axis.</code></pre></p>
-
 <p style="margin-top: 1em">Without specifying axis, all()
 iterates through all columns (in the direction of rows),
 treated each column as an array and checks if all values are
 True.</p>
-
 <p style="margin-top: 1em">The result is a Series with
 column names as indices.</p>
-
 <p style="margin-top: 1em"><pre><code>df.apply(lambda col: col.apply(lambda x: pd.isna(x) or isinstance(x, bool)))
             .all()
             .all()
@@ -883,29 +792,22 @@ np.False_
 False
 &gt;&gt;&gt; False.__bool__()
 False</code></pre></p>
-
 <p style="margin-top: 1em">By applying all() for 2 times,
 this line checks whether all values in the 2-dimensional
 matrix are all True values.</p>
-
 <p style="margin-top: 1em">Applying all() on a Series
 reduces a Series to a single value.</p>
-
 <p style="margin-top: 1em">valid_input_check returns
 nothing. It raises an exception only if it finds the data
 invalid. Whether the data is all True or nothing, it
-won&rsquo;t matter.</p>
-
+won’t matter.</p>
 <p style="margin-top: 1em">In association_rules(), it
 checks for df_orig, which defaults to None, hence this check
 never fails for our case.</p>
-
 <p style="margin-top: 1em"><pre><code># check for valid input
     fpc.valid_input_check(df_orig, null_values)</code></pre></p>
-
 <p style="margin-top: 1em">Supports of antecedent and
 consequent.</p>
-
 <p style="margin-top: 1em"><pre><code>sA = frequent_items_dict[antecedent]
                         sC = frequent_items_dict[consequent]
 
@@ -915,14 +817,11 @@ consequent.</p>
 
                         else:
                             an = list(antecedent)</code></pre></p>
-
 <p style="margin-top: 1em">A large part of the code handles
 the case with null_values = True. In our case, we passed in
 df and used the default null_values = False.</p>
-
 <p style="margin-top: 1em">Hence, we jump directly to the
 core logic.</p>
-
 <p style="margin-top: 1em"><pre><code>score = metric_dict[metric](
                     sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
                 )
@@ -932,49 +831,36 @@ core logic.</p>
                     rule_supports.append(
                         [sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_]
                     )</code></pre></p>
-
 <p style="margin-top: 1em">We keep the rule if we found it
 larger than the min_threshold.</p>
-
 <p style="margin-top: 1em">These dis* values are all zeros
 because our input dataframe is complete.</p>
-
 <p style="margin-top: 1em">The computation for the
 confidence metric is simple:</p>
-
-<p style="margin-top: 1em"><pre><code>&quot;confidence&quot;: lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
+<p style="margin-top: 1em"><pre><code>"confidence": lambda sAC, sA, _, disAC, disA, __, dis_int, ___: (
             sAC * (num_itemsets - disAC)
         )
         / (sA * (num_itemsets - disA) - dis_int),</code></pre></p>
-
 <p style="margin-top: 1em">The dis* prefix means disabled.
 In our case, our df is complete, so there are no disabled
 itemsets.</p>
-
 <p style="margin-top: 1em">In our case, since df is a
 complete dataframe, the value of num_itemsets is canceled
 out.</p>
-
 <p style="margin-top: 1em">Basically,
-&quot;confidence&quot; computes the probability of: if A
+"confidence" computes the probability of: if A
 happens, then what is the probability of C happens.
 P(C|A).</p>
-
 <p style="margin-top: 1em">Association rules are computed
 only from frequent itemsets with at least two items.</p>
-
 <p style="margin-top: 1em">In Python, if we loaded a
 module, and then we modified it in the source code and
-import again, the module doesn&rsquo;t get changed. Because
+import again, the module doesn’t get changed. Because
 the runtime thinks the module has been loaded already, the
 duplicated import statement will be ignored.</p>
-
 <p style="margin-top: 1em">To force a reload, use this:</p>
-
 <p style="margin-top: 1em"><pre><code>importlib.reload(mymodule)</code></pre></p>
-
 <p style="margin-top: 1em">To check an empty list:</p>
-
 <p style="margin-top: 1em"><pre><code>&gt;&gt;&gt; a=[]
 &gt;&gt;&gt; if a:
 ...     print(1)
@@ -989,41 +875,39 @@ duplicated import statement will be ignored.</p>
 
     # check if frequent rule was generated
     if not rule_supports:
-        return pd.DataFrame(columns=[&quot;antecedents&quot;, &quot;consequents&quot;] + return_metrics)
+        return pd.DataFrame(columns=["antecedents", "consequents"] + return_metrics)
 
     else:
         # generate metrics
         rule_supports = np.array(rule_supports).T.astype(float)
 
 _metrics = [
-    &quot;antecedent support&quot;,
-    &quot;consequent support&quot;,
-    &quot;support&quot;,
-    &quot;confidence&quot;,
-    &quot;lift&quot;,
-    &quot;representativity&quot;,
-    &quot;leverage&quot;,
-    &quot;conviction&quot;,
-    &quot;zhangs_metric&quot;,
-    &quot;jaccard&quot;,
-    &quot;certainty&quot;,
-    &quot;kulczynski&quot;,
+    "antecedent support",
+    "consequent support",
+    "support",
+    "confidence",
+    "lift",
+    "representativity",
+    "leverage",
+    "conviction",
+    "zhangs_metric",
+    "jaccard",
+    "certainty",
+    "kulczynski",
 ]</code></pre></p>
-
 <p style="margin-top: 1em">Construct the output:</p>
-
 <p style="margin-top: 1em"><pre><code># generate metrics
         rule_supports = np.array(rule_supports).T.astype(float)
         df_res = pd.DataFrame(
             data=list(zip(rule_antecedents, rule_consequents)),
-            columns=[&quot;antecedents&quot;, &quot;consequents&quot;],
+            columns=["antecedents", "consequents"],
         )
 
         if support_only:
             sAC = rule_supports[0]
             for m in return_metrics:
                 df_res[m] = np.nan
-            df_res[&quot;support&quot;] = sAC
+            df_res["support"] = sAC
 
         else:
             sAC = rule_supports[0]
@@ -1046,7 +930,7 @@ _metrics = [
 &gt;&gt;&gt; rule_supports=[[1,2,3],[4,5,6]]
 &gt;&gt;&gt; rule_supports = np.array(rule_supports).T.astype(float)
 &gt;&gt;&gt; type(rule_supports)
-&lt;class &#x27;numpy.ndarray&#x27;&gt;
+&lt;class 'numpy.ndarray'&gt;
 &gt;&gt;&gt; rule_supports
 array([[1., 4.],
        [2., 5.],
@@ -1055,18 +939,14 @@ array([[1., 4.],
 array([1., 4.])
 &gt;&gt;&gt; rule_supports[0][1]
 np.float64(4.0)</code></pre></p>
-
 <p style="margin-top: 1em">np.array transforms an array
 into a matrix. This makes adding columns to df easy.</p>
-
 <p style="margin-top: 1em">Here it only checks the score
 for the specific metric and makes sure it is above
 threshold. For the returning output, it computes all
 available metrics.</p>
-
 <p style="margin-top: 1em">That is also why we have lifts
 in the returning result.</p>
-
 <p style="margin-top: 1em"><pre><code>score = metric_dict[metric](
                     sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
                 )
@@ -1082,20 +962,17 @@ in the returning result.</p>
                     sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_
                 )
 
-        &quot;lift&quot;: lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
-            &quot;confidence&quot;
+        "lift": lambda sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_: metric_dict[
+            "confidence"
         ](sAC, sA, sC, disAC, disA, disC, dis_int, dis_int_)
         / sC,</code></pre></p>
-
 <p style="margin-top: 1em">Lift is computed as confidence
 divided by the consequent. (P(AC) / P(A) / P(C))</p>
-
-<p style="margin-top: 1em"><img src="lift.png" style="display:block; margin:auto;"></p>
-
+<p style="margin-top: 1em"><img src="lift.png" style="display:block; margin:auto;"/></p>
 <p style="margin-top: 1em">This makes sense. If events A
 and C are independent, then the lift is 1. That is, the
 occuring of one event does not improve the odds for the
 other.</p>
-<hr>
+<hr/>
 </body>
 </html>
