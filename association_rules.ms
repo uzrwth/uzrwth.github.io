@@ -1059,7 +1059,7 @@ np.float64(4.0)
 
 np.array transforms an array into a matrix. This makes adding columns to df easy.
 
-Here it only checks the score for the specific metric and makes sure it is above threshold. For the result output, it computes all available metrics.
+Here it only checks the score for the specific metric and makes sure it is above threshold. For the returning output, it computes all available metrics.
 
 That is also why we have lifts in the returning result.
 
@@ -1089,3 +1089,5 @@ That is also why we have lifts in the returning result.
 Lift is computed as confidence divided by the consequent. (P(AC) / P(A) / P(C))
 
 [[ lift.png ]]
+
+This makes sense. If events A and C are independent, then the lift is 1. That is, the occuring of one event does not improve the odds for the other.

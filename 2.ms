@@ -14,6 +14,8 @@ It's possible to add some special css and javascript to this static blog website
 
 I am interested in code and maths. Posting ideas on coding here might be easier than posting ideas on maths, but I will try. Using images to illustrate maths might still be the best option I have.
 
+一步一个脚印。
+
 
 .SH
 some tools for the ease of serving the blog locally
