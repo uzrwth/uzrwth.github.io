@@ -60,3 +60,7 @@ ul li::before {
   font-size: 0.6em;
   color: #444;
 }
+
+.ansi1 {
+  font-weight: bold;
+}

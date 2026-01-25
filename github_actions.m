@@ -9,7 +9,7 @@ By default, github actions only do:
 git fetch --depth=1
 .DE
 
-This causes a small problem for my blog to create the index page. In my blog, I uses git commit timestamp to track the create time of each post.
+This causes a small problem for my blog to create the index page. In my blog, I use git commit timestamps to track the create time of each post.
 
 Adding the following lines in workflows, it should be fine.
 
