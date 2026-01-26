@@ -1,8 +1,10 @@
 .TL
 pandas
 
-.PP
+.SH
+DataFrame
 
+.DS
 DataFrameGroupBy.size(): return a Series
 
     >>> lst = ['a', 'a', 'b']
@@ -52,6 +54,9 @@ Length: 284264, dtype: int64
 If g is the groupby from a list of columns, then the resulting g.size() uses a MultiIndex.
 
 >>> b=g.size()
+
+
+
 >>> b.index
 MultiIndex([('alcohol',    1325),
             ('alcohol',    2985),
@@ -78,3 +83,5 @@ MultiIndex([('alcohol',    1325),
 4       alcohol      5466            5
 ...         ...       ...          ...
 284259   snacks   3420505            1
+
+.DE
