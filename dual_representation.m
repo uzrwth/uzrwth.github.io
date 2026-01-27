@@ -13,6 +13,8 @@ Duality plays an important role in support vector machines.
 
 [[jw.png]]
 
+What is a regularized sum-of-squares error function? Why do we need regularization?
+
 Set the gradient of J(w) to 0 with respect to w:
 
 [[gradient_jw.png]]

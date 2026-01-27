@@ -1,6 +1,24 @@
 .TL
 Least squares
 
+.SH
+regularized least squares
+
+.PP
+We can add a regularization term to an error function in order to control over-fitting, so that the total error function to be minimized takes the form:
+
+[[regularized_least_squres.png]]
+
+where λ is the regularization coefficient that controls the relative importance of the data-dependent error E_D and the regularization term E_W.
+
+The simplest form of regularizer:
+
+[[simplest_regularizer.png]]
+
+
+[[total_error_function.png]]
+
+
 .PP
 Inconsistent systems arise often in applications.
 When a solution is demanded and none exists, the best one can do is to find an x that makes Ax as close as possible to b.
