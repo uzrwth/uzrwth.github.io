@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                      <span class="ansi1">Lagrange Multipliers</span>
+
+
+
+
+     Sometimes  we  need to find the extreme values of a function
+whose domain is constrained to lie within some particular  subset
+of the plane.
+
+Example:  we  want  to find the points on the hyperbolic cylinder
+xˆ2 ‐ zˆ2 ‐ 1 = 0 that are cloest to the origin.
+
+<img src="hyperbolic.png" style="display:block; margin:auto;"/>
+
+That is, we want to minimize f(x,y,z) = xˆ2 + yˆ2 + zˆ2
+
+We can treat x, y as the independent variables, or better,  treat
+y,  z  as the independent variables. Then by the First Derivative
+Test, find x, y and z.
+
+
+Another solution:
+
+<img src="bubble.png" style="display:block; margin:auto;"/>
+
+At each point of contact, the cylinder and sphere have  the  same
+tangent plane and normal line.
+
+Then we have f(x,y,z)=xˆ2+yˆ2+zˆ2 ‐ aˆ2 = 0 and
+
+g(x,y,z) = xˆ2 ‐ zˆ2 ‐ 1 = 0
+
+At any point of contact, the gradients f and g will be parallel:
+
+<img src="parallel_gradients.png" style="display:block; margin:auto;"/>
+
+No  point on the surface has a zero x‐coordinate to conclude that
+x != 0.
+
+To satisfy this, z = 0, y = 0, λ=1, x=+‐1
+
+This is the method of Lagrange multipliers. The method says  that
+the  local  extreme values of a function f(x,y,z) whose variables
+are subject to a constraint g(x,y,z)=0 are to  be  found  on  the
+surface g = 0 among the points where
+
+<img src="lagrange_gradients.png" style="display:block; margin:auto;"/>
+
+
+Another Example:
+
+
+
+
+
+
+
+
+
+
+                               ‐2‐
+
+
+<img src="example_3.png" style="display:block; margin:auto;"/>
+
+<img src="example_31.png" style="display:block; margin:auto;"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>

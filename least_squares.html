@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                          <span class="ansi1">Least squares</span>
+
+
+
+
+<span class="ansi1">regularized least squares</span>
+
+
+     We can add a regularization term to an error function in or‐
+der  to control over‐fitting, so that the total error function to
+be minimized takes the form:
+
+<img src="regularized_least_squres.png" style="display:block; margin:auto;"/>
+
+where λ is the regularization coefficient that controls the rela‐
+tive importance of the data‐dependent error E_D and the  regular‐
+ization term E_W.
+
+The simplest form of regularizer:
+
+<img src="simplest_regularizer.png" style="display:block; margin:auto;"/>
+
+
+<img src="total_error_function.png" style="display:block; margin:auto;"/>
+
+
+
+     Inconsistent  systems  arise  often in applications.  When a
+solution is demanded and none exists, the best one can do  is  to
+find an x that makes Ax as close as possible to b.
+
+The general least‐squares problem is to find an x that makes ||b‐
+Ax|| as small as possible.
+
+The  adjective  "least‐squares"  arises  from the fact that ||b ‐
+Ax|| is the square root of a sum of squares.
+
+The most important aspect of the least‐squares problem is that no
+matter what x we select, the vector Ax will necessarily be in the
+column space, Col A. So we seek an x that makes  Ax  the  closest
+point  in  Col  A  to b. (Of course, if b happens to be in Col A,
+then b is Ax for some x, and such an x is a "least‐squares  solu‐
+tion."
+
+When we talk about spaces, we talk about points and distances be‐
+tween points, and opertations allowed between points. What is the
+distance between two points in two different spaces? (projection)
+
+<img src="proj_col_a.png" style="display:block; margin:auto;" width="300"/>
+
+
+
+
+
+
+
+
+
+
+
+                               ‐2‐
+
+
+<img src="proj_col_a_b.png" style="display:block; margin:auto;" width="300"/>
+
+Such  an  xˆ  is  a list of weights that will build bˆ out of the
+columns of A. Think of multiplying these weights to  each  corre‐
+sponding column of A, and then sum up each row of A to get Axˆ.
+
+What is a column space?
+
+Col A is the set of all linear combinations of the columns of A.
+
+
+<img src="col_a.png" style="display:block; margin:auto;"/>
+
+What is a null space?
+
+Nul  A  is  the  set of all solutions of the homogeneous equation
+Ax=0.
+
+<img src="null_space.png" style="display:block; margin:auto;"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>

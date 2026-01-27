@@ -1,0 +1,146 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                     <span class="ansi1">Linear regression model</span>
+
+
+
+
+     For setting the parameters of a linear regression model, the
+effective model complexity, governed by the number of basis func‐
+tions,  needs  to be controlled according to the size of the data
+set.
+
+What is the effective model complexity? Answer: the complexity of
+the weight vector, the complexity of the basis functions.
+
+The simplest linear model for regression is one that  involves  a
+linear combination of the input variables:
+
+<img src="simplest_linear_regression.png" style="display:block; margin:auto;"/>
+
+This is often simply known as linear regression.
+
+It  is  a  linear function of the input variables and also linear
+function of the parameters w0, w1, ...wD. This  imposes  signifi‐
+cant limitations on the model. Here D means dimension.
+
+We  extend it by considering linear combinations of fixed nonlin‐
+ear functions of the input variables:
+
+<img src="linear_regression_with_basis_funcs.png" style="display:block; margin:auto;"/>
+
+w0 is called a bias parameter for the purpose of setting a  fixed
+offset.
+
+If a dummy function φ0 (x) = 1 is defined:
+
+<img src="with_dummy_func.png" style="display:block; margin:auto;"/>
+
+This linearity in the parameters greatly simplify the analysis of
+this  class of models. However, it also leads to some significant
+limitations.
+
+The example of polynomial regression is a particular  example  of
+this  model  in which there is a single input variable x, and the
+basis functions take the form of powers of x.
+
+There are many other possible choices for  the  basis  functions,
+for example, the Gaussian functions. It should be noted that they
+are  not  required to have a probabilistic interpretation, and in
+particular the normalization coefficient is  unimportant  because
+these  basis  functions will be multiplied by adaptive parameters
+wj.
+
+
+
+
+
+
+
+
+
+
+                               ‐2‐
+
+
+<img src="gaussian_basis.png" style="display:block; margin:auto;"/>
+
+
+Another possibility is the sigmoidal basis function of the form:
+
+<img src="sigmoidal.png" style="display:block; margin:auto;"/>
+
+
+
+Adding a regularization term to the log likelihood function means
+the effective model complexity can  then  be  controlled  by  the
+value  of  the regularization coefficient, although the choice of
+the number and form of the basis functions is of course still im‐
+portatnt in determining the overall behaviour of the model.
+
+Why adding a regularization term works?
+
+This leaves the issue of deciding the appropriate model  complex‐
+ity for the particular problem, which cannot be decided simply by
+maximizing  the likelihood function, because this always leads to
+excessively complex models and over‐fitting.
+
+
+
+<span class="ansi1">Regularized least squares</span>
+
+
+     Adding a regularization term to an error function  in  order
+to  control  over‐fitting, so that the total error function to be
+minimized takes the form
+
+<img src="total_error_func.png" style="display:block; margin:auto;"/>
+
+where λ is the regularization coefficient that controls the rela‐
+tive importance of the data‐dependent error and  the  regulariza‐
+tion term.
+
+One  of the simplest forms of regularizer is given by the sum‐of‐
+squares of the weight vector elements
+
+<img src="regularizer.png" style="display:block; margin:auto;"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>
