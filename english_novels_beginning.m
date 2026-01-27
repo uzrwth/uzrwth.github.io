@@ -70,3 +70,5 @@ Emma
 Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.
 
 (handsome in 19th century: well-formed/well-proportioned/dignified. It is a beauty worth respect. Jane Austen, George Eliot, Dickens use handome to describe women. A handsome woman is trustworthy, independent-minded)
+
+She was the youngest of the two daughters of a most affectionate, indulgent father; and had, in consequence of her sister's marriage, been mistress of his house from a very early period. Her mother had died too long ago for her to have more than an indistinct rememberance of her caresses; and her place had been supplied by an excellent woman as governess, who had fallen little short of a mother in affection.

@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - "*.ms"
+      - "**/*.{ms,m,css,py,sh}"
       - ".github/workflows/build-ms.yml"
 
 permissions:
