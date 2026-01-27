@@ -63,3 +63,10 @@ The boy awkwardly opened the book he held in his hand, which Mr. Phillotson had 
 
 "Well--don't speak of this everywhere. You know what a university is, and a university degree? It is the necessary hallmark of a man who wants to do anything in teaching. My scheme, or dream, is to be a university graduate, and then to be ordained. By going to live at Christminster, or near it, I shall be at headquarters, so to speak, and if my scheme is practicable at all, I consider that being the spot will afford me a better chance of carrying it out than I should have elsewhere."
 
+.SH
+Emma
+
+.PP
+Emma Woodhouse, handsome, clever, and rich, with a comfortable home and happy disposition, seemed to unite some of the best blessings of existence; and had lived nearly twenty-one years in the world with very little to distress or vex her.
+
+(handsome in 19th century: well-formed/well-proportioned/dignified. It is a beauty worth respect. Jane Austen, George Eliot, Dickens use handome to describe women. A handsome woman is trustworthy, independent-minded)
