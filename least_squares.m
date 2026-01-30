@@ -29,7 +29,7 @@ The adjective "least-squares" arises from the fact that ||b - Ax|| is the square
 
 The most important aspect of the least-squares problem is that no matter what x we select, the vector Ax will necessarily be in the column space, Col A. So we seek an x that makes Ax the closest point in Col A to b. (Of course, if b happens to be in Col A, then b is Ax for some x, and such an x is a "least-squares solution."
 
-When we talk about spaces, we talk about points and distances between points, and opertations allowed between points. What is the distance between two points in two different spaces? (projection)
+When we talk about spaces, we talk about points and distances between points, and opertations allowed between points. What is the distance between a space and a point which does not lie in the space? (projection)
 
 [[ proj_col_a.png width=300]]
 
