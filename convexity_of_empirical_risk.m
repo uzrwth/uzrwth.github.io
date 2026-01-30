@@ -227,11 +227,40 @@ The probability of receiving a nonrepresentative sample is less than right-side.
 We get the probability of 1 - δ. If m is larger, the probability will be higher than 1 - δ.
 
 
-
-
-
+.SH
+PAC learnability
 
 .PP
+
+[[pac_learnability.png]]
+
+
+Since the training set is randomly generated, there may always be a small chance that it will happen to be noninformative (for example, there is always some chance that the training set will contain only one domain point, sampled over and over again).
+
+Even if we get a training sample that is informative, because it is finite, there will always be some details that it fails to capture. Our accuracy parameter, allows "forgiving" the learner's classifier for making minor errors.
+
+
+Sample complexity: the number of examples required to guarantee a probably approximately correct solution.
+
+There are infinite classes that are learnable as well.
+
+What determines the PAC learnability of a class is not its finiteness but rather a combinatorial measure: VC dimension.
+
+
+.SH
+Learning problems beyond binary classification
+
+.PP
+By allowing a variety of loss functions, we can do regression, multiclass classification.
+
+.SH
+Agnostic PAC learning
+
+.PP
+The realizability assumption is waived.
+
+.SH
 Various learning algorithms
 
+.PP
 The general learning principle behind the algorithms.
