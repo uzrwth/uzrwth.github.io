@@ -1,0 +1,80 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                         <span class="ansi1">Newton’s method</span>
+
+
+
+
+     There  are  two  major shortcomings of the classical conver‐
+gence analysis of Newton’s method.
+
+Newton’s method: unconstrained minimization.
+
+<img src="unconstrained_minimization.png" style="display:block; margin:auto;"/>
+
+where f: Rˆn ‐&gt; R is convex and twice continuously differentiable
+(which implies that dom f is open).
+
+A necessary and sufficient condition for a point x* to be optimal
+is
+
+<img src="convex_optimal.png" style="display:block; margin:auto;"/>
+
+Solving the unconstrained minimization problem  is  the  same  as
+finding  a  solution of the gradient=0, which is a set of n equa‐
+tions in the n variables x1,...,xn. In a few  special  cases,  we
+can  find  a  solution  to  the problem by solving the optimality
+equation, but usually the problem must be solved by an  iterative
+algorithm.
+
+By  this  we mean an algorithm that computes a sequence of points
+x(0), x(1), ... such a sequence of points is called a  minimizing
+sequence for the problem. The algorithm is terminated when
+
+<img src="terminated.png" style="display:block; margin:auto;"/>
+
+(some specified nonnegative tolerance)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>
