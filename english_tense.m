@@ -107,3 +107,7 @@ When the story was told, the nineteenth century had already reached one-third of
 "before ... have ..."
 
 "after ... have ..."
+
+The perfect in present perfect is connected with present.
+
+The perfect in past perfect is connected with past.
