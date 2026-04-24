@@ -84,4 +84,6 @@ For the proof of the relationship between the directional derivative and the gra
 
 Hence, when we do gradient descent, we take a step in the negative direction of the gradient.
 
+The directional derivative means if we move one unit in the direction of u, how much does the value of the function increase.
+
 
