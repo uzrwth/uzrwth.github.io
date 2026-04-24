@@ -1,0 +1,212 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<title></title>
+
+<link href="style.css" rel="stylesheet"/></head>
+<body class="body_foreground body_background" style="font-size: normal;"><a class="home-button" href="/">Home</a>
+<pre class="ansi2html-content">
+
+
+
+
+
+
+
+
+
+                        <span class="ansi1">Gradient Descent</span>
+
+
+
+
+     The  gradient of a function is the vector of partial deriva‐
+tives of it. (multi‐variables function)
+
+Gradient descent is  an  iterative  algorithm.  (the  computation
+starts with an initial assumed value)
+
+(See Schwartz &amp; David 14.1)
+
+For an iterative algorithm, the crucial point is the update rule.
+
+
+     Why  do  we  need gradient descent rather than computing the
+optimal value mathematically by setting the gradient to the  zero
+vector?
+
+The point with zero gradient might now exist. Even if exists, the
+amount of computation could be huge.
+
+
+
+     Why  do  we have to learn about gradient descent for machine
+learning?
+
+Our goal of learning is to minimize the  risk  function  (but  we
+don’t know the distribution as well as the gradient, what we only
+know is the gradient of the empirical risk. How does this work?).
+Gradient descent is a method for minimizing a function.
+
+The  key  point is, even though we don’t know the gradient of the
+risk function, we can still find a  direction  whose  expectation
+matches the gradient of the risk function. (SGD)
+
+(See Schwartz &amp; David 14.3)
+
+
+     We take it for granted that in this algorithm we will take a
+step in the direction of the negative of the gradient at the cur‐
+rent point, but what is the principle behind such an algorithm?
+
+
+
+     When  we apply an iterative method, we must know its conver‐
+gence rate.
+
+
+
+
+
+
+
+
+
+
+
+
+                               ‐2‐
+
+
+     What is the advantage  of  preconditioned  gradient  descent
+over gradient descent?
+
+Gradient  descent  is a first‐order algorithm for finding a local
+minimum of a differentiable function.
+
+Preconditioning is typically used to accelerate first‐order opti‐
+mization algorithms.
+
+
+
+     Def Gradient
+
+whose value at a point p is the "direction and  rate  of  fastest
+increase" (See wiki)
+
+"at  a point p, the direction of the gradient is the direction in
+which the function increases most quickly from p, and the  magni‐
+tude  of  the gradient is the rate of increase in that direction,
+the greatest absolute directional derivative." (See wiki)
+
+To maximize a function: gradient ascent.
+
+To minimize a function: gradient descent.
+
+The relationship between directional derivative and gradient: The
+directional derivative is a dot product of the gradient  and  the
+unit vector. (See Thomas Calculus: 14)
+
+
+
+     Def: directional derivative
+
+(See Thomas Calculus: 14)
+
+measures the rate at which a function changes in a particular di‐
+rection at a given point. (See wiki)
+
+Notation  of the directional derivative: The derivative of f at P
+in the direction of u.
+
+To talk about a directional derivative, there is  a  function,  a
+point and a direction vector.
+
+Derivative  is a limit. When we choose the direction vector to be
+a unit vector, the divisor is easy to express. (See Thomas Calcu‐
+lus: 14.5 Directional Derivatives and Gradient Vectors)
+
+Therefore, for the same function f and point P, choosing  a  dif‐
+ferent direction vector means a different directional derivative.
+
+
+Dot product: &lt;u,v&gt; = |u| * |v| * cos(arc&lt;u,v&gt;)
+
+
+
+
+
+
+
+
+
+
+                               ‐3‐
+
+
+If we choose the direction vector to be the same direction as the
+gradient, then the directional derivative equals to the dot prod‐
+uct  of the gradient and the direction vector, cos() = 1. The di‐
+rectional derivative equals the |gradient|.
+
+At point P, f increases most rapidly in the direction of the gra‐
+dient vector at P. (since the directional derivative measures the
+rate at which a function changes in a particular direction  at  a
+given point).
+
+But,  why  increases rather than decreases? See the definition of
+diretional derivative in terms of limitation. lim (f(x0 +  su)  ‐
+f(x0)) / s.
+
+For the proof of the relationship between the directional deriva‐
+tive  and  the  gradient vector, see Thomas Calculus 14.5: Direc‐
+tional derivatives and gradient vectors.
+
+Hence, when we do gradient descent, we take a step in  the  nega‐
+tive direction of the gradient.
+
+The  directional  derivative means if we move one unit in the di‐
+rection of u, how much does the value of the function increase.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
+</body>
+</html>
