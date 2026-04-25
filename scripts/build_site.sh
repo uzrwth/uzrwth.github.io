@@ -19,8 +19,10 @@ cp style/* "$DIST_DIR/"
 
 cp images/* "$DIST_DIR/"
 
+cp posts/* "$DIST_DIR/"
 
-python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
+
+# python ./scripts/index.py . templates/index.html $DIST_DIR/index.html
 
 # -----------------------------
 # 2️⃣ 编译所有 .ms 文件 -> HTML
