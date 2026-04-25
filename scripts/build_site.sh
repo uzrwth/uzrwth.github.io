@@ -41,5 +41,6 @@ done
 # -----------------------------
 touch "$DIST_DIR/.nojekyll"
 
+cd "$DIST_DIR"
 
-tree -H "$DIST_DIR" -o "$DIST_DIR/index.html"
+tree -H . -o index.html
