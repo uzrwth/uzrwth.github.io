@@ -9,6 +9,7 @@ on:
       - "**.ms"
       - "**.css"
       - "**.py"
+      - "**.jpg"
       - "**.pdf"
       - ".github/workflows/build-ms.yml"
 
