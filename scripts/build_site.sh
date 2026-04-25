@@ -15,9 +15,9 @@ mkdir -p "$DIST_DIR"
 # -----------------------------
 # 1️⃣ 复制 CSS
 # -----------------------------
-cp style/* "$DIST_DIR/"
+#cp style/* "$DIST_DIR/"
 
-cp images/* "$DIST_DIR/"
+#cp images/* "$DIST_DIR/"
 
 cp posts/* "$DIST_DIR/"
 
@@ -42,3 +42,4 @@ done
 touch "$DIST_DIR/.nojekyll"
 
 
+tree -H "$DIST_DIR" -o "$DIST_DIR/index.html"
