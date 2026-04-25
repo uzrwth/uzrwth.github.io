@@ -2,7 +2,7 @@
 Gradient of quadratic form
 
 .PP
-[[ expand.svg ]]
+[[ gradient.jpg ]]
 
 See wiki: Definite matrix (Extension for non-Hermitian square matrices)
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -e
 
+shopt -s nullglob
+
 # 参数：dist 目录
 DIST_DIR="$1"
 if [ -z "$DIST_DIR" ]; then
